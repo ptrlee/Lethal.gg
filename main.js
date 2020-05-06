@@ -1,32 +1,58 @@
 const $root = $("#root");
+const $champs = $("#champs");
 
+renderLiveGame();
+renderChampionOne();
+renderChampionTwo();
 
-function renderButtons() {
-    let hold = `
-        <div>
-            <button id="live-game-button"> Live Game </button>
-            <button id="calc-button"> Damage Calculator </button>
-        </div>
-    `;
-    $root.append(hold);
-}
 
 function renderLiveGame() {
     let hold = `
-        <div>
+        <div id="live-game">
             <input placeholder="Enter Summoner's Name" id="name-inputbox"> </input>
-
-        </div>
-
-        <div>
-            <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
-            VS                                   
-            <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Aatrox.png">  </img>    
 
         </div>
     `;
     $root.append(hold);
 }
 
-renderButtons();
-renderLiveGame();
+function renderChampionOne() {
+    let hold = `
+    <div class="column">
+        Ahri
+    
+        <div>
+        <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
+        </div>
+    </div>
+
+    <div class=column>
+    VS
+    </div>
+    `;
+    $champs.append(hold);
+}
+
+function renderChampionTwo() {
+    let hold = `
+    <div class="column">
+        Aatrox
+
+        <div>
+        <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Aatrox.png">  </img>
+        </div>
+    </div>
+    `;
+    $champs.append(hold);
+}
+
+$('#live-game-button').on('click', function(e) {        
+    $("#calc").remove();
+    $("#champ-input-list").remove();
+    renderLiveGame();
+
+    e.preventDefault();
+});
+
+
+

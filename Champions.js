@@ -72,7 +72,7 @@ var champA = {
 }
 
 var champD = {
-    level = 1,
+    level: 1,
     armor: 0,
     health: 0,
     mr: 0, 
