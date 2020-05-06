@@ -1,8 +1,4 @@
-import { Champions } from "./Champions.js"
 const $root = $("#root");
-
-let ahri = Champions.data.Ahri.image.full; 
-
 
 
 function renderButtons() {
@@ -32,7 +28,5 @@ function renderLiveGame() {
     $root.append(hold);
 }
 
-
-console.log(Champions);
 renderButtons();
 renderLiveGame();
