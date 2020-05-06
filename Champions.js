@@ -14,6 +14,6 @@ jQuery.extend({
     }
 });
 
-let Champions = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json');
-console.log(Champions);
+export let Champions = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json');
+//console.log(Champions);
 
