@@ -106,13 +106,26 @@ champA.spelldmg[3] += placeholder1.spells[3].effect[champA.lvlOfspell[3]];
 let i;
 for (i = 0; i < 4; i++) {
     if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP;
+        try {
+            champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP;
+        }
+        catch (err) {
+        }
     }
     else if (champA.ratiotypeSpell[i] == 1) { //tAD scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD);
+        try {
+            champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD);
+        }
+        catch (err) {
+        }
     }
     else if (champA.ratiotypeSpell[i] == 2) { //bAD scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD);
+        try {
+            champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD);
+        }
+        catch (err) {
+        }
+
     }
     else if (champA.ratiotypeSpell[i] == 3) { //hp scaling
         //exception 
@@ -137,6 +150,6 @@ for (i = 0; i < 4; i++) {
 //attack damage calculations
 // do after items and runes
 champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD);
-champA.aaDMG = (champA.aaDMG / parseFloat(crit)(2+critMult)(crit));
+champA.aaDMG = (champA.aaDMG / parseFloat(champA.crit))*(2+champA.critMult)*(champA.crit);
 
 
