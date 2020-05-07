@@ -49,12 +49,12 @@ let champA = {
     critMult: 0,  //IE = .5
     atkSpeed: 0,
     bonusAP: 0,
-    p = 0, //not coded yet 
-    aaDMG = 0,
-    spelldmg = [0,0,0,0],
-    lvlOfspell = [1,1,1,1],
-    typeofSpell = [0,0,0,0], //physical 0, magic 1, true 2, neither 3
-    ratiotypeofSpell = [0,0,0,0], // magic 0, totalAD 1, bonusAD 2, health 3, mana 4, 
+    p: 0, //not coded yet 
+    aaDMG: 0,
+    spelldmg: [0,0,0,0],
+    lvlOfspell: [1,1,1,1],
+    typeofSpell: [0,0,0,0], //physical 0, magic 1, true 2, neither 3
+    ratiotypeofSpell: [0,0,0,0], // magic 0, totalAD 1, bonusAD 2, health 3, mana 4, 
     item: 0, //not coded yet 
     physical: 0,
     magical: 0,
