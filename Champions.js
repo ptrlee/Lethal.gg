@@ -152,4 +152,15 @@ for (i = 0; i < 4; i++) {
 champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD);
 champA.aaDMG = (champA.aaDMG / parseFloat(champA.crit))*(2+champA.critMult)*(champA.crit);
 
-
+function bubbleSort(n) {
+    let i = 0;
+    for (i = 0; i < length(n); i++) {
+        for (j = 0; j < length(n) - i; j++) {
+            if (n[j] > n[j+1]) {
+                let temp = n[j+1];
+                n[j+1] = n[j];
+                n[j] = temp;
+            }
+        }
+    }
+}
