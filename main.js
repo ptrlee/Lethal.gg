@@ -12,7 +12,6 @@ function renderSummonerSearchbar() {
     let hold = `
         <div id="live-game">
             <input placeholder="Enter Summoner's Name" id="name-inputbox"> </input>
-
         </div>
     `;
     $root.append(hold);
@@ -23,13 +22,7 @@ function renderSummonerSearchbar() {
  */
 function renderChampionOne() {
     let hold = `
-    <div class="column">
-        Ahri
-        <div>
-        <img id="image-one" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
-        </div>
-    </div>
-
+    ${renderChampStats("one")}
     <div class=column>
     VS
     </div>
@@ -41,15 +34,7 @@ function renderChampionOne() {
  * Renders the second champion
  */
 function renderChampionTwo() {
-    let hold = `
-    <div class="column">
-        Aatrox
-
-        <div>
-        <img id="image-two" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Aatrox.png">  </img>
-        </div>
-    </div>
-    `;
+    let hold = `${renderChampStats("two")}`;
     $champs.append(hold);
 }
 
@@ -64,6 +49,53 @@ $('#live-game-button').on('click', function(e) {
 
     e.preventDefault();
 });
+
+function renderChampStats(num) {
+    let hold = `
+    <div class="column">
+        <div id="champ-name-${num}">
+            Ahri
+        </div>
+
+        <div>
+            <img id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
+        </div>
+
+        <div id="level-${num}">
+            Level: 1
+        </div>
+
+        <div id="HP-${num}">
+            HP: 1200/1200
+        </div>
+
+        <div id="MP-${num}">
+            MP: 1000/1000
+        </div>
+
+        <div id="damage-${num}">
+            <div id="AD-${num}">
+                AD: 45
+            </div>
+
+            <div id="AP-${num}">
+                AP: 54
+            </div>
+        </div>
+    
+        <div id="defense-${num}">
+            <div id="MR-${num}">
+                MR: 54
+            </div>
+
+            <div id="armor-${num}">
+                Armor: 45
+            </div>
+        </div>
+    </div>
+    `
+    return hold;
+}
 
 
 

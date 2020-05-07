@@ -38,6 +38,7 @@ function renderChampLists() {
             championChange("two");
         });
     });
+
 }
 
 
@@ -70,12 +71,14 @@ function createChampionList() {
     return temp;
 }
 
+
 /**
  * Gets the champion that was selected
  */
 function championChange(num) {
     let x = document.getElementById("champ-input-list-" + num);
     document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/${x.value}.png`;
+    document.getElementById("champ-name-" + num).innerHTML = x.value;
 }
 
 jQuery.extend({
