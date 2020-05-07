@@ -1,29 +1,29 @@
 jQuery.extend({
     getValues: function(url, meow) {
-        var att_champ = null;
+        var champ = null;
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'JSON',
             async: false,
             success: function(data) {
-                att_champ = data.data;
+                champ = data.data;
             }
         });
-       return att_champ;
+       return champ;
     },
     getValues: function(url) {
-        var placeholder2 = null;
+        var champ = null;
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'JSON',
             async: false,
             success: function(data) {
-                placeholder2 = data.data;
+                champ = data.data;
             }
         });
-       return placeholder2;
+       return champ;
     }
 });
 
@@ -33,10 +33,10 @@ console.log(placeholder2);
 console.log(att_champ);
 
 function calculateDMG(phys, magic, trueDMG, armor, mr) {
-    total = 0
-    total += (phys * 100 / parseFloat((100 + armor)))
-    total += (magic * 100 / parseFloat((100 + mr)))
-    total += trueDMG
+    total = 0;
+    total += (phys * 100 / parseFloat((100 + armor)));
+    total += (magic * 100 / parseFloat((100 + mr)));
+    total += trueDMG;
     return total;
 }
 
@@ -71,33 +71,33 @@ let champD = { // abilities and runes
     hpregen: 0
 }
 
-let placeholder1 = atk_champ.Ahri
-let placeholder2 = def_champ.Garen
+let placeholder1 = atk_champ.Ahri;
+let placeholder2 = def_champ.Garen;
 
 //attk hero base stats 
 // parameters needed: level
-champA.baseAD = placeholder1.stats.attackdamage
-champA.baseAD += placeholder1.stats.attackdamageperlevel
-champA.atkSpeed += placeholder1.stats.attackspeed
-champA.atkSpeed += placeholder1.stats.attackspeedperlevel * champA.level
+champA.baseAD = placeholder1.stats.attackdamage;
+champA.baseAD += placeholder1.stats.attackdamageperlevel;
+champA.atkSpeed += placeholder1.stats.attackspeed;
+champA.atkSpeed += placeholder1.stats.attackspeedperlevel * champA.level;
 
 
 // def hero
-champD.armor += placeholder2.stats.armor
-champD.armor += champD.level * placeholder2.stats.armorperlevel
-champD.spellblock += placeholder2.stats.spellblock
-champD.spellblock += champD.level * placeholder2.stats.spellblockperlevel
-champD.health += placeholder2.stats.hp
-champD.health += champD.level * placeholder2.stats.hpperlevel
-champD.hpregen += placeholder2.stats.hpregen
-champD.hpregen += champD.level * placeholder2.stats.hpregenperlevel
+champD.armor += placeholder2.stats.armor;
+champD.armor += champD.level * placeholder2.stats.armorperlevel;
+champD.spellblock += placeholder2.stats.spellblock;
+champD.spellblock += champD.level * placeholder2.stats.spellblockperlevel;
+champD.health += placeholder2.stats.hp;
+champD.health += champD.level * placeholder2.stats.hpperlevel;
+champD.hpregen += placeholder2.stats.hpregen;
+champD.hpregen += champD.level * placeholder2.stats.hpregenperlevel;
 
 //attk hero damage calculations 
 // necessary parameters: lvl of abilities 
-champA.spelldmg[0] += placeholder1.spells[0].effect[lvlOfspell[0]]
-champA.spelldmg[1] += placeholder1.spells[1].effect[lvlOfspell[1]]
-champA.spelldmg[2] += placeholder1.spells[2].effect[lvlOfspell[2]]
-champA.spelldmg[3] += placeholder1.spells[3].effect[lvlOfspell[3]]
+champA.spelldmg[0] += placeholder1.spells[0].effect[lvlOfspell[0]];
+champA.spelldmg[1] += placeholder1.spells[1].effect[lvlOfspell[1]];
+champA.spelldmg[2] += placeholder1.spells[2].effect[lvlOfspell[2]];
+champA.spelldmg[3] += placeholder1.spells[3].effect[lvlOfspell[3]];
 
 //scaling ability damage 
 // do after items/runes have been calculated
@@ -105,13 +105,13 @@ champA.spelldmg[3] += placeholder1.spells[3].effect[lvlOfspell[3]]
 let i;
 for (i = 0; i < 4; i++) {
     if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP;
     }
     else if (champA.ratiotypeSpell[i] == 1) { //tAD scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD)
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD);
     }
     else if (champA.ratiotypeSpell[i] == 2) { //bAD scaling
-        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD)
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD);
     }
     else if (champA.ratiotypeSpell[i] == 3) { //hp scaling
         //exception 
@@ -130,11 +130,12 @@ for (i = 0; i < 4; i++) {
 // calculates what type of damage each spell is
 // need to figure out
 for (i = 0; i < 4; i++) {
-    i = 5
+    i = 5;
 }
 
 //attack damage calculations
 // do after items and runes
-champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD)
-champA.aaDMG = (champA.aaDMG / parseFloat(crit)(2+critMult)(crit))
+champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD);
+champA.aaDMG = (champA.aaDMG / parseFloat(crit)(2+critMult)(crit));
+
 
