@@ -13,29 +13,29 @@ jQuery.extend({
        return att_champ;
     },
     getValues: function(url) {
-        var def_champ = null;
+        var placeholder2 = null;
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'JSON',
             async: false,
             success: function(data) {
-                def_champ = data.data;
+                placeholder2 = data.data;
             }
         });
-       return def_champ;
+       return placeholder2;
     }
 });
 
-let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Annie.json', 0);
-let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Alistar.json', 0);
-console.log(def_champ);
+let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json', 0);
+let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json', 0);
+console.log(placeholder2);
 console.log(att_champ);
 
 function calculateDMG(phys, magic, trueDMG, armor, mr) {
     total = 0
-    total += (phys * 100 / (100 + armor))
-    total += (magic * 100 / (100 + mr))
+    total += (phys * 100 / parseFloat((100 + armor)))
+    total += (magic * 100 / parseFloat((100 + mr)))
     total += trueDMG
     return total;
 }
@@ -45,8 +45,8 @@ let champA = {
     level: 1,
     baseAD: 0,
     bonusAD: 0,
-    crit: 0, 
-    critMult: 1, 
+    crit: 0, //crit chance
+    critMult: 0,  //IE = .5
     atkSpeed: 0,
     bonusAP: 0,
     p = 0, //not coded yet 
@@ -71,42 +71,47 @@ let champD = { // abilities and runes
     hpregen: 0
 }
 
+let placeholder1 = atk_champ.Ahri
+let placeholder2 = def_champ.Garen
+
 //attk hero base stats 
 // parameters needed: level
-champA.baseAD = att_champ.Ahri.stats.attackdamage
-champA.baseAD += att_champ.Ahri.stats.attackdamageperlevel
-champA.atkSpeed += att_champ.Ahri.stats.attackspeed
-champA.atkSpeed += att_champ.Ahri.stats.attackspeedperlevel * champA.level
+champA.baseAD = placeholder1.stats.attackdamage
+champA.baseAD += placeholder1.stats.attackdamageperlevel
+champA.atkSpeed += placeholder1.stats.attackspeed
+champA.atkSpeed += placeholder1.stats.attackspeedperlevel * champA.level
 
 
 // def hero
-champD.armor += def_champ.stats.armor
-champD.armor += champD.level * def_champ.stats.armorperlevel
-champD.spellblock += def_champ.stats.spellblock
-champD.spellblock += champD.level * def_champ.stats.spellblockperlevel
-champD.health += def_champ.stats.hp
-champD.health += champD.level * def_champ.stats.hpperlevel
-champD.hpregen += def_champ.stats.hpregen
-champD.hpregen += champD.level * def_champ.stats.hpregenperlevel
+champD.armor += placeholder2.stats.armor
+champD.armor += champD.level * placeholder2.stats.armorperlevel
+champD.spellblock += placeholder2.stats.spellblock
+champD.spellblock += champD.level * placeholder2.stats.spellblockperlevel
+champD.health += placeholder2.stats.hp
+champD.health += champD.level * placeholder2.stats.hpperlevel
+champD.hpregen += placeholder2.stats.hpregen
+champD.hpregen += champD.level * placeholder2.stats.hpregenperlevel
 
 //attk hero damage calculations 
-// necessary parameters lvl of abilities 
-champA.spelldmg[0] += att_champ.Ahri.spells[0].effect[lvlOfspell[0]]
-champA.spelldmg[1] += att_champ.Ahri.spells[1].effect[lvlOfspell[1]]
-champA.spelldmg[2] += att_champ.Ahri.spells[2].effect[lvlOfspell[2]]
-champA.spelldmg[3] += att_champ.Ahri.spells[3].effect[lvlOfspell[3]]
+// necessary parameters: lvl of abilities 
+champA.spelldmg[0] += placeholder1.spells[0].effect[lvlOfspell[0]]
+champA.spelldmg[1] += placeholder1.spells[1].effect[lvlOfspell[1]]
+champA.spelldmg[2] += placeholder1.spells[2].effect[lvlOfspell[2]]
+champA.spelldmg[3] += placeholder1.spells[3].effect[lvlOfspell[3]]
 
 //scaling ability damage 
 // do after items/runes have been calculated
+// need to add champs with multiple scaling damage
+let i;
 for (i = 0; i < 4; i++) {
     if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
-        champA.spelldmg[i] += att_champ.Ahri.spells[i].vars[0].coeff * champA.bonusAP
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP
     }
     else if (champA.ratiotypeSpell[i] == 1) { //tAD scaling
-        champA.spelldmg[i] += att_champ.Ahri.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD)
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD)
     }
     else if (champA.ratiotypeSpell[i] == 2) { //bAD scaling
-        champA.spelldmg[i] += att_champ.Ahri.spells[i].vars[0].coeff * (champA.baseAD)
+        champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD)
     }
     else if (champA.ratiotypeSpell[i] == 3) { //hp scaling
         //exception 
@@ -122,8 +127,14 @@ for (i = 0; i < 4; i++) {
     }
 }
 
+// calculates what type of damage each spell is
+// need to figure out
+for (i = 0; i < 4; i++) {
+    i = 5
+}
+
 //attack damage calculations
 // do after items and runes
 champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD)
-champA.aaDMG *= (1 + champA.crit)
+champA.aaDMG = (champA.aaDMG / parseFloat(crit)(2+critMult)(crit))
 
