@@ -37,6 +37,14 @@ function renderChampLists() {
         $('#champ-input-list-two').change(function() {
             championChange("two");
         });
+
+        $('#champ-level-list-one').change(function() {
+            lvlChange("one");
+        });
+
+        $('#champ-level-list-two').change(function() {
+            lvlChange("two");
+        });
     });
 
 }
@@ -48,6 +56,8 @@ function renderChampLists() {
 $('#calc-button').on('click', function(e) {        
     $("#live-game").remove();
     $("#name-inputbox").remove();
+    levelChange("one");
+    levelChange("two");
     $("#live-game-button").removeAttr('disabled');
     $(this).attr('disabled', "disabled");
     renderChampLists();
@@ -71,6 +81,21 @@ function createChampionList() {
     return temp;
 }
 
+function levelChange(num) {
+    const $stats = $("#champ-stats-" + num);
+    $(`#level-` + num).remove();
+
+    let hold = `
+        <div id="input-level-${num}">
+            <label> Level: </label>
+            <input placeholder="Enter Level" id="champ-level-list-${num}" type="text" list="levels-${num}" />
+            <datalist id="levels-${num}">
+               <option> 2 </option>
+            </datalist>
+        </div>
+    `;
+    $stats.prepend(hold);
+}
 
 /**
  * Gets the champion that was selected
@@ -78,15 +103,27 @@ function createChampionList() {
 function championChange(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
-    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/${x}.png`;
+    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${x}_0.jpg`;
     document.getElementById("champ-name-" + num).innerHTML = x;
-    console.log(champ[x]);
     document.getElementById("HP-" + num).innerHTML = "HP: " + champ[x].stats.hp + "/" + champ[x].stats.hp;
     document.getElementById("MP-" + num).innerHTML = "MP: " + champ[x].stats.mp + "/" + champ[x].stats.mp;
     document.getElementById("AD-" + num).innerHTML = "AD: " + champ[x].stats.attackdamage;
     document.getElementById("MR-" + num).innerHTML = "MR: " + champ[x].stats.spellblock;
     document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
+}
 
+function lvlChange(num) {
+    let x = document.getElementById("champ-input-list-" + num).value;
+    let l = document.getElementById("champ-level-list-" + num).value - 1;
+    console.log(l);
+    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+    console.log(champ);
+
+    document.getElementById("HP-" + num).innerHTML = "HP: " + (champ[x].stats.hp + (champ[x].stats.hpperlevel*l)) + "/" + (champ[x].stats.hp + (champ[x].stats.hpperlevel*l));
+    document.getElementById("MP-" + num).innerHTML = "MP: " + (champ[x].stats.mp + (champ[x].stats.mpperlevel*l)) + "/" + (champ[x].stats.mp + (champ[x].stats.mpperlevel*l));
+    document.getElementById("AD-" + num).innerHTML = "AD: " + (champ[x].stats.attackdamage + (champ[x].stats.attackdamageperlevel*l));
+    document.getElementById("MR-" + num).innerHTML = "MR: " + (champ[x].stats.spellblock + (champ[x].stats.spellblockperlevel*l));
+    document.getElementById("armor-" + num).innerHTML = "Armor: " + (champ[x].stats.armor + (champ[x].stats.armorperlevel*l));
 }
 
 jQuery.extend({
