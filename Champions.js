@@ -78,20 +78,20 @@ console.log(placeholder1.spells[0].vars[0]);
 //attk hero base stats 
 // parameters needed: level
 champA.baseAD = placeholder1.stats.attackdamage;
-champA.baseAD += placeholder1.stats.attackdamageperlevel;
+champA.baseAD += placeholder1.stats.attackdamageperlevel * (champA.level-1);
 champA.atkSpeed += placeholder1.stats.attackspeed;
-champA.atkSpeed += placeholder1.stats.attackspeedperlevel * champA.level;
+champA.atkSpeed += placeholder1.stats.attackspeedperlevel * (champA.level-1);
 
 
 // def hero
 champD.armor += placeholder2.stats.armor;
-champD.armor += champD.level * placeholder2.stats.armorperlevel;
+champD.armor += (champD.level-1) * placeholder2.stats.armorperlevel;
 champD.spellblock += placeholder2.stats.spellblock;
-champD.spellblock += champD.level * placeholder2.stats.spellblockperlevel;
+champD.spellblock += (champD.level-1) * placeholder2.stats.spellblockperlevel;
 champD.health += placeholder2.stats.hp;
-champD.health += champD.level * placeholder2.stats.hpperlevel;
+champD.health += (champD.level-1) * placeholder2.stats.hpperlevel;
 champD.hpregen += placeholder2.stats.hpregen;
-champD.hpregen += champD.level * placeholder2.stats.hpregenperlevel;
+champD.hpregen += (champD.level-1) * placeholder2.stats.hpregenperlevel;
 
 //attk hero damage calculations 
 // necessary parameters: lvl of abilities 
