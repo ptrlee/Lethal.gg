@@ -1,12 +1,14 @@
 const $root = $("#root");
 const $champs = $("#champs");
 
-renderLiveGame();
+renderSummonerSearchbar();
 renderChampionOne();
 renderChampionTwo();
 
-
-function renderLiveGame() {
+/**
+ * Renders the summoner searchbar
+ */
+function renderSummonerSearchbar() {
     let hold = `
         <div id="live-game">
             <input placeholder="Enter Summoner's Name" id="name-inputbox"> </input>
@@ -16,13 +18,15 @@ function renderLiveGame() {
     $root.append(hold);
 }
 
+/**
+ * Renders the first champion
+ */
 function renderChampionOne() {
     let hold = `
     <div class="column">
         Ahri
-    
         <div>
-        <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
+        <img id="image-one" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
         </div>
     </div>
 
@@ -33,23 +37,30 @@ function renderChampionOne() {
     $champs.append(hold);
 }
 
+/**
+ * Renders the second champion
+ */
 function renderChampionTwo() {
     let hold = `
     <div class="column">
         Aatrox
 
         <div>
-        <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Aatrox.png">  </img>
+        <img id="image-two" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Aatrox.png">  </img>
         </div>
     </div>
     `;
     $champs.append(hold);
 }
 
+/**
+ * Handles Live Game button press
+ */
 $('#live-game-button').on('click', function(e) {        
-    $("#calc").remove();
-    $("#champ-input-list").remove();
-    renderLiveGame();
+    $("#champ-lists").remove();
+    $("#calc-button").removeAttr('disabled');
+    $(this).attr('disabled', "disabled");
+    renderSummonerSearchbar();
 
     e.preventDefault();
 });
