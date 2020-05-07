@@ -76,9 +76,17 @@ function createChampionList() {
  * Gets the champion that was selected
  */
 function championChange(num) {
-    let x = document.getElementById("champ-input-list-" + num);
-    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/${x.value}.png`;
-    document.getElementById("champ-name-" + num).innerHTML = x.value;
+    let x = document.getElementById("champ-input-list-" + num).value;
+    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/${x}.png`;
+    document.getElementById("champ-name-" + num).innerHTML = x;
+    console.log(champ[x]);
+    document.getElementById("HP-" + num).innerHTML = "HP: " + champ[x].stats.hp + "/" + champ[x].stats.hp;
+    document.getElementById("MP-" + num).innerHTML = "MP: " + champ[x].stats.mp + "/" + champ[x].stats.mp;
+    document.getElementById("AD-" + num).innerHTML = "AD: " + champ[x].stats.attackdamage;
+    document.getElementById("MR-" + num).innerHTML = "MR: " + champ[x].stats.spellblock;
+    document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
+
 }
 
 jQuery.extend({

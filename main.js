@@ -60,36 +60,37 @@ function renderChampStats(num) {
         <div>
             <img id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/Ahri.png">  </img>
         </div>
-
-        <div id="level-${num}">
-            Level: 1
-        </div>
-
-        <div id="HP-${num}">
-            HP: 1200/1200
-        </div>
-
-        <div id="MP-${num}">
-            MP: 1000/1000
-        </div>
-
-        <div id="damage-${num}">
-            <div id="AD-${num}">
-                AD: 45
+        <div id="champ-stats-${num}">
+            <div id="level-${num}">
+                Level: 1
             </div>
 
-            <div id="AP-${num}">
-                AP: 54
-            </div>
-        </div>
-    
-        <div id="defense-${num}">
-            <div id="MR-${num}">
-                MR: 54
+            <div id="HP-${num}">
+                HP: 1200/1200
             </div>
 
-            <div id="armor-${num}">
-                Armor: 45
+            <div id="MP-${num}">
+                MP: 1000/1000
+            </div>
+
+            <div id="damage-${num}">
+                <div id="AD-${num}">
+                    AD: 45
+                </div>
+
+                <div id="AP-${num}">
+                    AP: 0
+                </div>
+            </div>
+        
+            <div id="defense-${num}">
+                <div id="MR-${num}">
+                    MR: 54
+                </div>
+
+                <div id="armor-${num}">
+                    Armor: 45
+                </div>
             </div>
         </div>
     </div>
