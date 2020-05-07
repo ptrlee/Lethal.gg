@@ -29,7 +29,7 @@ jQuery.extend({
 
 let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json', 0);
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json', 0);
-console.log(placeholder2);
+console.log(def_champ);
 console.log(att_champ);
 
 function calculateDMG(phys, magic, trueDMG, armor, mr) {
