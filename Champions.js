@@ -71,8 +71,9 @@ let champD = { // abilities and runes
     hpregen: 0
 }
 
-let placeholder1 = atk_champ.Ahri;
+let placeholder1 = att_champ.Ahri;
 let placeholder2 = def_champ.Garen;
+console.log(placeholder1.spells[0].vars[0]);
 
 //attk hero base stats 
 // parameters needed: level
@@ -94,10 +95,10 @@ champD.hpregen += champD.level * placeholder2.stats.hpregenperlevel;
 
 //attk hero damage calculations 
 // necessary parameters: lvl of abilities 
-champA.spelldmg[0] += placeholder1.spells[0].effect[lvlOfspell[0]];
-champA.spelldmg[1] += placeholder1.spells[1].effect[lvlOfspell[1]];
-champA.spelldmg[2] += placeholder1.spells[2].effect[lvlOfspell[2]];
-champA.spelldmg[3] += placeholder1.spells[3].effect[lvlOfspell[3]];
+champA.spelldmg[0] += placeholder1.spells[0].effect[champA.lvlOfspell[0]];
+champA.spelldmg[1] += placeholder1.spells[1].effect[champA.lvlOfspell[1]];
+champA.spelldmg[2] += placeholder1.spells[2].effect[champA.lvlOfspell[2]];
+champA.spelldmg[3] += placeholder1.spells[3].effect[champA.lvlOfspell[3]];
 
 //scaling ability damage 
 // do after items/runes have been calculated
