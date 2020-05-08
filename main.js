@@ -1,4 +1,4 @@
-import {getItemsList} from "./calc.js"
+import {getItemsList, getSpells} from "./calc.js"
 const $root = $("#root");
 const $champs = $("#champs");
 
@@ -6,6 +6,8 @@ const $champs = $("#champs");
 renderSummonerSearchbar();
 renderChampionOne();
 renderChampionTwo();
+renderSpells("one");
+renderSpells("two");
 
 /**
  * Renders the summoner searchbar
@@ -57,15 +59,11 @@ $('#live-game-button').on('click', function(e) {
 function renderChampStats(num) {
     let hold = `
     <div class="column">
-        <div id="champ-name-${num}">
-            Ahri
-        </div>
+        <div id="champ-name-${num}">Ahri</div>
 
-        <div>
+        <div id="champ-pictures-${num}">
             <img width=150px length=300px id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ahri_0.jpg">  </img>
         </div>
-
-        ${renderItems(num)}
 
         <div id="champ-stats-${num}">
             <div id="level-${num}">
@@ -143,7 +141,28 @@ function renderItems(num) {
 
         </div>
     `;
-    return hold;;
+    return hold;
+}
+
+function renderSpells(num) {
+    const $champPics = $(`#champ-pictures-${num}`);
+    let x = getSpells(num);
+    console.log(x);
+    
+    let spells = "";
+    for (let i = 0; i < 4; i++) {
+        console.log(x[i].name);
+        spells += `<image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${x[i].id}.png"> </image>`;
+    }
+
+    let hold = ` 
+    <div id="champ-spell-${num}">
+        <span>
+            ${spells}
+        </span>
+    </div>
+    `;
+    $champPics.append(hold);
 }
 
 

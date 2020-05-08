@@ -152,7 +152,11 @@ export function getItemsList() {
     return temp; 
 }
 
-
+export function getSpells(num){
+    let x = document.getElementById("champ-name-" + num).textContent;
+    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+    return champ[x].spells;
+}
 
 
 
