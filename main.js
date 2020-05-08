@@ -1,5 +1,7 @@
+import {getItemsList} from "./calc.js"
 const $root = $("#root");
 const $champs = $("#champs");
+
 
 renderSummonerSearchbar();
 renderChampionOne();
@@ -43,6 +45,8 @@ function renderChampionTwo() {
  */
 $('#live-game-button').on('click', function(e) {        
     $("#champ-lists").remove();
+    $(`#input-level-one`).remove();
+    $(`#input-level-two`).remove();
     $("#calc-button").removeAttr('disabled');
     $(this).attr('disabled', "disabled");
     renderSummonerSearchbar();
@@ -102,13 +106,46 @@ function renderChampStats(num) {
 }
 
 function renderItems(num) {
+
     let hold = `
-        <div id="champ-items-${num}">
-            <input placeholder="1" id="champ-level-list-${num}" type="text" list="levels-${num}" />
+        <div id="champ-items-${num}" height: 206px;>
+            <label> Items: </label>
+
+            <select height: 150px; id="itemf-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
+            <select id="items-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
+            <select id="itemt-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
+            <select id="itemfo-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
+            <select id="itemfi-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
+            <select id="itemsi-champ-${num}">
+                ${getItemsList()}
+                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
+            </select>
+
         </div>
     `;
     return hold;;
 }
+
 
 
 

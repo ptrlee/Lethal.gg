@@ -9,7 +9,7 @@ function renderChampLists() {
     let hold = `
     <div id="champ-lists" class=columns>
         <div id="champ-one" class="column">
-            <input placeholder="First Champ's Name" id="champ-input-list-one" type="text" list="champions-one" />
+            <input value="Ahri" id="champ-input-list-one" type="text" list="champions-one"/>
             <datalist id="champions-one">
                 ${createChampionList()}
             </datalist>    
@@ -19,7 +19,7 @@ function renderChampLists() {
         </div>
 
         <div id="champ-two" class="column">
-            <input placeholder="Second Champ's Name" id="champ-input-list-two" type="text" list="champions-two" />
+            <input value="Ahri" id="champ-input-list-two" type="text" list="champions-two" />
             <datalist id="champions-two">
                 ${createChampionList()}
             </datalist>
@@ -141,6 +141,17 @@ jQuery.extend({
        return att_champ;
     }
 });
+
+export function getItemsList() {
+    let temp = "";
+    let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
+    let items = Object.keys(item);
+    for (let i =0; i < items.length; i++) {
+        temp += `<option value="a" data-image="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${items[i]}.png">${items[i]}</option>`;
+    }
+    return temp; 
+}
+
 
 
 
