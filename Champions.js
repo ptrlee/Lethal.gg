@@ -77,14 +77,14 @@ let growthD = (champD.level-1)*(.7025 + (.0175*(champD.level-1)));
 champA.baseAD = placeholder1.stats.attackdamage;
 champA.baseAD += placeholder1.stats.attackdamageperlevel * growthA;
 champA.atkSpeed += placeholder1.stats.attackspeed;
-champA.bAtkSpeed += placeholder1.stats.attackspeedperlevel * growthA;    
+champA.bAtkSpeed += placeholder1.stats.attackspeedperlevel/parseFloat(100) * growthA;    
 
 
 // def hero
 champD.armor += placeholder2.stats.armor;
 champD.armor += growthD * placeholder2.stats.armorperlevel;
-champD.spellblock += placeholder2.stats.spellblock;
-champD.spellblock += growthD * placeholder2.stats.spellblockperlevel;
+champD.mr += placeholder2.stats.spellblock;
+champD.mr += growthD * placeholder2.stats.spellblockperlevel;
 champD.health += placeholder2.stats.hp;
 champD.health += growthD * placeholder2.stats.hpperlevel;
 champD.hpregen += placeholder2.stats.hpregen;
@@ -113,7 +113,7 @@ for (i = 0; i < 6; i++) {
             champD.armor += itemWanted.FlatArmorMod;
         }       
         if (itemWanted.FlatSpellBlockMod != null) {
-            champD.armor += itemWanted.FlatSpellBlockMod;
+            champD.mr += itemWanted.FlatSpellBlockMod;
         }
     }
 }
@@ -135,7 +135,7 @@ for (i = 0; i < 6; i++) {
             champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
         }
         if (itemWanted.FlatPhysicalDamageMod != null) {
-            champA.baseAD += itemWanted.FlatPhysicalDamageMod;
+            champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
         }
         if (itemWanted.FlatMagicDamageMod != null) {
             champA.bonusAP += itemWanted.FlatMagicDamageMod;
@@ -151,26 +151,19 @@ for (i = 0; i < 6; i++) {
 // need to add champs with multiple scaling damage
 for (i = 0; i < 4; i++) {
     if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
-        try {
+        if (placeholder1.spells[i].vars[0] != null) {
             champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP;
-        }
-        catch (err) {
         }
     }
     else if (champA.ratiotypeSpell[i] == 1) { //tAD scaling
-        try {
+        if (placeholder1.spells[i].vars[0] != null) {
             champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD);
-        }
-        catch (err) {
         }
     }
     else if (champA.ratiotypeSpell[i] == 2) { //bAD scaling
-        try {
+        if (placeholder1.spells[i].vars[0] != null) {
             champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD);
         }
-        catch (err) {
-        }
-
     }
     else if (champA.ratiotypeSpell[i] == 3) { //hp scaling
         //exception 
@@ -194,6 +187,23 @@ for (i = 0; i < 4; i++) {
 
 //attack damage calculations
 // do after items and runes
-champA.aaDMG += (champA.atkSpeed*(1+bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
-champA.aaDMG = (champA.aaDMG / parseFloat(champA.crit))*(2+champA.critMult)*(champA.crit);
+champA.aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
+champA.aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
 
+//type separator damage 
+//physical 0, magic 1, true 2, neither 3
+for (i=0;i<5;i++) {
+    if(champA.typeofSpell[i] == 0) {
+        champA.physical += champA.spelldmg[i];
+    }
+    else if (champA.typeofSpell[i] == 1) {
+        champA.magic += champA.spelldmg[i];
+    }
+    else if (champA.typeofSpell[i] == 2) {
+        champA.true += champA.spelldmg[i];
+    }
+}
+champA.physical += champA.aaDMG;
+
+let total;
+total = calculateDMG(champA.physical, champA.magic, champA.true, champD.armor, champD.mr)
