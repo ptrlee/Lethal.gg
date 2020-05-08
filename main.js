@@ -60,6 +60,9 @@ function renderChampStats(num) {
         <div>
             <img width=150px length=300px id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ahri_0.jpg">  </img>
         </div>
+
+        ${renderItems(num)}
+
         <div id="champ-stats-${num}">
             <div id="level-${num}">
                 Level: 1
@@ -96,6 +99,15 @@ function renderChampStats(num) {
     </div>
     `
     return hold;
+}
+
+function renderItems(num) {
+    let hold = `
+        <div id="champ-items-${num}">
+            <input placeholder="1" id="champ-level-list-${num}" type="text" list="levels-${num}" />
+        </div>
+    `;
+    return hold;;
 }
 
 
