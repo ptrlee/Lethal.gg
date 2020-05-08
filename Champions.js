@@ -1,17 +1,4 @@
 jQuery.extend({
-    getValues: function(url, meow) {
-        var champ = null;
-        $.ajax({
-            url: url,
-            type: 'get',
-            dataType: 'JSON',
-            async: false,
-            success: function(data) {
-                champ = data.data;
-            }
-        });
-       return champ;
-    },
     getValues: function(url) {
         var champ = null;
         $.ajax({
@@ -27,10 +14,8 @@ jQuery.extend({
     }
 });
 
-let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json', 0);
-let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json', 0);
-console.log(def_champ);
-console.log(att_champ);
+let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json');
+let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
 function calculateDMG(phys, magic, trueDMG, armor, mr) {
     total = 0;
@@ -38,6 +23,11 @@ function calculateDMG(phys, magic, trueDMG, armor, mr) {
     total += (magic * 100 / parseFloat((100 + mr)));
     total += trueDMG;
     return total;
+}
+
+function itemSearch(itemIndex) {
+    let itemArray = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json');
+    return itemArray[itemIndex].stats;
 }
 
 let champA = {
@@ -48,6 +38,7 @@ let champA = {
     crit: 0, //crit chance
     critMult: 0,  //IE = .5
     atkSpeed: 0,
+    bAtkSpeed: 0,
     bonusAP: 0,
     p: 0, //not coded yet 
     aaDMG: 0,
@@ -73,25 +64,31 @@ let champD = { // abilities and runes
 
 let placeholder1 = att_champ.Ahri;
 let placeholder2 = def_champ.Garen;
-console.log(placeholder1.spells[0].vars[0]);
+let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
+let itemplaceholder2 = [3029, 3022, 3065, 1000, 1000, 1000]; // 1000 is no item, def champ
+    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer
 
+
+//constant growth parameter
+let growthA = (champA.level-1)*(.7025 + (.0175*(champA.level-1)));
+let growthD = (champD.level-1)*(.7025 + (.0175*(champD.level-1)));
 //attk hero base stats 
 // parameters needed: level
 champA.baseAD = placeholder1.stats.attackdamage;
-champA.baseAD += placeholder1.stats.attackdamageperlevel * (champA.level-1);
+champA.baseAD += placeholder1.stats.attackdamageperlevel * growthA;
 champA.atkSpeed += placeholder1.stats.attackspeed;
-champA.atkSpeed += placeholder1.stats.attackspeedperlevel * (champA.level-1);
+champA.bAtkSpeed += placeholder1.stats.attackspeedperlevel * growthA;    
 
 
 // def hero
 champD.armor += placeholder2.stats.armor;
-champD.armor += (champD.level-1) * placeholder2.stats.armorperlevel;
+champD.armor += growthD * placeholder2.stats.armorperlevel;
 champD.spellblock += placeholder2.stats.spellblock;
-champD.spellblock += (champD.level-1) * placeholder2.stats.spellblockperlevel;
+champD.spellblock += growthD * placeholder2.stats.spellblockperlevel;
 champD.health += placeholder2.stats.hp;
-champD.health += (champD.level-1) * placeholder2.stats.hpperlevel;
+champD.health += growthD * placeholder2.stats.hpperlevel;
 champD.hpregen += placeholder2.stats.hpregen;
-champD.hpregen += (champD.level-1) * placeholder2.stats.hpregenperlevel;
+champD.hpregen += growthD * placeholder2.stats.hpregenperlevel;
 
 //attk hero damage calculations 
 // necessary parameters: lvl of abilities 
@@ -100,10 +97,54 @@ champA.spelldmg[1] += placeholder1.spells[1].effect[champA.lvlOfspell[1]];
 champA.spelldmg[2] += placeholder1.spells[2].effect[champA.lvlOfspell[2]];
 champA.spelldmg[3] += placeholder1.spells[3].effect[champA.lvlOfspell[3]];
 
+//item calculations def champ
+// gargoyle's stoneplate needs exception
+// ninja tabi's
+// shield items like hexdrinker, steraks
+
+/**
+ * let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
+let itemplaceholder2 = [3029, 3022, 3065, 1000, 1000, 1000]; // 1000 is no item, def champ
+    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer
+ */
+
+let i;
+for (i = 0; i < 6; i++) {
+    let itemWanted = itemSearch(itemplaceholder2[i]);
+    if (itemWanted.FlatHPPoolMod != null) {
+        champD.health += itemWanted.FlatHPPoolMod;
+        console.log(itemWanted.FlatHPPoolMod);
+    }
+    if (itemWanted.FlatArmorMod != null) {
+        champD.armor += itemWanted.FlatArmorMod;
+    }       
+    if (itemWanted.FlatSpellBlockMod != null) {
+        champD.armor += itemWanted.FlatSpellBlockMod;
+    }
+}
+
+// att champion item calculations
+// exception bloodrazor, bork, hydra, roa, any active items, armor/ap penetration items, leth items
+// sheen items, rab, ie mod
+for (i = 0; i < 6; i++) {
+    let itemWanted = itemSearch(itemplaceholder1[i]);
+    if (itemWanted.PercentAtkSpeedMod != null) {
+        champA.bAtkSpeed += itemWanted.PercentAtkSpeedMod;
+    }
+    if (itemWanted.FlatPhysicalDamageMod != null) {
+        champA.baseAD += itemWanted.FlatPhysicalDamageMod;
+    }
+    if (itemWanted.FlatMagicDamageMod != null) {
+        champA.bonusAP += itemWanted.FlatMagicDamageMod;
+    }
+    if (itemWanted.FlatCritChanceMod != null) {
+        champA.crit += itemWanted.FlatCritChanceMod;
+    }
+}
+
 //scaling ability damage 
 // do after items/runes have been calculated
 // need to add champs with multiple scaling damage
-let i;
 for (i = 0; i < 4; i++) {
     if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
         try {
@@ -152,15 +193,3 @@ for (i = 0; i < 4; i++) {
 champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD);
 champA.aaDMG = (champA.aaDMG / parseFloat(champA.crit))*(2+champA.critMult)*(champA.crit);
 
-function bubbleSort(n) {
-    let i = 0;
-    for (i = 0; i < length(n); i++) {
-        for (j = 0; j < length(n) - i; j++) {
-            if (n[j] > n[j+1]) {
-                let temp = n[j+1];
-                n[j+1] = n[j];
-                n[j] = temp;
-            }
-        }
-    }
-}
