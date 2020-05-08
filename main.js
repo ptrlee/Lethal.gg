@@ -144,7 +144,8 @@ function renderItems(num) {
     return hold;
 }
 
-function renderSpells(num) {
+export function renderSpells(num) {
+    $(`#champ-spell-${num}`).remove();
     const $champPics = $(`#champ-pictures-${num}`);
     let x = getSpells(num);
     console.log(x);

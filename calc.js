@@ -1,3 +1,4 @@
+import {renderSpells} from "./main.js"
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -32,10 +33,12 @@ function renderChampLists() {
     $(function(ready){
         $('#champ-input-list-one').change(function() {
             championChange("one");
+            renderSpells("one");
         });
 
         $('#champ-input-list-two').change(function() {
             championChange("two");
+            renderSpells("two");
         });
 
         $('#champ-level-list-one').change(function() {
