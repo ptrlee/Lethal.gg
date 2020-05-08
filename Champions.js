@@ -65,8 +65,8 @@ let champD = { // abilities and runes
 let placeholder1 = att_champ.Ahri;
 let placeholder2 = def_champ.Garen;
 let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
-let itemplaceholder2 = [3029, 3022, 3065, 1000, 1000, 1000]; // 1000 is no item, def champ
-    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer
+let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
+    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
 
 
 //constant growth parameter
@@ -102,43 +102,47 @@ champA.spelldmg[3] += placeholder1.spells[3].effect[champA.lvlOfspell[3]];
 // ninja tabi's
 // shield items like hexdrinker, steraks
 
-/**
- * let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
-let itemplaceholder2 = [3029, 3022, 3065, 1000, 1000, 1000]; // 1000 is no item, def champ
-    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer
- */
-
 let i;
 for (i = 0; i < 6; i++) {
-    let itemWanted = itemSearch(itemplaceholder2[i]);
-    if (itemWanted.FlatHPPoolMod != null) {
-        champD.health += itemWanted.FlatHPPoolMod;
-        console.log(itemWanted.FlatHPPoolMod);
-    }
-    if (itemWanted.FlatArmorMod != null) {
-        champD.armor += itemWanted.FlatArmorMod;
-    }       
-    if (itemWanted.FlatSpellBlockMod != null) {
-        champD.armor += itemWanted.FlatSpellBlockMod;
+    if (itemplaceholder2[i] != 1000) {
+        let itemWanted = itemSearch(itemplaceholder2[i]);
+        if (itemWanted.FlatHPPoolMod != null) {
+            champD.health += itemWanted.FlatHPPoolMod;
+        }
+        if (itemWanted.FlatArmorMod != null) {
+            champD.armor += itemWanted.FlatArmorMod;
+        }       
+        if (itemWanted.FlatSpellBlockMod != null) {
+            champD.armor += itemWanted.FlatSpellBlockMod;
+        }
     }
 }
 
 // att champion item calculations
 // exception bloodrazor, bork, hydra, roa, any active items, armor/ap penetration items, leth items
 // sheen items, rab, ie mod
+
+
+/**
+ * let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
+let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
+    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
+ */
 for (i = 0; i < 6; i++) {
-    let itemWanted = itemSearch(itemplaceholder1[i]);
-    if (itemWanted.PercentAtkSpeedMod != null) {
-        champA.bAtkSpeed += itemWanted.PercentAtkSpeedMod;
-    }
-    if (itemWanted.FlatPhysicalDamageMod != null) {
-        champA.baseAD += itemWanted.FlatPhysicalDamageMod;
-    }
-    if (itemWanted.FlatMagicDamageMod != null) {
-        champA.bonusAP += itemWanted.FlatMagicDamageMod;
-    }
-    if (itemWanted.FlatCritChanceMod != null) {
-        champA.crit += itemWanted.FlatCritChanceMod;
+    if (itemplaceholder1[i] != 1000) {
+        let itemWanted = itemSearch(itemplaceholder1[i]);
+        if (itemWanted.PercentAttackSpeedMod != null) {
+            champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+        }
+        if (itemWanted.FlatPhysicalDamageMod != null) {
+            champA.baseAD += itemWanted.FlatPhysicalDamageMod;
+        }
+        if (itemWanted.FlatMagicDamageMod != null) {
+            champA.bonusAP += itemWanted.FlatMagicDamageMod;
+        }
+        if (itemWanted.FlatCritChanceMod != null) {
+            champA.crit += itemWanted.FlatCritChanceMod;
+        }
     }
 }
 
@@ -190,6 +194,6 @@ for (i = 0; i < 4; i++) {
 
 //attack damage calculations
 // do after items and runes
-champA.aaDMG += champA.atkSpeed * (champA.baseAD + champA.bonusAD);
+champA.aaDMG += (champA.atkSpeed*(1+bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
 champA.aaDMG = (champA.aaDMG / parseFloat(champA.crit))*(2+champA.critMult)*(champA.crit);
 
