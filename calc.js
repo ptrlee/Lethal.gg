@@ -1,4 +1,3 @@
-import {renderSpells} from "./main.js"
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -33,12 +32,12 @@ function renderChampLists() {
     $(function(ready){
         $('#champ-input-list-one').change(function() {
             championChange("one");
-            renderSpells("one");
+            getAbilities("one");
         });
 
         $('#champ-input-list-two').change(function() {
             championChange("two");
-            renderSpells("two");
+            getAbilities("two");
         });
 
         $('#champ-level-list-one').change(function() {
@@ -155,10 +154,32 @@ export function getItemsList() {
     return temp; 
 }
 
-export function getSpells(num){
+/**
+ * Renders the spells of the champs  
+ */
+export function getAbilities(num){
+    $(`#champ-spell-${num}`).remove();
     let x = document.getElementById("champ-name-" + num).textContent;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
-    return champ[x].spells;
+    console.log(champ[x].passive.image.full);
+   
+    const $champPics = $(`#champ-pictures-${num}`);
+    let y = champ[x].spells;
+    
+    let spells = "";
+    for (let i = 0; i < 4; i++) {
+        spells += `<image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
+    }
+
+    let hold = ` 
+    <div id="champ-spell-${num}">
+        <span>
+        <image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
+            ${spells}
+        </span>
+    </div>
+    `;
+    $champPics.append(hold);
 }
 
 

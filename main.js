@@ -1,4 +1,4 @@
-import {getItemsList, getSpells} from "./calc.js"
+import {getItemsList, getAbilities} from "./calc.js"
 const $root = $("#root");
 const $champs = $("#champs");
 
@@ -6,8 +6,8 @@ const $champs = $("#champs");
 renderSummonerSearchbar();
 renderChampionOne();
 renderChampionTwo();
-renderSpells("one");
-renderSpells("two");
+getAbilities("one");
+getAbilities("two");
 
 /**
  * Renders the summoner searchbar
@@ -143,29 +143,6 @@ function renderItems(num) {
     `;
     return hold;
 }
-
-export function renderSpells(num) {
-    $(`#champ-spell-${num}`).remove();
-    const $champPics = $(`#champ-pictures-${num}`);
-    let x = getSpells(num);
-    console.log(x);
-    
-    let spells = "";
-    for (let i = 0; i < 4; i++) {
-        console.log(x[i].name);
-        spells += `<image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${x[i].id}.png"> </image>`;
-    }
-
-    let hold = ` 
-    <div id="champ-spell-${num}">
-        <span>
-            ${spells}
-        </span>
-    </div>
-    `;
-    $champPics.append(hold);
-}
-
 
 
 
