@@ -1,6 +1,7 @@
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
+let itemIds = [];
 
 /**
  * Renders the two champion lists
@@ -63,6 +64,8 @@ $('#calc-button').on('click', function(e) {
     $("#live-game-button").removeAttr('disabled');
     $(this).attr('disabled', "disabled");
     renderChampLists();
+    renderItemChoices("one");
+    renderItemChoices("two");
 
     e.preventDefault();
 });
@@ -144,15 +147,25 @@ jQuery.extend({
     }
 });
 
-export function getItemsList() {
+export function getItemsList(num) {
+    const $champPics = $(`#champ-pictures-${num}`);
     let temp = "";
     let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
     let items = Object.keys(item);
+
     for (let i =0; i < items.length; i++) {
-        temp += `<option value="a" data-image="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${items[i]}.png">${items[i]}</option>`;
+        temp += `<option>${item[items[i]].name}</option>`;
     }
-    return temp; 
+
+    let itemInput = `
+    <input id="item-input-list-${num}" type="text" list="items-${num}"/>
+        <datalist id="items-${num}">
+            ${temp}
+        </datalist> 
+    `;
+    $champPics.append(itemInput);
 }
+
 
 /**
  * Renders the spells of the champs  
@@ -161,7 +174,6 @@ export function getAbilities(num){
     $(`#champ-spell-${num}`).remove();
     let x = document.getElementById("champ-name-" + num).textContent;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
-    console.log(champ[x].passive.image.full);
    
     const $champPics = $(`#champ-pictures-${num}`);
     let y = champ[x].spells;
@@ -170,7 +182,6 @@ export function getAbilities(num){
     for (let i = 0; i < 4; i++) {
         spells += `<image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
     }
-
     let hold = ` 
     <div id="champ-spell-${num}">
         <span>
@@ -181,6 +192,30 @@ export function getAbilities(num){
     `;
     $champPics.append(hold);
 }
+
+
+function renderItemChoices(num){
+    const $champPics = $(`#champ-pictures-${num}`);
+    let hold = `
+    <div id="items">
+        <button id="add-item-button-${num}"> Add Item </button>
+    </div>
+    `;
+    $champPics.append(hold);
+
+
+
+    /**
+     * Handles Damage Calculator button press
+     */
+    $(`#add-item-button-${num}`).on('click', function(e) {        
+        $(`#add-item-button-${num}`).remove();
+        getItemsList(num);
+        e.preventDefault();
+    });
+}
+
+
 
 
 
