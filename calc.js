@@ -147,26 +147,6 @@ jQuery.extend({
     }
 });
 
-export function getItemsList(num) {
-    const $champPics = $(`#champ-pictures-${num}`);
-    let temp = "";
-    let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
-    let items = Object.keys(item);
-
-    for (let i =0; i < items.length; i++) {
-        temp += `<option>${item[items[i]].name}</option>`;
-    }
-
-    let itemInput = `
-    <input id="item-input-list-${num}" type="text" list="items-${num}"/>
-        <datalist id="items-${num}">
-            ${temp}
-        </datalist> 
-    `;
-    $champPics.append(itemInput);
-}
-
-
 /**
  * Renders the spells of the champs  
  */
@@ -192,6 +172,55 @@ export function getAbilities(num){
     `;
     $champPics.append(hold);
 }
+
+
+export function getItemsList(num) {
+    const $champPics = $(`#champ-pictures-${num}`);
+    let temp = "";
+    let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
+    let items = Object.keys(item);
+    for (let i =0; i < items.length; i++) {
+        
+        temp += `<option>${item[items[i]].name}</option>`;
+    }
+
+    let itemInput = `
+    <input id="item-input-list-${num}" type="text" list="items-${num}"/>
+        <datalist id="items-${num}">
+            ${temp}
+        </datalist> 
+    `;
+    $champPics.append(itemInput);
+
+
+    $(function(ready){
+        $(`#item-input-list-${num}`).change(function() {
+            let selectedItem = document.getElementById("item-input-list-" + num).value;
+            makeItemImages(selectedItem, item, items, num);
+            $(`#item-input-list-${num}`).remove();
+            renderItemChoices(num);
+        });
+    });
+}
+
+function makeItemImages(item, array1, array2, num) {
+    const $champPics = $(`#champ-pictures-${num}`);
+    let id;
+    let img;
+    for (let i = 0; i < array2.length; i++) {
+        if (array1[array2[i]].name === item) {
+            id = array2[i];
+        }
+    }
+    itemIds.push(id);
+    for (let i = 0; i < itemIds.length; i++) {
+        img += `
+            <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIds[i]}.png">
+        `;
+    }
+    $champPics.append(img);
+}
+
 
 
 function renderItemChoices(num){
