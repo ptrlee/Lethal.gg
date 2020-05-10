@@ -1,7 +1,7 @@
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
-let itemIds = [];
+let itemIds=[];
 
 /**
  * Renders the two champion lists
@@ -204,9 +204,10 @@ export function getItemsList(num) {
 }
 
 function makeItemImages(item, array1, array2, num) {
+    $(".pic").remove();
     const $champPics = $(`#champ-pictures-${num}`);
     let id;
-    let img;
+    let img="";
     for (let i = 0; i < array2.length; i++) {
         if (array1[array2[i]].name === item) {
             id = array2[i];
@@ -215,9 +216,10 @@ function makeItemImages(item, array1, array2, num) {
     itemIds.push(id);
     for (let i = 0; i < itemIds.length; i++) {
         img += `
-            <img src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIds[i]}.png">
+            <img class="pic" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIds[i]}.png">
         `;
     }
+    console.log(itemIds);
     $champPics.append(img);
 }
 
