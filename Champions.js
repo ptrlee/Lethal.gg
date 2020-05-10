@@ -14,7 +14,13 @@ jQuery.extend({
     }
 });
 
-let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Ahri.json');
+/** 
+let x = document.getElementById("champ-name-one").innerHTML;
+let att_champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
+*/ 
+let y = 'Ahri'; //kaisa needs general fix
+let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
 /**
@@ -39,27 +45,44 @@ function parseTooltip(tooltip) {
     let abilityIndex = 0;
     for (let i = 0; i < tooltip.length; i++) { 
         if (tooltip.charAt(i) == '<') {
+
+            //fail if <sc appears <scaleAP or <scaleAD
+            //fail if <p appears <physicalDamage>
+            //pass if sp appears
+            //right now sp fails
+            if ((tooltip.charAt(i+1) != 's'
+                && tooltip.charAt(i+2) != 'c')
+                && tooltip.charAt(i+1) != 'p' 
+                || tooltip.charAt(i+1) == 's' 
+                && tooltip.charAt(i+2) == 'p') {
+                i++;
+                continue;
+            }
+
             let j = i; //index of 'd'
 
-            for (j; j < tooltip.length; j++) {
-                if (tooltip.charAt(j) == 'd' //finds potential 'damage' candidate
+            //finds potential 'damage' candidate
+            for (j; j < tooltip.length-5; j++) {
+                if (tooltip.charAt(j) == 'd' 
                 && tooltip.charAt(j-1) == ' ' //can't be part of a variable
                 && tooltip.charAt(j+5) == 'e') {  //checks if 'd' string ends with 'e'
                     break;
                 }
             }
 
-            if (tooltip.charAt(j+5) != 'e') {
+            if (tooltip.charAt(j+5) != 'e') { //breaks loop if 'd...e' string not found
                 break;
             }
 
             if (tooltip.charAt(i-2) == '}') { //{{var}} checker 
                 for (i; i > 0; i--) {
-                    if (tooltip.charAt(i) == '{') 
+                    if (tooltip.charAt(i) == '{') {
+                        i--;
                         break;
+                    }
                 }
             }
-            value[abilityIndex] = tooltip.substring(i-1, j+6)
+            value[abilityIndex] = tooltip.substring(i, j+6)
             abilityIndex++;
             i = j+6;
         }
@@ -111,12 +134,12 @@ let champD = { // abilities and runes
  * placeholders for input champions, items and (later runes)
  * need to reroute to calc.js 
  */
-let placeholder1 = att_champ.Ahri;
+let placeholder1 = att_champ[y];
 let placeholder2 = def_champ.Garen;
 let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
 let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
     //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
-let pstring = placeholder2.spells[0].tooltip;
+let pstring = placeholder1.spells[0].tooltip;
 console.log(parseTooltip(pstring));
 
 
