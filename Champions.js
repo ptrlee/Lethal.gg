@@ -37,7 +37,7 @@ function calculateDMG(damage, reduction, flatPen, percentPen) {
 function parseTooltip(tooltip) {
     let value = [""]
     let abilityIndex = 0;
-    for (i = 0; i < tooltip.length; i++) {
+    for (let i = 0; i < tooltip.length; i++) {
         if (tooltip.charAt(i) == '<') {
             let j = i; //start of substring
             loop:
