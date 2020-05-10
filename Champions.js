@@ -37,33 +37,35 @@ function calculateDMG(damage, reduction, flatPen, percentPen) {
 function parseTooltip(tooltip) {
     let value = [""]
     let abilityIndex = 0;
-    for (let i = 0; i < tooltip.length; i++) {
+    for (let i = 0; i < tooltip.length; i++) { 
         if (tooltip.charAt(i) == '<') {
-            let j = i; //start of substring
-            loop:
-            for (i; i < tooltip.length; i++) {
-                if (tooltip.charAt(i) == '>') {
-                    let k = 0;
-                    for (i; i < tooltip.length; i++) {
-                        if (tooltip.charAt(i) == 'd') {
-                            if (tooltip.charAt(i+5) == 'e') {
-                                for (j;j>0;j--) {
-                                    if (tooltip.charAt(j) == '{') {
-                                        break;
-                                    }
-                                }
-                                value[abilityIndex] = tooltip.substring(j-1, i+6);
-                                abilityIndex++;
-                                i = i+6;
-                                break loop;
-                            }
-                        }
-                    }
+            let j = i; //index of 'd'
+
+            for (j; j < tooltip.length; j++) {
+                if (tooltip.charAt(j) == 'd' //finds potential 'damage' candidate
+                && tooltip.charAt(j-1) == ' ' //can't be part of a variable
+                && tooltip.charAt(j+5) == 'e') {  //checks if 'd' string ends with 'e'
+                    break;
                 }
             }
-        }   
+
+            if (tooltip.charAt(j+5) != 'e') {
+                break;
+            }
+
+            if (tooltip.charAt(i-2) == '}') { //{{var}} checker 
+                for (i; i > 0; i--) {
+                    if (tooltip.charAt(i) == '{') 
+                        break;
+                }
+            }
+            value[abilityIndex] = tooltip.substring(i-1, j+6)
+            abilityIndex++;
+            i = j+6;
+        }
     }
     return value;
+    
 }
 
 
@@ -114,7 +116,8 @@ let placeholder2 = def_champ.Garen;
 let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
 let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
     //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
-let pstring = placeholder1.spells[0].tooltip;
+let pstring = placeholder2.spells[0].tooltip;
+console.log(parseTooltip(pstring));
 
 
 /**
@@ -181,6 +184,7 @@ for (i = 0; i < 6; i++) {
 // let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
 //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
 
+
 for (i = 0; i < 6; i++) {
     if (itemplaceholder1[i] != 1000) {
         let itemWanted = itemSearch(itemplaceholder1[i]);
@@ -207,8 +211,26 @@ for (i = 0; i < 6; i++) {
  * calculates scaling/base damage @param level, @param allstats
  */
 
-console.log(parseTooltip(pstring));
+/** 
+ for (i = 0; i < 4; i++) { //iterates for every spell
+    let bigString = parseTooltip(placeholder1.spells[i].tooltip)
 
+    for (let j = 0; j < bigString.length; j++) { //iterates for every damage calculation
+        */
+        /**
+         * looks for '<' to find the base damage, general case {{e1}}
+         */
+/*
+         let k = 0;
+         let cont = true;
+         while (cont) {
+            break;
+         }
+         break;
+    }
+    break;
+ }
+ */
 
 //attk hero damage calculations 
 // necessary parameters: lvl of abilities 
