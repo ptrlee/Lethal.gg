@@ -149,7 +149,7 @@ jQuery.extend({
 });
 
 /**
- * Renders the spells of the champs  
+ * Renders the abilities of the champs  
  */
 export function getAbilities(num){
     $(`#champ-spell-${num}`).remove();
@@ -174,7 +174,9 @@ export function getAbilities(num){
     $champPics.append(hold);
 }
 
-
+/**
+ * Render the item input box 
+ */
 export function getItemsList(num) {
     const $champPics = $(`#champ-pictures-${num}`);
     let temp = "";
@@ -204,6 +206,9 @@ export function getItemsList(num) {
     });
 }
 
+/**
+ * Render the image of the items onscreen
+ */
 function makeItemImages(item, array1, array2, num) {
     $(`.pic-${num}`).remove();
     const $champPics = $(`#champ-pictures-${num}`);
@@ -220,26 +225,37 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsOne.push(id);
         for (let i = 0; i < itemIdsOne.length; i++) {
             imgOne += `
-                <img class="pic-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+                <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
         }
         $champPics.append(imgOne);
+        
+        removeImage("one", itemIdsOne);
     } else if (num === "two") {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
             imgTwo += `
-                <img class="pic-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
+                <img class="pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
             `;
         }
         $champPics.append(imgTwo);
+
+        removeImage("two", itemIdsTwo);
     }
 
-    //console.log(itemIds);
-    
 }
 
+function removeImage(num, array) {
+    for (let i = 0; i < array.length; i++) {
+        $(`#champ-${num}-${i}`).on('click', function(e) {   
+            $(`#champ-${num}-${i}`).remove();     
+            array.splice(i, 1);
+            e.preventDefault();
+        });
+    }
+}
 
-
+//Render the Add Items button
 function renderItemChoices(num){
     const $champPics = $(`#champ-pictures-${num}`);
     let hold = `
@@ -261,8 +277,14 @@ function renderItemChoices(num){
     });
 }
 
-export function getItemIds(){
-    return itemIds;
+//Gets the first champion's items
+export function getChampOneItems(){
+    return itemIdsOne;
+}
+
+//Gets the second champion's items
+export function getChampionTwoItems(){
+    return itemIdsTwo;
 }
 
 

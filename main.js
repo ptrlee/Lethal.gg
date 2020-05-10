@@ -103,46 +103,5 @@ function renderChampStats(num) {
     return hold;
 }
 
-function renderItems(num) {
-
-    let hold = `
-        <div id="champ-items-${num}" height: 206px;>
-            <label> Items: </label>
-
-            <select height: 150px; id="itemf-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-            <select id="items-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-            <select id="itemt-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-            <select id="itemfo-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-            <select id="itemfi-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-            <select id="itemsi-champ-${num}">
-                ${getItemsList()}
-                <option selected="selected" title="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png">Boots of Speed</option>
-            </select>
-
-        </div>
-    `;
-    return hold;
-}
-
 
 
