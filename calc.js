@@ -1,7 +1,8 @@
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
-let itemIds=[];
+let itemIdsOne=[];
+let itemIdsTwo=[]
 
 /**
  * Renders the two champion lists
@@ -204,23 +205,37 @@ export function getItemsList(num) {
 }
 
 function makeItemImages(item, array1, array2, num) {
-    $(".pic").remove();
+    $(`.pic-${num}`).remove();
     const $champPics = $(`#champ-pictures-${num}`);
     let id;
-    let img="";
+    let imgOne="";
+    let imgTwo="";
     for (let i = 0; i < array2.length; i++) {
         if (array1[array2[i]].name === item) {
             id = array2[i];
         }
     }
-    itemIds.push(id);
-    for (let i = 0; i < itemIds.length; i++) {
-        img += `
-            <img class="pic" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIds[i]}.png">
-        `;
+
+    if (num === "one") {
+        itemIdsOne.push(id);
+        for (let i = 0; i < itemIdsOne.length; i++) {
+            imgOne += `
+                <img class="pic-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+            `;
+        }
+        $champPics.append(imgOne);
+    } else if (num === "two") {
+        itemIdsTwo.push(id);
+        for (let i = 0; i < itemIdsTwo.length; i++) {
+            imgTwo += `
+                <img class="pic-${num}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
+            `;
+        }
+        $champPics.append(imgTwo);
     }
-    console.log(itemIds);
-    $champPics.append(img);
+
+    //console.log(itemIds);
+    
 }
 
 
@@ -228,7 +243,7 @@ function makeItemImages(item, array1, array2, num) {
 function renderItemChoices(num){
     const $champPics = $(`#champ-pictures-${num}`);
     let hold = `
-    <div id="items">
+    <div id="champ-items-${num}">
         <button id="add-item-button-${num}"> Add Item </button>
     </div>
     `;
@@ -244,6 +259,10 @@ function renderItemChoices(num){
         getItemsList(num);
         e.preventDefault();
     });
+}
+
+export function getItemIds(){
+    return itemIds;
 }
 
 
