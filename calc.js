@@ -224,32 +224,39 @@ function makeItemImages(item, array1, array2, num) {
     if (num === "one") {
         itemIdsOne.push(id);
         for (let i = 0; i < itemIdsOne.length; i++) {
-            imgOne += `
+            imgOne = `
                 <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
-        }
-        $champPics.append(imgOne);
-        
+            $champPics.append(imgOne);
         removeImage("one", itemIdsOne);
+        }
+        
+
     } else if (num === "two") {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
-            imgTwo += `
+            imgTwo = `
                 <img class="pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
             `;
+            $champPics.append(imgTwo);
+            removeImage("two", itemIdsTwo);
         }
-        $champPics.append(imgTwo);
-
-        removeImage("two", itemIdsTwo);
+        
+        
     }
 
 }
 
+/**
+ * Removes the images of the items by clicking on them
+ */
 function removeImage(num, array) {
     for (let i = 0; i < array.length; i++) {
         $(`#champ-${num}-${i}`).on('click', function(e) {   
             $(`#champ-${num}-${i}`).remove();     
             array.splice(i, 1);
+            console.log(i);
+            console.log(array);
             e.preventDefault();
         });
     }

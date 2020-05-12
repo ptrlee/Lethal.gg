@@ -42,6 +42,7 @@ function parseTooltip(tooltip) {
             let j = i; //index of 'd'
 
             for (j; j < tooltip.length; j++) {
+                //console.log(tooltip.charAt(j) )
                 if (tooltip.charAt(j) == 'd' //finds potential 'damage' candidate
                 && tooltip.charAt(j-1) == ' ' //can't be part of a variable
                 && tooltip.charAt(j+5) == 'e') {  //checks if 'd' string ends with 'e'
@@ -64,6 +65,7 @@ function parseTooltip(tooltip) {
             i = j+6;
         }
     }
+    //console.log(value);
     return value;
     
 }
