@@ -24,12 +24,47 @@ let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
 export function easyCheck() {
+    let type = false; // If false == physical true == magical 
     let x = document.getElementById("champ-name-one").innerHTML;
+    let y = document.getElementById("champ-name-two").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
-    let placeholder1 = att_champ[x];
+    let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
+    let attack = att_champ[x];
+    let defend = def_champ[y];
+
+    let attackSpells = attack.spells;
+    console.log(defend);
     let pstring = placeholder1.spells[0].tooltip;
-    console.log(pstring);
-    console.log(parseTooltip(pstring));
+    //console.log(attackSpells[0]);
+
+    for (let i = 0; i < attackSpells.length; i++) {
+        type = false;
+        let level = 1;
+        let spell = attackSpells[i];
+        console.log(spell);
+        let spellEffect = spell.effect[1];
+        let spellVar = attackSpells[i].vars;
+        console.log(spellVar);
+        let shorten = parseTooltip(placeholder1.spells[i].tooltip).toString().split(" ");
+
+        for (let j = 0; j < shorten.length; j++) {
+            if (shorten[j] === "magic" || shorten[j] === "magical") {
+                type = true;
+                break;
+            }
+        }
+
+        if (type) {
+            let damage = spellEffect[level-1]*spellVar[0].coeff;
+            let dmg = calculateDMG(damage,defend.stats.spellblock,10,10);
+            console.log(spell + dmg);
+        }
+ 
+    }
+    
+    //console.log(baseSpellDamage1);
+    //console.log(defend);
+    //console.log(shorten);
 }
 
 /**
@@ -39,9 +74,10 @@ export function easyCheck() {
  */
 function calculateDMG(damage, reduction, flatPen, percentPen) {
     total = 0;
-    reduc *= (1-percentPen);
-    reduc -= flatPen;
+    reduction *= (1-percentPen);
+    reduction -= flatPen;
     total += (damage * 100 / parseFloat((100 + reduction)));
+    console.log(reduction);
     return total;
 }
 
@@ -100,7 +136,6 @@ function parseTooltip(tooltip) {
     return value;
     
 }
-
 
 function itemSearch(itemIndex) {
     let itemArray = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json');

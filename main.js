@@ -50,6 +50,8 @@ $('#live-game-button').on('click', function(e) {
     $("#champ-lists").remove();
     $(`#input-level-one`).remove();
     $(`#input-level-two`).remove();
+    $(`#add-item-button-one`).remove();
+    $(`#add-item-button-two`).remove();
     $("#calc-button").removeAttr('disabled');
     $(this).attr('disabled', "disabled");
     renderSummonerSearchbar();
