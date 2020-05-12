@@ -33,20 +33,19 @@ export function easyCheck() {
     let defend = def_champ[y];
 
     let attackSpells = attack.spells;
-    console.log(defend);
+    //console.log(defend);
     let pstring = placeholder1.spells[0].tooltip;
     //console.log(attackSpells[0]);
 
     for (let i = 0; i < attackSpells.length; i++) {
         type = false;
-        let level = 1;
+        let level = 1; //level of spell
         let spell = attackSpells[i];
-        console.log(spell);
         let spellEffect = spell.effect[1];
         let spellVar = attackSpells[i].vars;
-        console.log(spellVar);
+        //console.log(spellVar);
         let shorten = parseTooltip(placeholder1.spells[i].tooltip).toString().split(" ");
-
+        console.log(parseTooltip(placeholder1.spells[i].tooltip));
         for (let j = 0; j < shorten.length; j++) {
             if (shorten[j] === "magic" || shorten[j] === "magical") {
                 type = true;
@@ -56,8 +55,8 @@ export function easyCheck() {
 
         if (type) {
             let damage = spellEffect[level-1]*spellVar[0].coeff;
-            let dmg = calculateDMG(damage,defend.stats.spellblock,10,10);
-            console.log(spell + dmg);
+            let dmg = calculateDMG(damage,defend.stats.spellblock,0,0);
+            //console.log(spell + dmg);
         }
  
     }
@@ -228,18 +227,16 @@ champD.hpregen += growthD * placeholder2.stats.hpregenperlevel;
 */
 
 let i;
-for (i = 0; i < 6; i++) {
-    if (itemplaceholder2[i] != 1000) {
-        let itemWanted = itemSearch(itemplaceholder2[i]);
-        if (itemWanted.FlatHPPoolMod != null) {
-            champD.health += itemWanted.FlatHPPoolMod;
-        }
-        if (itemWanted.FlatArmorMod != null) {
-            champD.armor += itemWanted.FlatArmorMod;
-        }       
-        if (itemWanted.FlatSpellBlockMod != null) {
-            champD.mr += itemWanted.FlatSpellBlockMod;
-        }
+for (i = 0; i < itemplaceholder2.length; i++) {
+    let itemWanted = itemSearch(itemplaceholder2[i]);
+    if (itemWanted.FlatHPPoolMod != null) {
+        champD.health += itemWanted.FlatHPPoolMod;
+    }
+    if (itemWanted.FlatArmorMod != null) {
+        champD.armor += itemWanted.FlatArmorMod;
+    }       
+    if (itemWanted.FlatSpellBlockMod != null) {
+        champD.mr += itemWanted.FlatSpellBlockMod;
     }
 }
 
@@ -253,21 +250,19 @@ for (i = 0; i < 6; i++) {
 //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
 
 
-for (i = 0; i < 6; i++) {
-    if (itemplaceholder1[i] != 1000) {
-        let itemWanted = itemSearch(itemplaceholder1[i]);
-        if (itemWanted.PercentAttackSpeedMod != null) {
-            champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
-        }
-        if (itemWanted.FlatPhysicalDamageMod != null) {
-            champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
-        }
-        if (itemWanted.FlatMagicDamageMod != null) {
-            champA.bonusAP += itemWanted.FlatMagicDamageMod;
-        }
-        if (itemWanted.FlatCritChanceMod != null) {
-            champA.crit += itemWanted.FlatCritChanceMod;
-        }
+for (i = 0; i < itemplaceholder1.length; i++) {
+    let itemWanted = itemSearch(itemplaceholder1[i]);
+    if (itemWanted.PercentAttackSpeedMod != null) {
+        champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+    }
+    if (itemWanted.FlatPhysicalDamageMod != null) {
+        champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
+    }
+    if (itemWanted.FlatMagicDamageMod != null) {
+        champA.bonusAP += itemWanted.FlatMagicDamageMod;
+    }
+    if (itemWanted.FlatCritChanceMod != null) {
+        champA.crit += itemWanted.FlatCritChanceMod;
     }
 }
 
