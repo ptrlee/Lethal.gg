@@ -9,6 +9,7 @@ renderChampionTwo();
 getAbilities("one");
 getAbilities("two");
 
+
 /**
  * Renders the summoner searchbar
  */

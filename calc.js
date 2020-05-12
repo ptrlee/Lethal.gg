@@ -1,3 +1,4 @@
+import { easyCheck } from "./Champions.js"
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -35,11 +36,13 @@ function renderChampLists() {
         $('#champ-input-list-one').change(function() {
             championChange("one");
             getAbilities("one");
+            easyCheck();
         });
 
         $('#champ-input-list-two').change(function() {
             championChange("two");
             getAbilities("two");
+            easyCheck();
         });
 
         $('#champ-level-list-one').change(function() {
@@ -228,7 +231,7 @@ function makeItemImages(item, array1, array2, num) {
                 <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
             $champPics.append(imgOne);
-        removeImage("one", itemIdsOne);
+            removeImage("one", itemIdsOne);
         }
         
 
@@ -255,8 +258,6 @@ function removeImage(num, array) {
         $(`#champ-${num}-${i}`).on('click', function(e) {   
             $(`#champ-${num}-${i}`).remove();     
             array.splice(i, 1);
-            console.log(i);
-            console.log(array);
             e.preventDefault();
         });
     }

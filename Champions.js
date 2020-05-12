@@ -23,6 +23,14 @@ let y = 'Ahri'; //kaisa needs general fix
 let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
+export function easyCheck() {
+    let x = document.getElementById("champ-name-one").innerHTML;
+    let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
+    let placeholder1 = att_champ[x];
+    let pstring = placeholder1.spells[0].tooltip;
+    console.log(parseTooltip(pstring));
+}
+
 /**
  * calculates damage done based on reduction
  * @param all self-explanatory
@@ -141,7 +149,7 @@ let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item,
 let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
     //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
 let pstring = placeholder1.spells[0].tooltip;
-console.log(parseTooltip(pstring));
+//console.log(parseTooltip(pstring));
 
 
 /**
