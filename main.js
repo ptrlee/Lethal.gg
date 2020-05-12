@@ -28,7 +28,7 @@ function renderSummonerSearchbar() {
 function renderChampionOne() {
     let hold = `
     ${renderChampStats("one")}
-    <div class=column>
+    <div id='dumbocss5123' class="column">
     VS
     </div>
     `;

@@ -18,8 +18,9 @@ function renderChampLists() {
             </datalist>    
         </div>
 
-        <div class="column">
+        <div id="middle-ofchamps" class="column">
         </div>
+        
 
         <div id="champ-two" class="column">
             <input value="Ahri" id="champ-input-list-two" type="text" list="champions-two" />
@@ -37,6 +38,7 @@ function renderChampLists() {
             championChange("one");
             getAbilities("one");
             easyCheck();
+            VSColumn();
         });
 
         $('#champ-input-list-one').on("click", function() {
@@ -181,6 +183,31 @@ export function getAbilities(num){
     `;
     $champPics.append(hold);
 }
+
+function VSColumn() {
+    $(`champ-spell-middle`).remove();
+    let x = document.getElementById("champ-name-one").textContent;
+    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+   
+    let y = champ[x].spells;
+    
+    let spells = ["","","",""];
+    for (let i = 0; i < 4; i++) {
+        spells[i] += `<image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
+    }
+    let hold = `
+        <div>
+            <image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>\
+            <div>${spells[0]}</div>
+            <div>${spells[1]}</div>
+            <div>${spells[2]}</div>
+            <div>${spells[3]}</div>
+        </div>
+    `;
+
+    $("#dumbocss5123").append(hold)
+}
+
 
 /**
  * Render the item input box 
