@@ -28,6 +28,7 @@ export function easyCheck() {
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
     let placeholder1 = att_champ[x];
     let pstring = placeholder1.spells[0].tooltip;
+    console.log(pstring);
     console.log(parseTooltip(pstring));
 }
 
