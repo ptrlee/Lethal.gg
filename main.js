@@ -1,4 +1,4 @@
-import {getItemsList, getAbilities} from "./calc.js"
+import {getAbilities} from "./calc.js"
 const $root = $("#root");
 const $champs = $("#champs");
 

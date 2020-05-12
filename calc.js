@@ -39,6 +39,14 @@ function renderChampLists() {
             easyCheck();
         });
 
+        $('#champ-input-list-one').on("click", function() {
+            this.value="";
+        });
+
+        $('#champ-input-list-two').on("click", function() {
+            this.value="";
+        });
+
         $('#champ-input-list-two').change(function() {
             championChange("two");
             getAbilities("two");
@@ -97,10 +105,7 @@ function levelChange(num) {
     let hold = `
         <div id="input-level-${num}">
             <label> Level: </label>
-            <input placeholder="Enter Level" id="champ-level-list-${num}" type="text" list="levels-${num}" />
-            <datalist id="levels-${num}">
-               <option> 2 </option>
-            </datalist>
+            <input placeholder="Enter Level" id="champ-level-list-${num}" type="text"/>
         </div>
     `;
     $stats.prepend(hold);
