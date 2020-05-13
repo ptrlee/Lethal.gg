@@ -1,3 +1,5 @@
+import {getChampOneItems, getChampionTwoItems} from "./calc.js"
+
 jQuery.extend({
     getValues: function(url) {
         var champ = null;
@@ -24,7 +26,6 @@ let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
 export function easyCheck() {
-    let type = false; // If false == physical true == magical 
     let x = document.getElementById("champ-name-one").innerHTML;
     let y = document.getElementById("champ-name-two").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
@@ -38,25 +39,36 @@ export function easyCheck() {
     //console.log(attackSpells[0]);
 
     for (let i = 0; i < attackSpells.length; i++) {
-        type = false;
+        let type = 0; // If 0 == physical; 1 == magical; 2 == true 
         let level = 1; //level of spell
         let spell = attackSpells[i];
         let spellEffect = spell.effect[1];
         let spellVar = attackSpells[i].vars;
         //console.log(spellVar);
-        let shorten = parseTooltip(placeholder1.spells[i].tooltip).toString().split(" ");
-        console.log(parseTooltip(placeholder1.spells[i].tooltip));
-        for (let j = 0; j < shorten.length; j++) {
-            if (shorten[j] === "magic" || shorten[j] === "magical") {
-                type = true;
-                break;
-            }
-        }
+       
 
-        if (type) {
-            let damage = spellEffect[level-1]*spellVar[0].coeff;
-            let dmg = calculateDMG(damage,defend.stats.spellblock,0,0);
-            //console.log(spell + dmg);
+        for (let j = 0; j < parseTooltip(placeholder1.spells[i].tooltip).length; j++) {
+            //console.log(j + " J");
+            let shorten = parseTooltip(placeholder1.spells[i].tooltip)[j].toString().split(" ");
+            for (let k = 0; k < shorten.length; k++) {
+                if (shorten[k] === "magic" || shorten[k] === "magical") {
+                    type = 1;
+                    break;
+                } else if (shorten[k] === "true") {
+                    type = 2;
+                    break;
+                }
+                
+            }
+
+            console.log(shorten);
+            console.log(type);
+            
+            if (type === 1) {
+                let damage = spellEffect[level-1]*spellVar[0].coeff;
+                let dmg = calculateDMG(damage,defend.stats.spellblock,0,0);
+                //console.log(spell + dmg);
+            }
         }
  
     }
@@ -76,7 +88,7 @@ function calculateDMG(damage, reduction, flatPen, percentPen) {
     reduction *= (1-percentPen);
     reduction -= flatPen;
     total += (damage * 100 / parseFloat((100 + reduction)));
-    console.log(reduction);
+    //console.log(reduction);
     return total;
 }
 
@@ -180,9 +192,9 @@ let champD = { // abilities and runes
  */
 let placeholder1 = att_champ[y];
 let placeholder2 = def_champ.Garen;
-let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
-let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
-    //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
+let itemplaceholder1 = getChampOneItems(); //attk champ
+let itemplaceholder2 = getChampionTwoItems(); //def champ
+
 let pstring = placeholder1.spells[0].tooltip;
 //console.log(parseTooltip(pstring));
 
