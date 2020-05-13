@@ -1,4 +1,8 @@
 import { easyCheck } from "./Champions.js"
+import { getDefChamp, getAtkChamp } from "./Champions.js"
+
+let champD;
+let champA;
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -127,6 +131,27 @@ function championChange(num) {
     document.getElementById("MR-" + num).innerHTML = "MR: " + champ[x].stats.spellblock;
     document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
 }
+
+/*
+function championChangeStats(num) {
+    if (num == "one") {
+        champA = getAtkChamp();
+        document.getElementById("HP-" + num).innerHTML = "HP: " + champA.health;
+        document.getElementById("MP-" + num).innerHTML = "MP: " + champA.mana;
+        document.getElementById("AD-" + num).innerHTML = "AD: " + (champA.baseAD + champA.bonusAD);
+        document.getElementById("MR-" + num).innerHTML = "MR: " + champA.mr;
+        document.getElementById("armor-" + num).innerHTML = "Armor: " + champA.armor;
+    }
+    else if (num == "two") {
+        champD = getDefChamp();
+        document.getElementById("HP-" + num1).innerHTML = "HP: " + champD.health;
+        document.getElementById("MP-" + num1).innerHTML = "MP: " + champD.mana;
+        document.getElementById("AD-" + num1).innerHTML = "AD: " + (champD.baseAD + champA.bonusAD);
+        document.getElementById("MR-" + num1).innerHTML = "MR: " + champD.mr;
+        document.getElementById("armor-" + num1).innerHTML = "Armor: " + champD.armor;
+    }
+}
+*/
 
 function lvlChange(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
@@ -265,9 +290,10 @@ function makeItemImages(item, array1, array2, num) {
             $champPics.append(imgOne);
             removeImage("one", itemIdsOne);
         }
-        
-
-    } else if (num === "two") {
+        //championChangeStats("one");
+     }
+     
+     else if (num === "two") {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
             imgTwo = `
@@ -276,8 +302,7 @@ function makeItemImages(item, array1, array2, num) {
             $champPics.append(imgTwo);
             removeImage("two", itemIdsTwo);
         }
-        
-        
+        //championChangeStats("two");
     }
 
 }
@@ -293,6 +318,7 @@ function removeImage(num, array) {
             e.preventDefault();
         });
     }
+    //championChangeStats("num");
 }
 
 //Render the Add Items button
