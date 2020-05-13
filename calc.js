@@ -293,10 +293,10 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsOne.push(id);
         for (let i = 0; i < itemIdsOne.length; i++) {
             imgOne = `
-                <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+                <img class="pic-${num}" id="champ-one-${i}-${itemIdsOne[i]}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
             $champPics.append(imgOne);
-            removeImage("one", itemIdsOne);
+            removeImage("one", itemIdsOne, i);
         }
         championChangeStats("one");
         console.log("Items add-", itemIdsOne);
@@ -306,10 +306,10 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
             imgTwo = `
-                <img class="pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
+                <img class="pic-${num}" id="champ-two-${i}-${itemIdsTwo[i]}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
             `;
             $champPics.append(imgTwo);
-            removeImage("two", itemIdsTwo);
+            removeImage("two", itemIdsTwo, i);
         }
         championChangeStats("two");
         console.log("Items add-", itemIdsTwo);
@@ -320,16 +320,15 @@ function makeItemImages(item, array1, array2, num) {
 /**
  * Removes the images of the items by clicking on them
  */
-function removeImage(num, array) {
-    for (let i = 0; i < array.length; i++) {
-        $(`#champ-${num}-${i}`).on('click', function(e) {   
-            this.remove();     
-            array.splice(i, 1);
-            console.log("Items delete- ", array);
-            championChangeStats(num);
-            e.preventDefault();
-        });
-    }
+function removeImage(num, array, i) {
+    $(`#champ-${num}-${i}-${array[i]}`).on('click', function(e) {   
+        this.remove();     
+        array.splice(i, 1);
+        console.log("Items delete- ", array);
+        championChangeStats(num);
+        e.preventDefault();
+        return true;
+    });
 }
 
 //Render the Add Items button
@@ -363,6 +362,12 @@ export function getChampOneItems(){
 export function getChampionTwoItems(){
     return itemIdsTwo;
 }
+
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
 
 
 
