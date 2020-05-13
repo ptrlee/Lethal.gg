@@ -132,7 +132,6 @@ function championChange(num) {
     document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
 }
 
-/*
 function championChangeStats(num) {
     if (num == "one") {
         champA = getAtkChamp();
@@ -151,7 +150,6 @@ function championChangeStats(num) {
         document.getElementById("armor-" + num1).innerHTML = "Armor: " + champD.armor;
     }
 }
-*/
 
 function lvlChange(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
@@ -290,7 +288,7 @@ function makeItemImages(item, array1, array2, num) {
             $champPics.append(imgOne);
             removeImage("one", itemIdsOne);
         }
-        //championChangeStats("one");
+        championChangeStats("one");
      }
      
      else if (num === "two") {
@@ -302,7 +300,7 @@ function makeItemImages(item, array1, array2, num) {
             $champPics.append(imgTwo);
             removeImage("two", itemIdsTwo);
         }
-        //championChangeStats("two");
+        championChangeStats("two");
     }
 
 }
@@ -318,7 +316,7 @@ function removeImage(num, array) {
             e.preventDefault();
         });
     }
-    //championChangeStats("num");
+    championChangeStats("num");
 }
 
 //Render the Add Items button
