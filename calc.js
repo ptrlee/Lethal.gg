@@ -293,7 +293,7 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsOne.push(id);
         for (let i = 0; i < itemIdsOne.length; i++) {
             imgOne = `
-                <img class="pic-${num}" id="champ-one-${i}-${itemIdsOne[i]}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+                <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
             $champPics.append(imgOne);
             removeImage("one", itemIdsOne, i);
@@ -306,7 +306,7 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
             imgTwo = `
-                <img class="pic-${num}" id="champ-two-${i}-${itemIdsTwo[i]}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
+                <img class="pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
             `;
             $champPics.append(imgTwo);
             removeImage("two", itemIdsTwo, i);
@@ -321,9 +321,20 @@ function makeItemImages(item, array1, array2, num) {
  * Removes the images of the items by clicking on them
  */
 function removeImage(num, array, i) {
-    $(`#champ-${num}-${i}-${array[i]}`).on('click', function(e) {   
+    const $champPics = $(`#champ-pictures-${num}`);
+    let imgOne="";
+    $(`#champ-${num}-${i}`).on('click', function(e) {   
         this.remove();     
         array.splice(i, 1);
+        $(`.pic-${num}`).remove();
+        for (let j = 0; j < array.length; j++) {
+            imgOne = `
+                <img class="pic-${num}" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
+            `;
+            $champPics.append(imgOne);
+            removeImage(num, array, j);
+        }
+
         console.log("Items delete- ", array);
         championChangeStats(num);
         e.preventDefault();
