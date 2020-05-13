@@ -1,4 +1,4 @@
-import { easyCheck } from "./Champions.js"
+import { easyCheck, getAtkChamp } from "./Champions.js"
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -80,7 +80,6 @@ $('#calc-button').on('click', function(e) {
     renderChampLists();
     renderItemChoices("one");
     renderItemChoices("two");
-
     e.preventDefault();
 });
 

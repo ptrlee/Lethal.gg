@@ -25,6 +25,7 @@ let y = 'Ahri'; //kaisa needs general fix
 let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
+
 export function easyCheck() {
     let x = document.getElementById("champ-name-one").innerHTML;
     let y = document.getElementById("champ-name-two").innerHTML;
@@ -48,7 +49,6 @@ export function easyCheck() {
        
 
         for (let j = 0; j < parseTooltip(placeholder1.spells[i].tooltip).length; j++) {
-            //console.log(j + " J");
             let shorten = parseTooltip(placeholder1.spells[i].tooltip)[j].toString().split(" ");
             for (let k = 0; k < shorten.length; k++) {
                 if (shorten[k] === "magic" || shorten[k] === "magical") {
@@ -154,36 +154,66 @@ function itemSearch(itemIndex) {
 }
 
 //attacking champion
-let champA = {
-    type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
-    abilities: [[""]],
-    level: 1,
-    baseAD: 0,
-    bonusAD: 0,
-    crit: 0, //crit chance
-    critMult: 0,  //IE = .5
-    atkSpeed: 0,
-    bAtkSpeed: 0,
-    bonusAP: 0,
-    p: 0, //not coded yet 
-    aaDMG: 0,
-    spelldmg: [[0,0,0], [0,0,0], [0,0,0],[0,0,0]],
-    lvlOfspell: [1,1,1,1],
-    item: 0, //not coded yet 
-    physical: 0,
-    magical: 0,
-    true: 0,
-    damage_amp: 0 //not coded yet
+console.log(att_champ.Ahri);
+export function getAtkChamp() {
+    let x = document.getElementById("champ-name-one").innerHTML;
+    let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
+    let champ = att_champ[x];
+
+    let champA = {
+        type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
+        abilities: [[""]],
+        level: 1,
+        baseAD: champ.stats.attackdamage,
+        bonusAD: 0,
+        crit: 0, //crit chance
+        critMult: 0,  //IE = .5
+        atkSpeed: 0,
+        bAtkSpeed: 0,
+        bonusAP: 0,
+        aaDMG: 0,
+        spelldmg: [[0,0,0], [0,0,0], [0,0,0],[0,0,0]],
+        lvlOfspell: [1,1,1,1],
+        item: getChampOneItems(), //not coded yet 
+        physical: 0,
+        magical: 0,
+        true: 0,
+        damage_amp: 0, //not coded yet
+        health: champ.stats.hp,
+        armor: champ.stats.armor,
+        mr: champ.stats.spellblock,
+        mana: champ.stats.mp,
+    }
+    changeAtkStats(champA);
+    changeDefStats(champA);
+    itemStats(champA.item,champA);
+    console.log(champA);
+    return champA;
 }
 
 //defending champion
-let champD = { // abilities and runes
-    level: 1,
-    armor: 0,
-    health: 0,
-    mr: 0, 
-    dmg_reduc: 0,
-    hpregen: 0
+export function getDefChamp() { 
+    let y = document.getElementById("champ-name-two").innerHTML;
+    let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
+    let champ = def_champ[y];
+
+    let champD = { // abilities and runes
+        level: 1,
+        armor: champ.stats.armor,
+        health: champ.stats.hp,
+        mr: champ.stats.spellblock,
+        item: getChampionTwoItems(), 
+        dmg_reduc: 0,
+        hpregen: 0,
+        AP: 0,
+        baseAD: 0,
+        mana: champ.stats.mp,
+    }
+    changeAtkStats(champD);
+    changeDefStats(champD);
+    itemStats(champD.item,champD);
+    console.log(champD);
+    return champD;
 }
 
 /**
@@ -206,25 +236,30 @@ let pstring = placeholder1.spells[0].tooltip;
 
 //constant growth parameter -- applies to all perlevel values
 
-let growthA = (champA.level-1)*(.7025 + (.0175*(champA.level-1)));
-let growthD = (champD.level-1)*(.7025 + (.0175*(champD.level-1)));
+function growth(champion) {
+    return (champion.level-1)*(.7025 + (.0175*(champion.level-1)));
+}
 
-//attk hero base stats 
-champA.baseAD = placeholder1.stats.attackdamage;
-champA.baseAD += placeholder1.stats.attackdamageperlevel * growthA;
-champA.atkSpeed += placeholder1.stats.attackspeed;
-champA.bAtkSpeed += placeholder1.stats.attackspeedperlevel/parseFloat(100) * growthA;    
+//attk hero base stats
+function changeAtkStats(champion) { 
+    champion.baseAD = placeholder1.stats.attackdamage;
+    champion.bonusAD += placeholder1.stats.attackdamageperlevel * growth(champion);
+    champion.atkSpeed += placeholder1.stats.attackspeed;
+    champion.bAtkSpeed += placeholder1.stats.attackspeedperlevel/parseFloat(100) * growth(champion);    
+}
 
 
 // def hero
-champD.armor += placeholder2.stats.armor;
-champD.armor += growthD * placeholder2.stats.armorperlevel;
-champD.mr += placeholder2.stats.spellblock;
-champD.mr += growthD * placeholder2.stats.spellblockperlevel;
-champD.health += placeholder2.stats.hp;
-champD.health += growthD * placeholder2.stats.hpperlevel;
-champD.hpregen += placeholder2.stats.hpregen;
-champD.hpregen += growthD * placeholder2.stats.hpregenperlevel;
+function changeDefStats (champion) {
+    champion.armor += placeholder2.stats.armor;
+    champion.armor += growth(champion) * placeholder2.stats.armorperlevel;
+    champion.mr += placeholder2.stats.spellblock;
+    champion.mr += growth(champion) * placeholder2.stats.spellblockperlevel;
+    champion.health += placeholder2.stats.hp;
+    champion.health += growth(champion) * placeholder2.stats.hpperlevel;
+    champion.hpregen += placeholder2.stats.hpregen;
+    champion.hpregen += growth(champion) * placeholder2.stats.hpregenperlevel;
+}
 
 /**
  * Item calculations
@@ -238,17 +273,18 @@ champD.hpregen += growthD * placeholder2.stats.hpregenperlevel;
 * takes into account hp, armor, mr
 */
 
-let i;
-for (i = 0; i < itemplaceholder2.length; i++) {
-    let itemWanted = itemSearch(itemplaceholder2[i]);
-    if (itemWanted.FlatHPPoolMod != null) {
-        champD.health += itemWanted.FlatHPPoolMod;
-    }
-    if (itemWanted.FlatArmorMod != null) {
-        champD.armor += itemWanted.FlatArmorMod;
-    }       
-    if (itemWanted.FlatSpellBlockMod != null) {
-        champD.mr += itemWanted.FlatSpellBlockMod;
+function itemStats(items, champion) {
+    for (i = 0; i < items.length; i++) {
+        let itemWanted = itemSearch(items[i]);
+        if (itemWanted.FlatHPPoolMod != null) {
+            champion.health += itemWanted.FlatHPPoolMod;
+        }
+        if (itemWanted.FlatArmorMod != null) {
+            champion.armor += itemWanted.FlatArmorMod;
+        }       
+        if (itemWanted.FlatSpellBlockMod != null) {
+            champion.mr += itemWanted.FlatSpellBlockMod;
+        }
     }
 }
 
@@ -261,22 +297,6 @@ for (i = 0; i < itemplaceholder2.length; i++) {
 // let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
 //3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
 
-
-for (i = 0; i < itemplaceholder1.length; i++) {
-    let itemWanted = itemSearch(itemplaceholder1[i]);
-    if (itemWanted.PercentAttackSpeedMod != null) {
-        champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
-    }
-    if (itemWanted.FlatPhysicalDamageMod != null) {
-        champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
-    }
-    if (itemWanted.FlatMagicDamageMod != null) {
-        champA.bonusAP += itemWanted.FlatMagicDamageMod;
-    }
-    if (itemWanted.FlatCritChanceMod != null) {
-        champA.crit += itemWanted.FlatCritChanceMod;
-    }
-}
 
 /**
  * Ability calculations
@@ -377,8 +397,15 @@ champA.physical += champA.aaDMG;
 
 //attack damage calculations
 // do after items and runes
-champA.aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
-champA.aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
+
+
+//Commented this out temperarily
+//champA.aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
+//champA.aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
 
 let total;
-//total = calculateDMG(champA.physical, champA.magic, champA.true, champD.armor, champD.mr)
+
+
+
+
+//total = calculateDMG(champA.physical, champA.magic, champA.true, champion.armor, champion.mr)
