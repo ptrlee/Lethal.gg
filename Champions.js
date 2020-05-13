@@ -209,7 +209,7 @@ export function getDefChamp() {
         baseAD: 0,
         mana: champ.stats.mp,
     }
-    changeAtkStats(champD);
+    //changeAtkStats(champD);
     changeDefStats(champD);
     itemStats(champD.item,champD);
     console.log(champD);
@@ -257,8 +257,8 @@ function changeDefStats (champion) {
     champion.mr += growth(champion) * placeholder2.stats.spellblockperlevel;
     champion.health += placeholder2.stats.hp;
     champion.health += growth(champion) * placeholder2.stats.hpperlevel;
-    champion.hpregen += placeholder2.stats.hpregen;
-    champion.hpregen += growth(champion) * placeholder2.stats.hpregenperlevel;
+    //champion.hpregen += placeholder2.stats.hpregen;
+    //champion.hpregen += growth(champion) * placeholder2.stats.hpregenperlevel;
 }
 
 /**
