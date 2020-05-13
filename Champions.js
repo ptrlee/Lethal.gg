@@ -285,6 +285,18 @@ function itemStats(items, champion) {
         if (itemWanted.FlatSpellBlockMod != null) {
             champion.mr += itemWanted.FlatSpellBlockMod;
         }
+        if (itemWanted.PercentAttackSpeedMod != null) {
+            champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+        }
+        if (itemWanted.FlatPhysicalDamageMod != null) {
+            champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
+        }
+        if (itemWanted.FlatMagicDamageMod != null) {
+            champA.bonusAP += itemWanted.FlatMagicDamageMod;
+        }
+        if (itemWanted.FlatCritChanceMod != null) {
+            champA.crit += itemWanted.FlatCritChanceMod;
+        }
     }
 }
 
