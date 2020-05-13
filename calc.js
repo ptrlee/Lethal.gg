@@ -152,12 +152,12 @@ function championChangeStats(num) {
     else if (num == "two") {
         champD = getDefChamp();
         //console.log(champD);
-        document.getElementById("HP-" + num1).innerHTML = "HP: " + champD.health;
-        document.getElementById("MP-" + num1).innerHTML = "MP: " + champD.mana;
-        document.getElementById("AD-" + num1).innerHTML = "AD: " + (champD.baseAD + champA.bonusAD);
+        document.getElementById("HP-" + num).innerHTML = "HP: " + champD.health;
+        document.getElementById("MP-" + num).innerHTML = "MP: " + champD.mana;
+        document.getElementById("AD-" + num).innerHTML = "AD: " + (champD.baseAD + champD.bonusAD);
         document.getElementById("AP-" + num).innerHTML = "AP: " + champD.bonusAP;
-        document.getElementById("MR-" + num1).innerHTML = "MR: " + champD.mr;
-        document.getElementById("armor-" + num1).innerHTML = "Armor: " + champD.armor;
+        document.getElementById("MR-" + num).innerHTML = "MR: " + champD.mr;
+        document.getElementById("armor-" + num).innerHTML = "Armor: " + champD.armor;
     }
 }
 
