@@ -1,8 +1,6 @@
-import { easyCheck } from "./Champions.js"
+import { spellDamage } from "./Champions.js"
 import { getDefChamp, getAtkChamp } from "./Champions.js"
 
-let champD;
-let champA;
 const $root = $("#root");
 const $champs = $("#champs");
 let champions;
@@ -41,7 +39,7 @@ function renderChampLists() {
         $('#champ-input-list-one').change(function() {
             championChangeStats("one");
             getAbilities("one");
-            easyCheck();
+            spellDamage();
             VSColumn();
         });
 
@@ -56,15 +54,15 @@ function renderChampLists() {
         $('#champ-input-list-two').change(function() {
             championChangeStats("two");
             getAbilities("two");
-            easyCheck();
+            spellDamage();
         });
 
         $('#champ-level-list-one').change(function() {
-            lvlChange("one");
+            championChangeStats("one");
         });
 
         $('#champ-level-list-two').change(function() {
-            lvlChange("two");
+            championChangeStats("two");
         });
     });
 
@@ -111,28 +109,11 @@ function levelChange(num) {
     let hold = `
         <div id="input-level-${num}">
             <label> Level: </label>
-            <input placeholder="Enter Level" id="champ-level-list-${num}" type="text"/>
+            <input placeholder="Enter Level" id="champ-level-list-${num}" value = 1 type="text"/>
         </div>
     `;
     $stats.prepend(hold);
 }
-
-/**
- * Gets the champion that was selected
- */
-/** 
-function championChange(num) {
-    let x = document.getElementById("champ-input-list-" + num).value;
-    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
-    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${x}_0.jpg`;
-    document.getElementById("champ-name-" + num).innerHTML = x;
-    document.getElementById("HP-" + num).innerHTML = "HP: " + champ[x].stats.hp + "/" + champ[x].stats.hp;
-    document.getElementById("MP-" + num).innerHTML = "MP: " + champ[x].stats.mp + "/" + champ[x].stats.mp;
-    document.getElementById("AD-" + num).innerHTML = "AD: " + champ[x].stats.attackdamage;
-    document.getElementById("MR-" + num).innerHTML = "MR: " + champ[x].stats.spellblock;
-    document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
-}
-*/
 
 function championChangeStats(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
@@ -140,7 +121,7 @@ function championChangeStats(num) {
     document.getElementById("champ-name-" + num).innerHTML = x;
 
     if (num == "one") {
-        champA = getAtkChamp();
+        let champA = getAtkChamp();
         //console.log(champA);
         document.getElementById("HP-" + num).innerHTML = "HP: " + champA.health;
         document.getElementById("MP-" + num).innerHTML = "MP: " + champA.mana;
@@ -150,7 +131,7 @@ function championChangeStats(num) {
         document.getElementById("armor-" + num).innerHTML = "Armor: " + champA.armor;
     }
     else if (num == "two") {
-        champD = getDefChamp();
+        let champD = getDefChamp();
         //console.log(champD);
         document.getElementById("HP-" + num).innerHTML = "HP: " + champD.health;
         document.getElementById("MP-" + num).innerHTML = "MP: " + champD.mana;
@@ -161,20 +142,20 @@ function championChangeStats(num) {
     }
 }
 
+/*
 function lvlChange(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
     let l = document.getElementById("champ-level-list-" + num).value - 1;
     console.log(l);
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
     console.log(champ);
-
     document.getElementById("HP-" + num).innerHTML = "HP: " + (champ[x].stats.hp + (champ[x].stats.hpperlevel*l)) + "/" + (champ[x].stats.hp + (champ[x].stats.hpperlevel*l));
     document.getElementById("MP-" + num).innerHTML = "MP: " + (champ[x].stats.mp + (champ[x].stats.mpperlevel*l)) + "/" + (champ[x].stats.mp + (champ[x].stats.mpperlevel*l));
     document.getElementById("AD-" + num).innerHTML = "AD: " + (champ[x].stats.attackdamage + (champ[x].stats.attackdamageperlevel*l));
     document.getElementById("MR-" + num).innerHTML = "MR: " + (champ[x].stats.spellblock + (champ[x].stats.spellblockperlevel*l));
     document.getElementById("armor-" + num).innerHTML = "Armor: " + (champ[x].stats.armor + (champ[x].stats.armorperlevel*l));
 }
-
+*/
 jQuery.extend({
     getValues: function(url) {
         var att_champ = null;
@@ -299,7 +280,7 @@ function makeItemImages(item, array1, array2, num) {
             removeImage("one", itemIdsOne, i);
         }
         championChangeStats("one");
-        console.log("Items add-", itemIdsOne);
+        //console.log("Items add-", itemIdsOne);
      }
      
      else if (num === "two") {
@@ -312,7 +293,7 @@ function makeItemImages(item, array1, array2, num) {
             removeImage("two", itemIdsTwo, i);
         }
         championChangeStats("two");
-        console.log("Items add-", itemIdsTwo);
+        //console.log("Items add-", itemIdsTwo);
     }
 
 }
@@ -335,7 +316,7 @@ function removeImage(num, array, i) {
             removeImage(num, array, j);
         }
 
-        console.log("Items delete- ", array);
+        //console.log("Items delete- ", array);
         championChangeStats(num);
         e.preventDefault();
         return true;

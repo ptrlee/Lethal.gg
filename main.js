@@ -74,11 +74,11 @@ function renderChampStats(num) {
             </div>
 
             <div id="HP-${num}">
-                HP: 1200/1200
+                HP: 526
             </div>
 
             <div id="MP-${num}">
-                MP: 1000/1000
+                MP: 418/418
             </div>
 
             <div id="damage-${num}">

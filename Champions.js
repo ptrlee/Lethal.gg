@@ -21,12 +21,8 @@ let x = document.getElementById("champ-name-one").innerHTML;
 let att_champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
 let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 */ 
-let y = 'Ahri'; //kaisa needs general fix
-let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
-let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/Garen.json');
 
-
-export function easyCheck() {
+export function spellDamage() {
     let x = document.getElementById("champ-name-one").innerHTML;
     let y = document.getElementById("champ-name-two").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
@@ -36,56 +32,58 @@ export function easyCheck() {
     let champD = getDefChamp();
     let champA = getAtkChamp();
 
-    let attackSpells = attack.spells;
     //console.log(defend);
-    let pstring = attack.spells[0].tooltip;
-    //console.log(attackSpells[0]);
+    //console.log(attack.spells[0]);
 
-    for (let i = 0; i < attackSpells.length; i++) {
+    for (let i = 0; i < attack.spells.length; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
-        let level = 1; //level of spell
-        let spell = attackSpells[i];
+        let level = 5; //level of spell placeholder
+        let spell = attack.spells[i];
         let spellEffect = spell.effect[1];
-        let spellVar = attackSpells[i].vars;
+        let spellVar = attack.spells[i].vars;
         let totalDamage = [0,0,0,0];
+        let aaDMG;
         //console.log(spellVar);
        
-        //test 
+        //test for print
         if (i != 0)
         break;
 
-        for (let j = 0; j < parseTooltip(attack.spells[i].tooltip).length; j++) {
+        // type of damage
+        for (let j = 0; j < parseTooltip(attack.spells[i].tooltip).length; j++) { //2x for ahri q 
             let shorten = parseTooltip(attack.spells[i].tooltip)[j].toString().split(" ");
-            for (let k = 0; k < shorten.length; k++) {
+            for (let k = 0; k < shorten.length; k++) { 
                 if (shorten[k] === "magic" || shorten[k] === "magical") {
                     type = 1;
                     break;
                 } else if (shorten[k] === "true") {
                     type = 2;
                     break;
-                } else if (shorten[k] == "physical") {
-                    type = 0;
-                    break;
                 }
-                
             }
 
             console.log(shorten);
             //console.log(type);
             
+            //calls calculateDMG for every type of dmg 
             if (type === 1) {
-                let damage = spellEffect[level-1]*spellVar[0].coeff;
+                let damage = spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
                 totalDamage[i] += calculateDMG(damage,champD.mr,0,0);
                 //console.log(spell + dmg);
             } else if (type == 2) {
-                totalDamage[i] += spellEffect[level-1]*spellVar[0].coeff;
-            } else if (type == 3) { 
+                totalDamage[i] += spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
+            } else if (type == 0) { 
                 let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
                 // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
                 // have to implement this
                 totalDamage[i] += calculateDMG(damage,champD.armor,0,0);
             }
         }
+        console.log("damage = ", totalDamage);
+
+        /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+        aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
+        aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
  
     }
     
@@ -100,7 +98,7 @@ export function easyCheck() {
  * does not factor in total damage reduction or percentile conversion like conqueror
  */
 function calculateDMG(damage, reduction, flatPen, percentPen) {
-    total = 0;
+    let total = 0;
     reduction *= (1-percentPen);
     reduction -= flatPen;
     total += (damage * 100 / parseFloat((100 + reduction)));
@@ -179,7 +177,7 @@ export function getAtkChamp() {
     let champA = {
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
         abilities: [[""]],
-        level: 1,
+        level: document.getElementById("champ-level-list-one").value,
         mana: 0,
         baseAD: 0,
         bonusAD: 0,
@@ -188,7 +186,6 @@ export function getAtkChamp() {
         atkSpeed: 0,
         bAtkSpeed: 0,
         bonusAP: 0,
-        aaDMG: 0,
         spelldmg: [[0,0,0], [0,0,0], [0,0,0],[0,0,0]],
         lvlOfspell: [1,1,1,1],
         item: 0, //not coded yet 
@@ -200,6 +197,9 @@ export function getAtkChamp() {
         armor: 0,
         mr: 0,
         mana: 0,
+    }
+    if (champA.level == undefined) {
+        champA.level = 1;
     }
     champA.item = getChampOneItems();
     changeAtkStats(champA, champ);
@@ -217,7 +217,7 @@ export function getDefChamp() {
     let champ = def_champ[y];
 
     let champD = { // abilities and runes
-        level: 1,
+        level: document.getElementById("champ-level-list-two").value,
         armor: 0,
         health: 0,
         mana: 0,
@@ -229,6 +229,9 @@ export function getDefChamp() {
         baseAD: 0,
         bonusAD: 0,
         mana: 0,
+    }
+    if (champD.level == undefined) {
+        champD.level = 1;
     }
     changeAtkStats(champD,champ);
     changeDefStats(champD,champ);
@@ -431,12 +434,6 @@ champA.physical += champA.aaDMG;
 
 
 //Commented this out temperarily
-//champA.aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
-//champA.aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
-
-let total;
-
-
 
 
 //total = calculateDMG(champA.physical, champA.magic, champA.true, champion.armor, champion.mr)
