@@ -50,6 +50,9 @@ export function easyCheck() {
         let totalDamage = [0,0,0,0];
         //console.log(spellVar);
        
+        //test 
+        if (i != 0)
+        break;
 
         for (let j = 0; j < parseTooltip(attack.spells[i].tooltip).length; j++) {
             let shorten = parseTooltip(attack.spells[i].tooltip)[j].toString().split(" ");
@@ -67,7 +70,7 @@ export function easyCheck() {
                 
             }
 
-            //console.log(shorten);
+            console.log(shorten);
             //console.log(type);
             
             if (type === 1) {
