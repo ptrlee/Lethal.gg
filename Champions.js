@@ -33,10 +33,12 @@ export function easyCheck() {
     let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
     let attack = att_champ[x];
     let defend = def_champ[y];
+    let champD = getDefChamp();
+    let champA = getAtkChamp();
 
     let attackSpells = attack.spells;
     //console.log(defend);
-    let pstring = placeholder1.spells[0].tooltip;
+    let pstring = attack.spells[0].tooltip;
     //console.log(attackSpells[0]);
 
     for (let i = 0; i < attackSpells.length; i++) {
@@ -45,17 +47,21 @@ export function easyCheck() {
         let spell = attackSpells[i];
         let spellEffect = spell.effect[1];
         let spellVar = attackSpells[i].vars;
+        let totalDamage = [0,0,0,0];
         //console.log(spellVar);
        
 
-        for (let j = 0; j < parseTooltip(placeholder1.spells[i].tooltip).length; j++) {
-            let shorten = parseTooltip(placeholder1.spells[i].tooltip)[j].toString().split(" ");
+        for (let j = 0; j < parseTooltip(attack.spells[i].tooltip).length; j++) {
+            let shorten = parseTooltip(attack.spells[i].tooltip)[j].toString().split(" ");
             for (let k = 0; k < shorten.length; k++) {
                 if (shorten[k] === "magic" || shorten[k] === "magical") {
                     type = 1;
                     break;
                 } else if (shorten[k] === "true") {
                     type = 2;
+                    break;
+                } else if (shorten[k] == "physical") {
+                    type = 0;
                     break;
                 }
                 
@@ -66,8 +72,15 @@ export function easyCheck() {
             
             if (type === 1) {
                 let damage = spellEffect[level-1]*spellVar[0].coeff;
-                let dmg = calculateDMG(damage,defend.stats.spellblock,0,0);
+                totalDamage[i] += calculateDMG(damage,champD.mr,0,0);
                 //console.log(spell + dmg);
+            } else if (type == 2) {
+                totalDamage[i] += spellEffect[level-1]*spellVar[0].coeff;
+            } else if (type == 3) { 
+                let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
+                // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
+                // have to implement this
+                totalDamage[i] += calculateDMG(damage,champD.armor,0,0);
             }
         }
  
@@ -164,6 +177,7 @@ export function getAtkChamp() {
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
         abilities: [[""]],
         level: 1,
+        mana: 0,
         baseAD: 0,
         bonusAD: 0,
         crit: 0, //crit chance
@@ -174,7 +188,7 @@ export function getAtkChamp() {
         aaDMG: 0,
         spelldmg: [[0,0,0], [0,0,0], [0,0,0],[0,0,0]],
         lvlOfspell: [1,1,1,1],
-        item: getChampOneItems(), //not coded yet 
+        item: 0, //not coded yet 
         physical: 0,
         magical: 0,
         true: 0,
@@ -184,8 +198,10 @@ export function getAtkChamp() {
         mr: 0,
         mana: 0,
     }
+    champA.item = getChampOneItems();
     changeAtkStats(champA, champ);
     changeDefStats(champA, champ);
+    changeAtkSpeedStats(champA, champ);
     itemStats(champA.item,champA);
     //console.log(champA);
     return champA;
@@ -201,6 +217,7 @@ export function getDefChamp() {
         level: 1,
         armor: 0,
         health: 0,
+        mana: 0,
         mr: 0,
         item: getChampionTwoItems(), 
         dmg_reduc: 0,
@@ -210,25 +227,13 @@ export function getDefChamp() {
         bonusAD: 0,
         mana: 0,
     }
-    //changeAtkStats(champD,champ);
+    changeAtkStats(champD,champ);
     changeDefStats(champD,champ);
+    changehpregenStats(champD, champ);
     itemStats(champD.item,champD);
-    console.log(champD);
+    //console.log(champD);
     return champD;
 }
-
-/**
- * placeholders for input champions, items and (later runes)
- * need to reroute to calc.js 
- */
-let placeholder1 = att_champ[y];
-let placeholder2 = def_champ.Garen;
-let itemplaceholder1 = getChampOneItems(); //attk champ
-let itemplaceholder2 = getChampionTwoItems(); //def champ
-
-let pstring = placeholder1.spells[0].tooltip;
-//console.log(parseTooltip(pstring));
-
 
 /**
  * calculations for base stats depending on @param level
@@ -241,12 +246,21 @@ function growth(level) {
     return (level-1)*(.7025 + (.0175*(level-1)));
 }
 
-//attk hero base stats
 function changeAtkStats(champion, champ) { 
     champion.baseAD = champ.stats.attackdamage;
     champion.bonusAD += champ.stats.attackdamageperlevel * growth(champion.level);
+    champion.mana = champ.stats.mp; 
+    champion.mana += champ.stats.mpperlevel * growth(champion.level); 
+}
+
+function changeAtkSpeedStats(champion, champ) { //only for champA
     champion.atkSpeed += champ.stats.attackspeed;
-    champion.bAtkSpeed += champ.stats.attackspeedperlevel/parseFloat(100) * growth(champion.level);    
+    champion.bAtkSpeed += champ.stats.attackspeedperlevel/parseFloat(100) * growth(champion.level);   
+}
+
+function changehpregenStats(champion, champ) { //only for champD
+    champion.hpregen += champ.stats.hpregen;
+    champion.hpregen += growth(champion.level) * champ.stats.hpregenperlevel; 
 }
 
 
@@ -258,8 +272,6 @@ function changeDefStats (champion, champ) {
     champion.mr += growth(champion.level) * champ.stats.spellblockperlevel;
     champion.health += champ.stats.hp;
     champion.health += growth(champion.level) * champ.stats.hpperlevel;
-    //champion.hpregen += champ.stats.hpregen;
-    //champion.hpregen += growth(champion.level) * champ.stats.hpregenperlevel;
 }
 
 /**
@@ -286,8 +298,8 @@ function itemStats(items, champion) {
         if (itemWanted.FlatSpellBlockMod != null) {
             champion.mr += itemWanted.FlatSpellBlockMod;
         }
-        if (itemWanted.PercentAttackSpeedMod != null) {
-            //champion.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+        if (itemWanted.PercentAttackSpeedMod != null && champion.bAtkSpeed != null) {
+            champion.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
         }
         if (itemWanted.FlatPhysicalDamageMod != null) {
             champion.bonusAD += itemWanted.FlatPhysicalDamageMod;
@@ -295,8 +307,11 @@ function itemStats(items, champion) {
         if (itemWanted.FlatMagicDamageMod != null) {
             champion.bonusAP += itemWanted.FlatMagicDamageMod;
         }
-        if (itemWanted.FlatCritChanceMod != null) {
-            //champion.crit += itemWanted.FlatCritChanceMod;
+        if (itemWanted.FlatCritChanceMod != null && champion.crit != null) {
+            champion.crit += itemWanted.FlatCritChanceMod;
+        }
+        if (itemWanted.FlatMPPoolMod != null) {
+            champion.mana += itemWanted.FlatMPPoolMod;
         }
     }
 }
