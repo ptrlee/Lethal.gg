@@ -61,8 +61,8 @@ export function easyCheck() {
                 
             }
 
-            console.log(shorten);
-            console.log(type);
+            //console.log(shorten);
+            //console.log(type);
             
             if (type === 1) {
                 let damage = spellEffect[level-1]*spellVar[0].coeff;
@@ -154,7 +154,7 @@ function itemSearch(itemIndex) {
 }
 
 //attacking champion
-console.log(att_champ.Ahri);
+//console.log(att_champ.Ahri);
 export function getAtkChamp() {
     let x = document.getElementById("champ-name-one").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
@@ -164,7 +164,7 @@ export function getAtkChamp() {
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
         abilities: [[""]],
         level: 1,
-        baseAD: champ.stats.attackdamage,
+        baseAD: 0,
         bonusAD: 0,
         crit: 0, //crit chance
         critMult: 0,  //IE = .5
@@ -179,15 +179,15 @@ export function getAtkChamp() {
         magical: 0,
         true: 0,
         damage_amp: 0, //not coded yet
-        health: champ.stats.hp,
-        armor: champ.stats.armor,
-        mr: champ.stats.spellblock,
-        mana: champ.stats.mp,
+        health: 0,
+        armor: 0,
+        mr: 0,
+        mana: 0,
     }
-    changeAtkStats(champA);
-    changeDefStats(champA);
+    changeAtkStats(champA, champ);
+    changeDefStats(champA, champ);
     itemStats(champA.item,champA);
-    console.log(champA);
+    //console.log(champA);
     return champA;
 }
 
@@ -199,18 +199,19 @@ export function getDefChamp() {
 
     let champD = { // abilities and runes
         level: 1,
-        armor: champ.stats.armor,
-        health: champ.stats.hp,
-        mr: champ.stats.spellblock,
+        armor: 0,
+        health: 0,
+        mr: 0,
         item: getChampionTwoItems(), 
         dmg_reduc: 0,
         hpregen: 0,
-        AP: 0,
+        bonusAP: 0,
         baseAD: 0,
-        mana: champ.stats.mp,
+        bonusAD: 0,
+        mana: 0,
     }
-    //changeAtkStats(champD);
-    changeDefStats(champD);
+    //changeAtkStats(champD,champ);
+    changeDefStats(champD,champ);
     itemStats(champD.item,champD);
     console.log(champD);
     return champD;
@@ -236,29 +237,29 @@ let pstring = placeholder1.spells[0].tooltip;
 
 //constant growth parameter -- applies to all perlevel values
 
-function growth(champion) {
-    return (champion.level-1)*(.7025 + (.0175*(champion.level-1)));
+function growth(level) {
+    return (level-1)*(.7025 + (.0175*(level-1)));
 }
 
 //attk hero base stats
-function changeAtkStats(champion) { 
-    champion.baseAD = placeholder1.stats.attackdamage;
-    champion.bonusAD += placeholder1.stats.attackdamageperlevel * growth(champion);
-    champion.atkSpeed += placeholder1.stats.attackspeed;
-    champion.bAtkSpeed += placeholder1.stats.attackspeedperlevel/parseFloat(100) * growth(champion);    
+function changeAtkStats(champion, champ) { 
+    champion.baseAD = champ.stats.attackdamage;
+    champion.bonusAD += champ.stats.attackdamageperlevel * growth(champion.level);
+    champion.atkSpeed += champ.stats.attackspeed;
+    champion.bAtkSpeed += champ.stats.attackspeedperlevel/parseFloat(100) * growth(champion.level);    
 }
 
 
 // def hero
-function changeDefStats (champion) {
-    champion.armor += placeholder2.stats.armor;
-    champion.armor += growth(champion) * placeholder2.stats.armorperlevel;
-    champion.mr += placeholder2.stats.spellblock;
-    champion.mr += growth(champion) * placeholder2.stats.spellblockperlevel;
-    champion.health += placeholder2.stats.hp;
-    champion.health += growth(champion) * placeholder2.stats.hpperlevel;
-    //champion.hpregen += placeholder2.stats.hpregen;
-    //champion.hpregen += growth(champion) * placeholder2.stats.hpregenperlevel;
+function changeDefStats (champion, champ) {
+    champion.armor += champ.stats.armor;
+    champion.armor += growth(champion.level) * champ.stats.armorperlevel;
+    champion.mr += champ.stats.spellblock;
+    champion.mr += growth(champion.level) * champ.stats.spellblockperlevel;
+    champion.health += champ.stats.hp;
+    champion.health += growth(champion.level) * champ.stats.hpperlevel;
+    //champion.hpregen += champ.stats.hpregen;
+    //champion.hpregen += growth(champion.level) * champ.stats.hpregenperlevel;
 }
 
 /**
@@ -274,7 +275,7 @@ function changeDefStats (champion) {
 */
 
 function itemStats(items, champion) {
-    for (i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.length; i++) {
         let itemWanted = itemSearch(items[i]);
         if (itemWanted.FlatHPPoolMod != null) {
             champion.health += itemWanted.FlatHPPoolMod;
@@ -286,16 +287,16 @@ function itemStats(items, champion) {
             champion.mr += itemWanted.FlatSpellBlockMod;
         }
         if (itemWanted.PercentAttackSpeedMod != null) {
-            champA.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+            //champion.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
         }
         if (itemWanted.FlatPhysicalDamageMod != null) {
-            champA.bonusAD += itemWanted.FlatPhysicalDamageMod;
+            champion.bonusAD += itemWanted.FlatPhysicalDamageMod;
         }
         if (itemWanted.FlatMagicDamageMod != null) {
-            champA.bonusAP += itemWanted.FlatMagicDamageMod;
+            champion.bonusAP += itemWanted.FlatMagicDamageMod;
         }
         if (itemWanted.FlatCritChanceMod != null) {
-            champA.crit += itemWanted.FlatCritChanceMod;
+            //champion.crit += itemWanted.FlatCritChanceMod;
         }
     }
 }

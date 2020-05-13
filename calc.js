@@ -39,7 +39,7 @@ function renderChampLists() {
 
     $(function(ready){
         $('#champ-input-list-one').change(function() {
-            championChange("one");
+            championChangeStats("one");
             getAbilities("one");
             easyCheck();
             VSColumn();
@@ -54,7 +54,7 @@ function renderChampLists() {
         });
 
         $('#champ-input-list-two').change(function() {
-            championChange("two");
+            championChangeStats("two");
             getAbilities("two");
             easyCheck();
         });
@@ -120,6 +120,7 @@ function levelChange(num) {
 /**
  * Gets the champion that was selected
  */
+/** 
 function championChange(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
@@ -131,21 +132,33 @@ function championChange(num) {
     document.getElementById("MR-" + num).innerHTML = "MR: " + champ[x].stats.spellblock;
     document.getElementById("armor-" + num).innerHTML = "Armor: " + champ[x].stats.armor;
 }
+*/
 
 function championChangeStats(num) {
+    console.log(document.getElementById("champ-input-list-" + num).value);
+    let x = document.getElementById("champ-input-list-" + num).value;
+    //console.log(x);
+    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
+    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${x}_0.jpg`;
+    document.getElementById("champ-name-" + num).innerHTML = x;
+
     if (num == "one") {
         champA = getAtkChamp();
+        console.log(champA);
         document.getElementById("HP-" + num).innerHTML = "HP: " + champA.health;
         document.getElementById("MP-" + num).innerHTML = "MP: " + champA.mana;
         document.getElementById("AD-" + num).innerHTML = "AD: " + (champA.baseAD + champA.bonusAD);
+        document.getElementById("AP-" + num).innerHTML = "AP: " + champA.bonusAP;
         document.getElementById("MR-" + num).innerHTML = "MR: " + champA.mr;
         document.getElementById("armor-" + num).innerHTML = "Armor: " + champA.armor;
     }
     else if (num == "two") {
         champD = getDefChamp();
+        console.log(champD);
         document.getElementById("HP-" + num1).innerHTML = "HP: " + champD.health;
         document.getElementById("MP-" + num1).innerHTML = "MP: " + champD.mana;
         document.getElementById("AD-" + num1).innerHTML = "AD: " + (champD.baseAD + champA.bonusAD);
+        document.getElementById("AP-" + num).innerHTML = "AP: " + champD.bonusAP;
         document.getElementById("MR-" + num1).innerHTML = "MR: " + champD.mr;
         document.getElementById("armor-" + num1).innerHTML = "Armor: " + champD.armor;
     }
@@ -313,10 +326,10 @@ function removeImage(num, array) {
         $(`#champ-${num}-${i}`).on('click', function(e) {   
             $(`#champ-${num}-${i}`).remove();     
             array.splice(i, 1);
+            championChangeStats("num");
             e.preventDefault();
         });
     }
-    championChangeStats("num");
 }
 
 //Render the Add Items button
