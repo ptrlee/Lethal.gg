@@ -135,16 +135,13 @@ function championChange(num) {
 */
 
 function championChangeStats(num) {
-    console.log(document.getElementById("champ-input-list-" + num).value);
     let x = document.getElementById("champ-input-list-" + num).value;
-    //console.log(x);
-    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
     document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${x}_0.jpg`;
     document.getElementById("champ-name-" + num).innerHTML = x;
 
     if (num == "one") {
         champA = getAtkChamp();
-        console.log(champA);
+        //console.log(champA);
         document.getElementById("HP-" + num).innerHTML = "HP: " + champA.health;
         document.getElementById("MP-" + num).innerHTML = "MP: " + champA.mana;
         document.getElementById("AD-" + num).innerHTML = "AD: " + (champA.baseAD + champA.bonusAD);
@@ -154,7 +151,7 @@ function championChangeStats(num) {
     }
     else if (num == "two") {
         champD = getDefChamp();
-        console.log(champD);
+        //console.log(champD);
         document.getElementById("HP-" + num1).innerHTML = "HP: " + champD.health;
         document.getElementById("MP-" + num1).innerHTML = "MP: " + champD.mana;
         document.getElementById("AD-" + num1).innerHTML = "AD: " + (champD.baseAD + champA.bonusAD);
@@ -302,6 +299,7 @@ function makeItemImages(item, array1, array2, num) {
             removeImage("one", itemIdsOne);
         }
         championChangeStats("one");
+        console.log("Items add-", itemIdsOne);
      }
      
      else if (num === "two") {
@@ -314,6 +312,7 @@ function makeItemImages(item, array1, array2, num) {
             removeImage("two", itemIdsTwo);
         }
         championChangeStats("two");
+        console.log("Items add-", itemIdsTwo);
     }
 
 }
@@ -324,9 +323,10 @@ function makeItemImages(item, array1, array2, num) {
 function removeImage(num, array) {
     for (let i = 0; i < array.length; i++) {
         $(`#champ-${num}-${i}`).on('click', function(e) {   
-            $(`#champ-${num}-${i}`).remove();     
+            this.remove();     
             array.splice(i, 1);
-            championChangeStats("num");
+            console.log("Items delete- ", array);
+            championChangeStats(num);
             e.preventDefault();
         });
     }
