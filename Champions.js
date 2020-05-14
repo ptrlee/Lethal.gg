@@ -42,7 +42,8 @@ export function spellDamage() {
     let champA = getAtkChamp();
 
     let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
-    console.log(spellsChamp);
+    let totalDamage = [[0],[0],[0],[0],[0],[0]];
+    let aaDMG;
     for (let i = 0; i < champA.abilities.length + 1; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
         let level = 5; //level of spell placeholder
@@ -51,21 +52,37 @@ export function spellDamage() {
         let spellVar;
         if (i!=0) {
             spell = champA.abilities[i-1];
-            spellEffect = spell.effect[1];
-            spellVar = spell.vars;
+            spellEffect = spell.effect[1]; //base value
+            spellVar = spell.vars; // scaling value
         }
-        let totalDamage = [0,0,0,0,0];
-        let aaDMG;
-       
         //test for print
-        if (i != 0)
-        break;
 
-        console.log(spellsChamp[0]); 
-        if (i == 0 || !spellsChamp[i].useParseToolTip) {
+        if (i == 0 || !spellsChamp[i].worksForAPI) {
+            type = spellsChamp[i].type;
+            if (i == 0) {
+                spellsChamp[i]=spellsChamp[i].Passive;
+                totalDamage[i] = (champD.health)*(spellsChamp[i].targetHPScale + spellsChamp[i].targetHPScalePerLevel * champA.level);
+                totalDamage[i] = calculateDMG(totalDamage[i], champD.armor, 0, 0)
+            }
+            else if (i == 1) {
+                spellsChamp[i]=spellsChamp[i].QBaseDamage;
+                for (let j = 0; j < 3; j++) {
+                    totalDamage[i][j] = (spellsChamp[i].FirstCast[level-1]+(spellsChamp[i].FirstADScale[level-1]*(champA.bonusAD+champA.baseAD)));
+                    totalDamage[i][j] = totalDamage[i][j]*(1+0.25*j)
+                    totalDamage[i][j] = calculateDMG(totalDamage[i][j], champD.armor, 0, 0);
+                    totalDamage[i][j+3] = totalDamage[i][j]*1.5;
+                }
+            }
+            else if (i == 2) {
+                spellsChamp[i]=spellsChamp[i].WBaseDamage;
+                totalDamage[i][0] = spellsChamp[i].PhysicalDamage[level-1] + spellsChamp[i].FirstScale*(champA.bonusAD+champA.baseAD);
+                totalDamage[i][0] = calculateDMG(totalDamage[i][0], champD.armor, 0, 0)
+                totalDamage[i][1] = 2*totalDamage[i][0];
+            }
         }
 
         // type of damage
+        /** 
         if (i!= 0) {
         let tooltip = parseTooltip(spell.tooltip);
         for (let j = 0; j < tooltip.length; j++) { //2x for ahri q 
@@ -109,11 +126,15 @@ export function spellDamage() {
             }
         }
         }
-        /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
-        aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
-        aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
- 
+        **/
     }
+    
+    /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+    aaDMG = (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
+    aaDMG = (aaDMG * ((1+champA.critMult)*(champA.crit+1)))
+    totalDamage[5] = aaDMG;
+
+    console.log(totalDamage);
 }
 
 /**
