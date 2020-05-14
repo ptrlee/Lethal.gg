@@ -23,35 +23,28 @@ let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/
 */ 
 
 export function spellDamage() {
-    let x = document.getElementById("champ-name-one").innerHTML;
-    let y = document.getElementById("champ-name-two").innerHTML;
-    let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
-    let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
-    let attack = att_champ[x];
-    let defend = def_champ[y];
+    let exceptions = [];
     let champD = getDefChamp();
     let champA = getAtkChamp();
+    //console.log(champA.abilities);
 
-    //console.log(defend);
-    //console.log(attack.spells[0]);
-
-    for (let i = 0; i < attack.spells.length; i++) {
+    for (let i = 0; i < champA.abilities.length; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
         let level = 5; //level of spell placeholder
-        let spell = attack.spells[i];
+        let spell = champA.abilities[i];
         let spellEffect = spell.effect[1];
-        let spellVar = attack.spells[i].vars;
+        let spellVar = spell.vars;
         let totalDamage = [0,0,0,0];
         let aaDMG;
-        //console.log(spellVar);
+        console.log(spell);
        
         //test for print
-        if (i != 0)
-        break;
+        // if (i != 0)
+        // break;
 
         // type of damage
-        for (let j = 0; j < parseTooltip(attack.spells[i].tooltip).length; j++) { //2x for ahri q 
-            let shorten = parseTooltip(attack.spells[i].tooltip)[j].toString().split(" ");
+        for (let j = 0; j < parseTooltip(spell.tooltip).length; j++) { //2x for ahri q 
+            let shorten = parseTooltip(spell.tooltip)[j].toString().split(" ");
             for (let k = 0; k < shorten.length; k++) { 
                 if (shorten[k] === "magic" || shorten[k] === "magical") {
                     type = 1;
@@ -61,18 +54,33 @@ export function spellDamage() {
                     break;
                 }
             }
-
+           
             console.log(shorten);
             //console.log(type);
             
             //calls calculateDMG for every type of dmg 
             if (type === 1) {
+                if (spellVar.length === 0) {
+                    exceptions.push(spell);
+                    break;
+                }
+
                 let damage = spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
                 totalDamage[i] += calculateDMG(damage,champD.mr,0,0);
                 //console.log(spell + dmg);
             } else if (type == 2) {
+                if (spellVar.length === 0) {
+                    exceptions.push(spell);
+                    break;
+                }
+
                 totalDamage[i] += spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
             } else if (type == 0) { 
+                if (spellVar.length === 0) {
+                    exceptions.push(spell);
+                    break;
+                }
+
                 let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
                 // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
                 // have to implement this
@@ -80,7 +88,7 @@ export function spellDamage() {
             }
         }
         console.log("damage = ", totalDamage);
-
+        console.log("Exceptions", exceptions);
         /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
         aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
         aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
@@ -173,10 +181,9 @@ export function getAtkChamp() {
     let x = document.getElementById("champ-name-one").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
     let champ = att_champ[x];
-
     let champA = {
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
-        abilities: [[""]],
+        abilities: champ.spells,
         level: document.getElementById("champ-level-list-one").value,
         mana: 0,
         baseAD: 0,
@@ -218,6 +225,7 @@ export function getDefChamp() {
 
     let champD = { // abilities and runes
         level: document.getElementById("champ-level-list-two").value,
+        abilities: champ.abilities,
         armor: 0,
         health: 0,
         mana: 0,
@@ -254,7 +262,7 @@ function growth(level) {
 
 function changeAtkStats(champion, champ) { 
     champion.baseAD = champ.stats.attackdamage;
-    champion.bonusAD += champ.stats.attackdamageperlevel * growth(champion.level);
+    champion.baseAD += champ.stats.attackdamageperlevel * growth(champion.level);
     champion.mana = champ.stats.mp; 
     champion.mana += champ.stats.mpperlevel * growth(champion.level); 
 }
