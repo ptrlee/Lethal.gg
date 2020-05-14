@@ -13,6 +13,19 @@ jQuery.extend({
             }
         });
        return champ;
+    },
+    getJSON: function(ChampionName) {
+        var champ = null;
+        $.ajax({
+            url: '/ChampSpellDamage.json',
+            type: 'get',
+            dataType: 'JSON',
+            async: false,
+            success: function(data) {
+                champ = data[ChampionName];
+            }
+        });
+       return champ;
     }
 });
 
@@ -26,25 +39,36 @@ export function spellDamage() {
     let exceptions = [];
     let champD = getDefChamp();
     let champA = getAtkChamp();
-    //console.log(champA.abilities);
 
-    for (let i = 0; i < champA.abilities.length; i++) {
+    let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
+    console.log(spellsChamp);
+    for (let i = 0; i < champA.abilities.length + 1; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
         let level = 5; //level of spell placeholder
-        let spell = champA.abilities[i];
-        let spellEffect = spell.effect[1];
-        let spellVar = spell.vars;
-        let totalDamage = [0,0,0,0];
+        let spell;
+        let spellEffect;
+        let spellVar;
+        if (i!=0) {
+            spell = champA.abilities[i-1];
+            spellEffect = spell.effect[1];
+            spellVar = spell.vars;
+        }
+        let totalDamage = [0,0,0,0,0];
         let aaDMG;
-        console.log(spell);
        
         //test for print
-        // if (i != 0)
-        // break;
+        if (i != 0)
+        break;
+
+        console.log(spellsChamp[0]); 
+        if (i == 0 || !spellsChamp[i].useParseToolTip) {
+        }
 
         // type of damage
-        for (let j = 0; j < parseTooltip(spell.tooltip).length; j++) { //2x for ahri q 
-            let shorten = parseTooltip(spell.tooltip)[j].toString().split(" ");
+        if (i!= 0) {
+        let tooltip = parseTooltip(spell.tooltip);
+        for (let j = 0; j < tooltip.length; j++) { //2x for ahri q 
+            let shorten = tooltip[j].toString().split(" ");
             for (let k = 0; k < shorten.length; k++) { 
                 if (shorten[k] === "magic" || shorten[k] === "magical") {
                     type = 1;
@@ -54,9 +78,6 @@ export function spellDamage() {
                     break;
                 }
             }
-           
-            //console.log(shorten);
-            //console.log(type);
             
             //calls calculateDMG for every type of dmg 
             if (type === 1) {
@@ -67,7 +88,6 @@ export function spellDamage() {
 
                 let damage = spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
                 totalDamage[i] += calculateDMG(damage,champD.mr,0,0);
-                //console.log(spell + dmg);
             } else if (type == 2) {
                 if (spellVar.length === 0) {
                     exceptions.push(spell);
@@ -87,17 +107,12 @@ export function spellDamage() {
                 totalDamage[i] += calculateDMG(damage,champD.armor,0,0);
             }
         }
-        //console.log("damage = ", totalDamage);
-        console.log("Exceptions", exceptions);
+        }
         /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
         aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
         aaDMG = (champA.aaDMG * ((1+champA.critMult)*champA.crit+1))
  
     }
-    
-    //console.log(baseSpellDamage1);
-    //console.log(defend);
-    //console.log(shorten);
 }
 
 /**
@@ -110,7 +125,6 @@ function calculateDMG(damage, reduction, flatPen, percentPen) {
     reduction *= (1-percentPen);
     reduction -= flatPen;
     total += (damage * 100 / parseFloat((100 + reduction)));
-    //console.log(reduction);
     return total;
 }
 
@@ -165,7 +179,6 @@ function parseTooltip(tooltip) {
             i = j+6;
         }
     }
-    //console.log(value);
     return value;
     
 }
@@ -176,7 +189,6 @@ function itemSearch(itemIndex) {
 }
 
 //attacking champion
-//console.log(att_champ.Ahri);
 export function getAtkChamp() {
     let x = document.getElementById("champ-name-one").innerHTML;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
@@ -213,7 +225,6 @@ export function getAtkChamp() {
     changeDefStats(champA, champ);
     changeAtkSpeedStats(champA, champ);
     itemStats(champA.item,champA);
-    //console.log(champA);
     return champA;
 }
 
@@ -245,7 +256,6 @@ export function getDefChamp() {
     changeDefStats(champD,champ);
     changehpregenStats(champD, champ);
     itemStats(champD.item,champD);
-    //console.log(champD);
     return champD;
 }
 
