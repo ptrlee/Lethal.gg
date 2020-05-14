@@ -1,4 +1,4 @@
-import {getChampOneItems, getChampionTwoItems} from "./calc.js"
+import {getChampOneItems, getChampionTwoItems} from "./calc.js";
 
 jQuery.extend({
     getValues: function(url) {
@@ -28,6 +28,7 @@ jQuery.extend({
        return champ;
     }
 });
+
 
 /** 
 let x = document.getElementById("champ-name-one").innerHTML;
