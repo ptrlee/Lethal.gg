@@ -55,7 +55,7 @@ export function spellDamage() {
                 }
             }
            
-            console.log(shorten);
+            //console.log(shorten);
             //console.log(type);
             
             //calls calculateDMG for every type of dmg 
@@ -87,7 +87,7 @@ export function spellDamage() {
                 totalDamage[i] += calculateDMG(damage,champD.armor,0,0);
             }
         }
-        console.log("damage = ", totalDamage);
+        //console.log("damage = ", totalDamage);
         console.log("Exceptions", exceptions);
         /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
         aaDMG += (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
