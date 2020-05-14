@@ -3,7 +3,8 @@
         "Passive": {
             "Formula": "(4.588% + 0.412% x level) of target's maximum hp",
             "Heal": 1
-        },
+        }},
+            {
         "QBaseDamage": {
             "SweetSpot": false,
             "FirstCast": [10,30,50,70,90],
@@ -13,7 +14,8 @@
             "SecondADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
             "ThirdADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
             "SweetSpotComment": "Hitting the targets in Aatrox's sweet spot"
-        },
+        }},
+            {
         "WBaseDamage": {
             "Chained": false,
             "PhysicalDamage": [30,40,50,60,70],
@@ -21,13 +23,15 @@
             "FirstScale": 0.4,
             "TotalScale": 0.8,
             "ChainedComment": "Enemy stays chained and gets pulled"
-        },
+            }},
+            {
         "RBaseDamage": {
             "BonusMS": [60,80,100],
             "ADScale": [20,25,30],
             "IncHeal": [50,60,70]
         }
-        }],
+
+    }],
 
     "Ahri": {
         "EBaseDamage": {
