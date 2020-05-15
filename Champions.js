@@ -44,91 +44,125 @@ export function spellDamage() {
     let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
     let totalDamage = [[0],[0],[0],[0],[0],[0]];
     let aaDMG;
-    for (let i = 0; i < champA.abilities.length + 1; i++) {
+    for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
-        let level = 5; //level of spell placeholder
+        let level = [5,1,1,1]; //level of spell placeholder
         let spell;
         let spellEffect;
         let spellVar;
-        if (i!=0) {
+        //test for print
+        
+        //yikes
+        let spellString;
+        if (i == 0)
+            spellString = 'Passive';
+        else if (i == 1)
+            spellString = 'QBaseDamage';
+        else if (i == 2)
+            spellString = 'WBaseDamage';
+        else if (i == 3)
+            spellString = 'EBaseDamage';
+        else 
+            spellString = 'RBaseDamage';
+
+        if (i == 0 || !spellsChamp[i][spellString].worksForAPI) {
+            type = spellsChamp[i][spellString].type;
+            if (i == 0) { //passive
+                spellsChamp[i]=spellsChamp[i].Passive;
+                totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+            }
+            else if (i == 1) { //q
+                spellsChamp[i]=spellsChamp[i].QBaseDamage;
+                totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
+                    for (let j = 0; j < 3; j++) {
+                        totalDamage[i][j] = totalDamage[i][0]*(1+0.25*j)
+                        totalDamage[i][j+3] = totalDamage[i][j]*1.5;
+                    }
+                }
+            }
+            else if (i == 2) { //w
+                spellsChamp[i]=spellsChamp[i].WBaseDamage;
+                totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+                console.log(totalDamage[i][0])
+                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
+                    totalDamage[i][0] = spellsChamp[i].PhysicalDamage[level[i-1]-1] + spellsChamp[i].FirstScale*(champA.bonusAD+champA.baseAD);
+                    totalDamage[i][1] = 2*totalDamage[i][0];
+                }
+            }
+            else if (i == 3) { //e
+                spellsChamp[i]=spellsChamp[i].EBaseDamage;
+                totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+            }
+            else if (i == 4) { //r
+                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
+                }
+                else {
+                    spellsChamp[i]=spellsChamp[i].RBaseDamage;
+                    totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+                }
+            }
+
+            //calls calculateDmg depending on type of ability
+            if (type == 0) {
+                for (let j = 0; j < totalDamage[i].length; j++) {
+                    totalDamage[i][j] = calculateDMG(totalDamage[i][j], champD.armor, 0, 0)
+                }
+            }
+            else if (type == 1) {
+                for (let j = 0; j < totalDamage[i].length; j++) 
+                    totalDamage[i][j] = calculateDMG(totalDamage[i][j], champD.mr, 0, 0)
+            }
+        }
+        else {
+
             spell = champA.abilities[i-1];
             spellEffect = spell.effect[1]; //base value
             spellVar = spell.vars; // scaling value
-        }
-        //test for print
-
-        if (i == 0 || !spellsChamp[i].worksForAPI) {
-            type = spellsChamp[i].type;
-            if (i == 0) {
-                spellsChamp[i]=spellsChamp[i].Passive;
-                totalDamage[i] = (champD.health)*(spellsChamp[i].targetHPScale + spellsChamp[i].targetHPScalePerLevel * champA.level);
-                totalDamage[i] = calculateDMG(totalDamage[i], champD.armor, 0, 0)
-            }
-            else if (i == 1) {
-                spellsChamp[i]=spellsChamp[i].QBaseDamage;
-                for (let j = 0; j < 3; j++) {
-                    totalDamage[i][j] = (spellsChamp[i].FirstCast[level-1]+(spellsChamp[i].FirstADScale[level-1]*(champA.bonusAD+champA.baseAD)));
-                    totalDamage[i][j] = totalDamage[i][j]*(1+0.25*j)
-                    totalDamage[i][j] = calculateDMG(totalDamage[i][j], champD.armor, 0, 0);
-                    totalDamage[i][j+3] = totalDamage[i][j]*1.5;
-                }
-            }
-            else if (i == 2) {
-                spellsChamp[i]=spellsChamp[i].WBaseDamage;
-                totalDamage[i][0] = spellsChamp[i].PhysicalDamage[level-1] + spellsChamp[i].FirstScale*(champA.bonusAD+champA.baseAD);
-                totalDamage[i][0] = calculateDMG(totalDamage[i][0], champD.armor, 0, 0)
-                totalDamage[i][1] = 2*totalDamage[i][0];
-            }
-        }
 
         // type of damage
-        /** 
-        if (i!= 0) {
-        let tooltip = parseTooltip(spell.tooltip);
-        for (let j = 0; j < tooltip.length; j++) { //2x for ahri q 
-            let shorten = tooltip[j].toString().split(" ");
-            for (let k = 0; k < shorten.length; k++) { 
-                if (shorten[k] === "magic" || shorten[k] === "magical") {
-                    type = 1;
-                    break;
-                } else if (shorten[k] === "true") {
-                    type = 2;
-                    break;
+            let tooltip = parseTooltip(spell.tooltip);
+            for (let j = 0; j < tooltip.length; j++) { //2x for ahri q 
+                let shorten = tooltip[j].toString().split(" ");
+                for (let k = 0; k < shorten.length; k++) { 
+                    if (shorten[k] === "magic" || shorten[k] === "magical") {
+                        type = 1;
+                        break;
+                    } else if (shorten[k] === "true") {
+                        type = 2;
+                        break;
+                    }
+                }
+                
+                //calls calculateDMG for every type of dmg 
+                if (type === 1) {
+                    if (spellVar.length === 0) {
+                        exceptions.push(spell);
+                        break;
+                    }
+                    let damage = spellEffect[level[i-1]-1] + champA.bonusAP*spellVar[0].coeff;
+                    totalDamage[i][0] += calculateDMG(damage,champD.mr,0,0);
+                } else if (type == 2) {
+                    if (spellVar.length === 0) {
+                        exceptions.push(spell);
+                        break;
+                    }
+
+                    totalDamage[i][0] += spellEffect[level[i-1]-1] + champA.bonusAP*spellVar[0].coeff;
+                } else if (type == 0) { 
+                    if (spellVar.length === 0) {
+                        exceptions.push(spell);
+                        break;
+                    }
+
+                    let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
+                    // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
+                    // have to implement this
+                    totalDamage[i][0] += calculateDMG(damage,champD.armor,0,0);
                 }
             }
-            
-            //calls calculateDMG for every type of dmg 
-            if (type === 1) {
-                if (spellVar.length === 0) {
-                    exceptions.push(spell);
-                    break;
-                }
-
-                let damage = spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
-                totalDamage[i] += calculateDMG(damage,champD.mr,0,0);
-            } else if (type == 2) {
-                if (spellVar.length === 0) {
-                    exceptions.push(spell);
-                    break;
-                }
-
-                totalDamage[i] += spellEffect[level-1] + champA.bonusAP*spellVar[0].coeff;
-            } else if (type == 0) { 
-                if (spellVar.length === 0) {
-                    exceptions.push(spell);
-                    break;
-                }
-
-                let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
-                // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
-                // have to implement this
-                totalDamage[i] += calculateDMG(damage,champD.armor,0,0);
-            }
         }
-        }
-        **/
-    }
-    
+    }   
     /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
     aaDMG = (champA.atkSpeed*(1+champA.bAtkSpeed)) * (champA.baseAD + champA.bonusAD);
     aaDMG = (aaDMG * ((1+champA.critMult)*(champA.crit+1)))
@@ -148,6 +182,42 @@ function calculateDMG(damage, reduction, flatPen, percentPen) {
     reduction -= flatPen;
     total += (damage * 100 / parseFloat((100 + reduction)));
     return total;
+}
+
+/**
+ * Calculates spell damage with scaling values and stuff
+ * @param {} tooltip 
+ */
+function calculateSpell(champA, champD, spellsChampSpell, level) {
+    let totalDamage = 0;
+    //enemy max hp scale
+
+    if (spellsChampSpell.targetHPScale != null && spellsChampSpell.targetHPScalePerLevel!=null)
+        totalDamage += (champD.health)*(spellsChampSpell.targetHPScale + spellsChampSpell.targetHPScalePerLevel * champA.level);
+
+    // bonus AD scale 
+    if (spellsChampSpell.ADScale != null) {
+        if (spellsChampSpell.ADScale.length == undefined) {
+            totalDamage += (spellsChampSpell.ADDamage[level-1]+(spellsChampSpell.ADScale*(champA.bonusAD)));
+        }
+        else 
+            totalDamage += (spellsChampSpell.ADDamage[level-1]+(spellsChampSpell.ADScale[level-1]*(champA.bonusAD)));
+    }
+
+    //aatrox  q
+    if (spellsChampSpell.FirstADScale != null) {
+        totalDamage += (spellsChampSpell.FirstCast[level-1]+(spellsChampSpell.FirstADScale[level-1]*(champA.bonusAD+champA.baseAD)));
+    }
+
+    // AP Scale
+    if (spellsChampSpell.APScale !=null) {
+        if (spellsChampSpell.APScale.length == undefined) {
+            totalDamage += (spellsChampSpell.APDamage[level-1]+(spellsChampSpell.APScale*(champA.bonusAP)));
+        }
+        else
+            totalDamage += (spellsChampSpell.APDamage[level-1]+(spellsChampSpell.APScale[level-1]*(champA.bonusAP)));
+    }
+        return totalDamage;
 }
 
 /**
