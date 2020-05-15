@@ -47,8 +47,20 @@
 
     "Ahri": [
         {
+        "QBaseDamage": {
+            "worksForAPI": true
+            }
+        },
+
+        {
         "EBaseDamage": {
             "Charmed": false
+            }
+        },
+
+        {
+        "WBaseDamage": {
+            "worksForAPI": true
             }
         },
 
@@ -64,6 +76,34 @@
 
     "Akali": [
         {
+        "Passive": {
+            "worksForAPI": false,
+            "APDamage": [39,42,45,48,51,54,57,60,69,78,87,96,105,120,135,150,165,180],
+            "ADScale": 0.6,
+            "APScale": 0.5
+            }
+        },
+
+        {
+        "QBaseDamage": {
+            "worksForAPI": true
+            } 
+        
+        },
+
+        {
+        "WBaseDamage": {
+            "worksForAPI": true
+            }
+        },
+
+        {
+        "EBaseDamage": {
+            "worksForAPI": true
+            }
+        },
+
+        {
         "RBaseDamage": {
             "worksForAPI": false,
             "ADDamage": [125,225,325],
@@ -76,21 +116,71 @@
 
     "Amumu": [
         {
-        "RBaseDamage": {
-            "worksForAPI": false,
-            "APDamage": [150,250,350],
-            "APScale": 0.8
+            "Passive": {
+                "Curse": false,
+                "Comment": "Cursed targets receive Hybrid penetration 10% bonus true damage from all incoming pre-mitigation magic damage."
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            } 
+            
+        },
+    
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+    
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "APDamage": [150,250,350],
+                "APScale": 0.8
             }
         }
     ],
 
     "Anivia": [
         {
-        "RBaseDamage": {
-            "worksForAPI": false,
-            "APPerSec": [40,60,80],
-            "Slow": [20,30,40],
-            "Scale": 0.125
+        "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "APPerSec": [40,60,80],
+                "Slow": [20,30,40],
+                "Scale": 0.125
             }
         }
     ],
@@ -118,17 +208,25 @@
                 "worksForAPI": false
             }
         },
-        {"RBaseDamage": {
-            "worksForAPI": false,
-            "APDamage": [150,275,400],
-            "APScale": 0.75,
-            "BurnDamage": [20,30,40],
-            "BurnAPScale": 0.12
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "APDamage": [150,275,400],
+                "APScale": 0.75,
+                "BurnDamage": [20,30,40],
+                "BurnAPScale": 0.12
             }
         }
     ],
 
     "Ashe": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "Frost": false,
+                "Comment": "Basic attacks against enemies with Frost deal 110% (+ (100 Infinity Edge item + 25)% of critical strike chance) modified damage"
+            }
+        },
         {
         "QBaseDamage": {
             "worksForAPI": false,
