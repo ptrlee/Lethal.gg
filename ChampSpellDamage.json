@@ -9,7 +9,7 @@
         }},
             {
         "QBaseDamage": {
-            "worksForAPI": false,
+            "worksForAPI": false,   
             "type": 0,
             "SweetSpot": false,
             "FirstCast": [10,30,50,70,90],
@@ -54,6 +54,7 @@
 
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "OneFoxfire": [60,90,120],
             "AllFoxfire": [180,270,360],
             "ScaleForOneFoxfire": 0.35
@@ -64,9 +65,10 @@
     "Akali": [
         {
         "RBaseDamage": {
-            "PhysicalDamage": [125,225,325],
+            "worksForAPI": false,
+            "ADDamage": [125,225,325],
             "ADScale": 0.5,
-            "MagicDamage": [75,145,215],
+            "APDamage": [75,145,215],
             "APScale": 0.3
             }
         }
@@ -75,8 +77,9 @@
     "Amumu": [
         {
         "RBaseDamage": {
-            "BaseAP": [150,250,350],
-            "Scale": 0.8
+            "worksForAPI": false,
+            "APDamage": [150,250,350],
+            "APScale": 0.8
             }
         }
     ],
@@ -84,6 +87,7 @@
     "Anivia": [
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APPerSec": [40,60,80],
             "Slow": [20,30,40],
             "Scale": 0.125
@@ -93,17 +97,33 @@
 
     "Annie": [
         {
-            "QBaseDamage": [80,115,150,185,220]
+            "QBaseDamage": {
+                "APDamage": [80,115,150,185,220],
+                "APScale": 0.8,
+                "worksForAPI": false
+            }
         },
         {
-            "WBaseDamage": [70,115,160,205,250]
+            "WBaseDamage": {
+                "APDamage": [70,115,160,205,250],
+                "APScale": 0.85,
+                "worksForAPI": false
+            }
         },
         {
-            "EBaseDamage": [20,30,40,50,60]
+            "EBaseDamage": {
+                "APDamage": [20,30,40,50,60],
+                "APScale": 0.2,
+                "DamageRed": [0.13, 0.17, 0.21, 0.25, 0.29],
+                "worksForAPI": false
+            }
         },
         {"RBaseDamage": {
-            "InitialDamage": [150,275,400],
-            "BurnDamage": [20,30,40]
+            "worksForAPI": false,
+            "APDamage": [150,275,400],
+            "APScale": 0.75,
+            "BurnDamage": [20,30,40],
+            "BurnAPScale": 0.12
             }
         }
     ],
@@ -111,13 +131,15 @@
     "Ashe": [
         {
         "QBaseDamage": {
+            "worksForAPI": false,
             "DamagePerArrow": [0.21,0.22,0.23,0.24,0.25],
-            "BonusAtkSpeed": [20,30,40,50,60]
+            "BonusAtkSpeed": [0.2,0.3,0.4,0.5,0.6]
             }
         },
         
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [200,400,600],
             "APScale": 1
             }
@@ -127,6 +149,7 @@
     "Aurelion_Sol": [
         {
         "WBaseDamage": {
+            "worksForAPI": false,
             "BonusDamage": [5,10,15,20,25],
             "APScale": 0.35
             }
@@ -136,6 +159,7 @@
     "Blitzcrank": [
         {
         "QBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [70,120,170,220,270],
             "APScale": 1
             }
@@ -143,6 +167,7 @@
 
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "PassiveAPDamage": [50,100,150],
             "ActiveAPDamage": [250,375,500],
             "PassiveAPScale": 0.3,
@@ -154,6 +179,7 @@
     "Brand": [
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [100,200,300],
             "APScale": 0.25
             }
@@ -163,6 +189,7 @@
     "Braum": [
         {
         "QBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [60,110,160,210,260],
             "HPScale": 0.025,
             "HPScaleComment": "Q damage scales with Braum HP"
@@ -171,6 +198,7 @@
 
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [150,300,450],
             "APScale": 0.6
             }
@@ -182,12 +210,14 @@
         "Passive": {
             "Level": [1,7,13],
             "ADScale": [0.5, 0.75, 1],
-            "Coomment": "Caitlyns headshot scales by ADScale at those levels"
+            "Comment": "Caitlyns headshot scales by ADScale at those levels",
+            "worksForAPI": false
             }
         },
 
         {
         "QBaseDamage": {
+            "worksForAPI": false,
             "ADDamage": [50,90,130,170,210],
             "ADScale": [1.3,1.4,1.5,1.6,1.7]
             }
@@ -195,6 +225,7 @@
 
         {
         "WBaseDamage": {
+            "worksForAPI": false,
             "Trapped": false,
             "ADDamage": [60,105,150,195,240],
             "ADScale": [0.4,0.55,0.7,0.85,1],
@@ -204,6 +235,7 @@
 
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "ADDamage": [300,525,750],
             "ADScale": 2
             }
@@ -213,14 +245,16 @@
     "Camille": [
         {
         "QBaseDamage": {
-            "FirstCast": [0.2,0.25,0.3,0.35,0.4],
-            "SecondCast": [0.4,0.5,0.6,0.7,0.8],
+            "worksForAPI": false,
+            "FirstCastDamage": [0.2,0.25,0.3,0.35,0.4],
+            "SecondCastDamage": [0.4,0.5,0.6,0.7,0.8],
             "Comment": "Both arrays contain ADScale, second cast also has some true damage based on level"
             }
         },
 
         {
         "WBaseDamage": {
+            "worksForAPI": false,
             "InnerPhysicalDamage": [70,100,130,160,190],
             "InnerADScale": 0.6,
             "OuterDamage": [0.06, 0.065, 0.07, 0.075, 0.08],
@@ -230,6 +264,7 @@
 
         {
         "EBaseDamage": {
+            "worksForAPI": false,
             "ADDamage": [60,95,130,165,200],
             "ADScale": 0.75
             }
@@ -237,6 +272,7 @@
         
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [0.05, 0.1, 0.15],
             "TargetHealthScale": [0.04, 0.06, 0.08],
             "Comment": "Deals bonus damage somehow"
@@ -247,8 +283,9 @@
     "Cassiopeia":[ 
         {
         "RBaseDamage": {
-               "APDamage": [150, 250, 350],
-               "APScale": 0.5 
+                "worksForAPI": false,
+                "APDamage": [150, 250, 350],
+                "APScale": 0.5 
             }
         }
     ],
@@ -256,6 +293,7 @@
     "Chogath": [
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "TrueDamage": [300,475,650],
             "APScale": 0.5,
             "HPScale": 0.1
@@ -266,6 +304,7 @@
     "Corki": [
         {
         "WBaseDamage": {
+            "worksForAPI": false,
             "Valkyrie" :{
                 "APDamagePerTick": [15, 22.5, 30, 37.5, 45],
                 "APScale": 0.1,
@@ -279,6 +318,7 @@
 
         {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [90, 125, 160],
             "ADScale": [0.15, 0.45, 0.75],
             "APScale": [0.2],
@@ -287,27 +327,39 @@
         }
     ],
 
-    "Darius": {
+    "Darius": [
+        {
         "WBaseDamage":{
+            "worksForAPI": false,
             "ADScale": [0.4, 0.45, 0.5, 0.55, 0.6]
+            }
         },
+        {
         "EBaseDamage":{
+            "worksForAPI": false,
             "ArmorPen": [0.15, 0.2, 0.25, 0.3, 0.35]
+            }
         },
+        {
         "RBaseDamage": {
+            "worksForAPI": false,
             "TrueDamage": [100, 200, 300],
             "ADScale": 0.75
+            }
         }
-    },
+    ],
 
-    "Diana": {
+    "Diana": [
+        {
         "RBaseDamage": {
+            "worksForAPI": false,
             "APDamage": [200, 300, 400],
             "APScale": 0.6,
             "APDamagePerChamp": [35, 60, 85],
             "BonusAPScale": 0.15
+            }
         }
-    },
+    ],
 
 
 
