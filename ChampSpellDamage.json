@@ -58,13 +58,13 @@
         },
 
         {
-        "EBaseDamage": {
+        "WBaseDamage": {
             "Charmed": false
             }
         },
 
         {
-        "WBaseDamage": {
+        "EBaseDamage": {
             "worksForAPI": true
             }
         },
@@ -73,9 +73,8 @@
         "RBaseDamage": {
             "type": 1,
             "worksForAPI": false,
-            "OneFoxfire": [60,90,120],
             "AllFoxfire": [180,270,360],
-            "ScaleForOneFoxfire": 0.35
+            "ScaleForOneFoxfire": 1.05
             }   
         }
     ],
@@ -482,6 +481,7 @@
         {
         "QBaseDamage": {
             "worksForAPI": false,
+            "type": 0,
             "FirstCastDamage": [0.2,0.25,0.3,0.35,0.4],
             "SecondCastDamage": [0.4,0.5,0.6,0.7,0.8],
             "Comment": "Both arrays contain ADScale, second cast also has some true damage based on level"
