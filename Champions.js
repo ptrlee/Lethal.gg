@@ -84,7 +84,6 @@ export function spellDamage() {
             else if (i == 2) { //w
                 spellsChamp[i]=spellsChamp[i].WBaseDamage;
                 totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                console.log(totalDamage[i][0])
                 if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
                     totalDamage[i][0] = spellsChamp[i].PhysicalDamage[level[i-1]-1] + spellsChamp[i].FirstScale*(champA.bonusAD+champA.baseAD);
                     totalDamage[i][1] = 2*totalDamage[i][0];
@@ -168,7 +167,14 @@ export function spellDamage() {
     aaDMG = (aaDMG * ((1+champA.critMult)*(champA.crit+1)))
     totalDamage[5] = aaDMG;
 
+    let inputAD = 0;
+    let inputAP = 0;
+    let debugAD = 100/(100+20.88)
+    let debugAP = 100/(100+30)
+    console.log(inputAD*debugAD);
+    console.log(inputAP*debugAP);
     console.log(totalDamage);
+    
 }
 
 /**
