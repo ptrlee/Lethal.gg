@@ -89,16 +89,20 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [39,42,45,48,51,54,57,60,69,78,87,96,105,120,135,150,165,180],
-                "ADScale": 0.6,
+                "BADScale": 0.6,
                 "APScale": 0.5
             }
         },
 
         {
         "QBaseDamage": {
-            "worksForAPI": true
+            "worksForAPI": false,
+            "type": 1,
+            "APDamage": [25,50,75,100,125],
+            "ADScale": 0.65,
+            "APScale": 0.6
             } 
-        
+
         },
 
         {
@@ -109,7 +113,11 @@
 
         {
         "EBaseDamage": {
-            "worksForAPI": true
+            "worksForAPI": false,
+            "type": 0,
+            "ADDamage": [100, 170, 240, 310, 380],
+            "ADScale": 0.70,
+            "APScale": 1.0
             }
         },
 
@@ -117,9 +125,9 @@
         "RBaseDamage": {
             "type": 3,
             "worksForAPI": false,
-            "ADDamage": [125,225,325],
+            "ADDamage": [125, 225, 325],
             "ADScale": 0.5,
-            "APDamage": [75,145,215],
+            "APDamage": [75, 145, 215],
             "APScale": 0.3
             }
         }
@@ -150,7 +158,10 @@
     
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [75,100,125,150,175],
+                "APScale": 0.5
             }
         },
 
@@ -167,13 +178,16 @@
     "Anivia": [
         {
         "Passive": {
-                "worksForAPI": true
+                "worksForAPI": true 
             }
         },
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [120, 170, 220, 270, 320],
+                "APScale": 0.9
             }
         },
 
@@ -201,6 +215,11 @@
     ],
 
     "Annie": [
+        {   
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
         {
             "QBaseDamage": {
                 "APDamage": [80,115,150,185,220],
@@ -224,7 +243,7 @@
                 "APDamage": [20,30,40,50,60],
                 "APScale": 0.2,
                 "DamageRed": [0.13, 0.17, 0.21, 0.25, 0.29],
-                "worksForAPI": false,
+                "worksForAPI": true,
                 "type": 1
             }
         },
@@ -261,7 +280,10 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [20,35,50,65,80],
+                "ADScale": 1.0
             }
         },
 
@@ -281,7 +303,7 @@
         }   
     ],
 
-    "Aurelion_Sol": [
+    "AurelionSol": [
         {
             "Passive": {
                 "worksForAPI": false,
@@ -299,7 +321,10 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "BonusDamage": [5,10,15,20,25],
+                "APScale": 0.35
             }
         },
 
@@ -310,13 +335,11 @@
         },
 
         {
-        "WBaseDamage": {
-            "worksForAPI": false,
-            "type": 1,
-            "BonusDamage": [5,10,15,20,25],
-            "APScale": 0.35
+            "RBaseDamage": {
+                "worksForAPI": true
             }
-        }   
+        }
+        
     ],
 
     "Blitzcrank": [
@@ -337,7 +360,8 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": true,
+                "BonusAtkSpeed": [0.3, 0.38, 0.46, 0.54, 0.62]
             }
         },
 
@@ -345,7 +369,7 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADScale": 1
+                "ADScale": 2
             }
         },
 
@@ -354,9 +378,9 @@
             "worksForAPI": false,
             "type": 1,
             "PassiveAPDamage": [50,100,150],
-            "ActiveAPDamage": [250,375,500],
+            "APDamage": [250,375,500],
             "PassiveAPScale": 0.3,
-            "ActiveAPScale": 1 
+            "APScale": 1 
             }
         }
     ],
@@ -405,7 +429,8 @@
             "Passive": {
                 "type": 1,
                 "worksForAPI": false,
-                "APDamage": "16 + (10 x Level)",
+                "APDamage": [26, 36, 46, 56, 66, 76, 86, 96, 106, 116, 126, 136, 146, 156, 166, 176, 186, 196],
+                "APScale": 0,
                 "Comment": "This effect cannot occur on the same target more than once every few seconds, but during this immunity period, affected targets instead take「 20% of the trigger damage 」 as bonus magic damage from Braum's basic attacks and Winter&#039;s Bite Winter's Bite."
             }
         },
@@ -414,7 +439,8 @@
                 "type": 1,
                 "worksForAPI": false,
                 "APDamage": [60,110,160,210,260],
-                "HPScale": 0.025,
+                "APScale": 0,
+                "myHPScale": 0.025,
                 "HPScaleComment": "Q damage scales with Braum HP"
             }
         },
@@ -443,8 +469,7 @@
     "Caitlyn": [
         {
         "Passive": {
-            "Level": [1,7,13],
-            "ADScale": [0.5, 0.75, 1],
+            "ADScale": [1.5, 1.5,1.5,1.5,1.5,1.5,1.75,1.75,1.75,1.75,1.75,1.75, 2, 2, 2, 2, 2, 2],
             "Comment": "Caitlyns headshot scales by ADScale at those levels",
             "worksForAPI": false,
             "type": 0 
@@ -465,23 +490,32 @@
             "worksForAPI": false,
             "Trapped": false,
             "ADDamage": [60,105,150,195,240],
-            "ADScale": [0.4,0.55,0.7,0.85,1],
+            "BADScale": [0.4,0.55,0.7,0.85,1],
             "type": 0,
             "TrappedComment": "Trap increases headshot damage by ADDamage+ADScale" 
             }
         },
-
+        {
+        "EBaseDamage": {
+            "worksForAPI": true
+        }
+        },
         {
         "RBaseDamage": {
             "worksForAPI": false,
             "type": 0,
             "ADDamage": [300,525,750],
-            "ADScale": 2
+            "BADScale": 2
             }
         }
     ],
 
     "Camille": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
         {
         "QBaseDamage": {
             "worksForAPI": false,
@@ -496,8 +530,8 @@
         "WBaseDamage": {
             "worksForAPI": false,
             "type": 0,
-            "InnerADDamage": [70,100,130,160,190],
-            "InnerADScale": 0.6,
+            "ADDamage": [70,100,130,160,190],
+            "BADScale": 0.6,
             "OuterDamage": [0.06, 0.065, 0.07, 0.075, 0.08],
             "Comment": "Outer damage increases based on opponent's max health and 3.3% per 100 bonus AD"
             }
@@ -508,7 +542,8 @@
             "worksForAPI": false,
             "type": 0,
             "ADDamage": [60,95,130,165,200],
-            "ADScale": 0.75
+            "BADScale": 0.75,
+            "BonusAtkSpeed": [0.4,0.5,0.6,0.7,0.8]
             }
         },
         
@@ -516,8 +551,9 @@
         "RBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "APDamage": [0.05, 0.1, 0.15],
-            "TargetHealthScale": [0.04, 0.06, 0.08],
+            "APDamage": [5, 10, 15],
+            "APScale": 0,
+            "targetCurrentHealthScale": [0.04, 0.06, 0.08],
             "Comment": "Deals bonus damage somehow"
             }
         }
@@ -545,12 +581,18 @@
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [52,56,60,64,68,72,76,80,84,88,92,96,100,104,108,112,116,120],
+                "APScale": 0.10,
+                "type": 1,
+                "extraAPDamage": [10,30,50,70,90],
+                "extraAPScale": 0.6
             }
         },
 
         {
         "RBaseDamage": {
+                "type": 1,
                 "worksForAPI": false,
                 "APDamage": [150, 250, 350],
                 "APScale": 0.5 
@@ -579,16 +621,21 @@
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [22,37,52,67,82],
+                "APScale": 0.3,
+                "targetHPScale": 0.03
             }
         },
 
         {
             "RBaseDamage": {
                 "worksForAPI": false,
-                "TrueDamage": [300,475,650],
+                "APDamage": [300,475,650],
+                "type": 2,
                 "APScale": 0.5,
-                "HPScale": 0.1
+                "myBonusHPScale": 0.1
             }
         }
     ],
@@ -606,7 +653,11 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [75,120,165,210,255],
+                "type": 1,
+                "BADScale": 0.5,
+                "APScale": 0.5
             }
         },
 
@@ -635,9 +686,10 @@
             "worksForAPI": false,
             "type": 1,
             "APDamage": [90, 125, 160],
+            "ADDamage": [0,0,0],
             "ADScale": [0.15, 0.45, 0.75],
-            "APScale": [0.2],
-            "BigOne": 1
+            "APScale": 0.2,
+            "BigOne": 2
             }
         }
     ],
@@ -652,7 +704,7 @@
                 "ADScale": 0.3,
                 "Stack": 0,
                 "MaxStack": {
-                    "ADDamage": [30,35,40,45,50,55,60,65,70,75,80,85,95,105,130,155,180,205,230]
+                    "BADDamage": [30,35,40,45,50,55,60,65,70,75,80,85,95,105,130,155,180,205,230]
                 }
 
             }
@@ -668,7 +720,7 @@
             "WBaseDamage":{
                 "worksForAPI": false,
                 "type": 1,
-                "ADScale": [0.4, 0.45, 0.5, 0.55, 0.6]
+                "BADScale": [0.4, 0.45, 0.5, 0.55, 0.6]
             }
         },
         {
@@ -1105,19 +1157,413 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": true,
+                "APDamage": [10, 25, 40, 55,70],
+                "APScale": 0.55,
+                "ADDamage": "100% of his AD"
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": false
+                "worksForAPI": false,
+                "Passive": {
+                    "typre": 3,
+                    "APDamage": [20, 30, 40, 50,  60],
+                    "APScale": 0.4,
+                    "Comment": "These numbers are total damage, not per tick"
+                },
+                "Active": {
+                    "Death": false,
+                    "type": 1,
+                    "BonusAPDamage": [50, 70, 90, 110, 130],
+                    "APScale": 0.5,
+                    "BonusOnHitDamage": [10, 15, 20, 25, 30],
+                    "APScaleTwo": 0.35,
+                    "Comment": "APScale is for BonusAPDamage, APScaleTwo is for BonusOnHitDamage; APScaleTwo and BonusOnHitDamage are only applied if target doesn't die"
+                }
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": false
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70, 120, 170, 220, 270],
+                "APScale": 0.75
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "LengthTraveled": 0,
+                "Guppy" : {
+                    "APDamage": [150, 250, 350],
+                    "APScale": 0.8
+                },
+                "Chomper" : {
+                    "APDamage": [225, 325, 425],
+                    "APScale": 1
+                },
+                "Gigalodon" : {
+                    "APDamage": [300, 400, 500],
+                    "APScale": 1.2
+                }
+            }
+        }
+    ],
+
+    "Galio": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": "4.118 + 10.882 x Level",
+                "ADScale": 1,
+                "APScale": 0.5,
+                "BMRScale": 0.6
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 115, 150, 185, 220],
+                "APScale": 0.75,
+                "Time": 0.5,
+                "APDamagePerTick": "2% (+ 0.66% per 100 AP) of target's maximum health"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [20, 35, 50, 65, 80],
+                "APScale": 0.3,
+                "Formula": "100% + (25% per 0.25 charged)",
+                "Comment": "APDamage only shows minimum magic damage"
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [90, 130, 170, 210, 250],
+                "APScale": 0.9
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [150, 250, 350],
+                "APScale": 0.7
+            }
+        }
+    ],
+
+    "Gangplank" : [
+        {
+            "Passive": {
+                "worksForAPI": false, 
+                "type": 2,
+                "BTrueDamage": "45 + (10 x Level)",
+                "BADScale": 1
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [20, 45, 70, 95, 120],
+                "ADScale": 1
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [80, 105, 130, 155, 180],
+                "ArmorIgnored": 0.4,
+                "Comment": "An exploding keg deals the attack's damage to all nearby enemies, plus bonus physical damage against Champion icon champions, ignoring 40% of their Armor icon armor"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Waves": 1,
+                "APDamage":[40, 70, 100],
+                "APScale": 0.1,
+                "Comment": "APDamage and Scale are per wave, so for x waves just multiply damage and scale by x" 
+            }
+        }
+    ],
+
+    "Garen": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [30, 60, 90, 120, 150],
+                "ADScale": 0.5
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "ADDamage": [4, 8, 12, 16, 20],
+                "LevelScale": [0, 0.8, 1.6, 2.4, 3.2, 4, 4.8, 5.6, 6.4, 6.6, 6.8, 7, 7.2, 7.4, 7.6, 7.8, 8, 8.2],
+                "ADScale": [0.32, 0.34, 0.36, 0.38, 0.4],
+                "Comment": "Judgment can Critical strike icon critically strike for (33% + Infinity Edge item 25%) bonus physical damage. The total damage is increased by 50% against non-epic Monster icon monsters."
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 2,
+                "TrueDamage": [150, 300, 450],
+                "TMHPScale": [0.2, 0.25, 0.3]
+            }
+        }
+    ],
+
+    "Gnar" : [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form" : {
+                    "FormOne": {
+                        "Name": "MiniGnar",
+                        "ADDamage": [5, 45, 85, 125, 165],
+                        "ADScale": 1.15
+                    },
+                    "FormTwo": {
+                        "Name": "MegaGnar",
+                        "ADDamage": [5, 45, 85, 125, 165],
+                        "ADScale": 1.4
+                    }
+                }
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form" : {
+                    "FormOne": {
+                        "Name": "MiniGnar",
+                        "BAPDamage": [10, 20, 30, 40, 50],
+                        "TMHPScale": [0.06, 0.08, 0.1, 0.12, 0.14],
+                        "APScale": 1
+                    },
+                    "FormTwo": {
+                        "Name": "MegaGnar",
+                        "ADDamage": [25, 55, 85, 115, 145],
+                        "ADScale": 1
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form" : {
+                    "FormOne": {
+                        "Name": "MiniGnar",
+                        "ADDamage": [50, 85, 120, 155, 190],
+                        "HPScale": 0.6 
+                    },
+                    "FormTwo": {
+                        "Name": "MegaGnar",
+                        "ADDamage": [80, 115, 150, 185, 220],
+                        "HPScale": 0.6
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form" : {
+                    "FormOne": {
+                        "Name": "MiniGnar",
+                        "ADDamage": [0, 0, 0],
+                        "ADScale": 0
+                    },
+                    "FormTwo": {
+                        "Name": "MegaGnar",
+                        "ADDamage": [200, 300, 400],
+                        "BADScale": 0.5,
+                        "APScale": 1
+                    }
+                }
+            }
+        }
+    ],
+
+    "Gragas": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 120, 160, 200, 240],
+                "APScale": 0.7,
+                "Comment": "These number are for minimum damage"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "BAPDamage": [20, 50, 80, 110, 140],
+                "APScale": 0.5,
+                "TMHPScale": 0.07
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 130, 180, 230, 280],
+                "APScale": 0.6
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [200, 300, 400],
+                "APScale": 0.7
+            }
+        }
+    ],
+
+    "Graves": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "Comment": "INNATE - 12-GAUGE: A shell sprays 4 pellets in a cone, one dealing 70% − 100% (based on level) AD Attack damage physical damage plus「 a third of the damage 」for each pellet beyond the first, up to a maximum of 140% − 200% (based on level) AD physical damage. Pellets deal 25% reduced damage against Turret icon turrets. Critical strike icon Critical strikes spray 6 pellets over a 50% wider cone with each one dealing (40% + Infinity Edge item 10%) bonus physical damage."
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [45, 60, 75, 90, 105],
+                "BADScale": 1,
+                "ADDamageTwo": [85, 120, 155, 190, 225],
+                "BADScaleTwo": [0.4, 0.7, 1, 1.3, 1.6],
+                "Comment": "Damage and Scale Two are explosion damages" 
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [250, 400, 550],
+                "BADScale": 1.5,
+                "ADDamageTwo": [200, 320, 440],
+                "BADScaleTwo": 1.2,
+                "Comment": "Same thing as Q, damage and scale two are explosion damages"
+            }
+        }
+    ],
+
+    "Hecarim": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "BADDamage": [0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3],
+                "Comment": "Hecarim gains 15% − 30% (based on level) of his bonus Movement speed as bonus attack damage."
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "Stack": 0,
+                "ADDamage": [55, 95, 135, 175, 215],
+                "BADScale": 0.7,
+                "Comment": "If Hecarim damages at least one enemy with Rampage, its base Cooldown reduction icon cooldown is reduced by 1 second and the damage is increased by 5% for 8 seconds, stacking up to two times."
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
             }
         },
 
@@ -1128,7 +1574,237 @@
         }
     ],
 
-    "Galio": [
+    "Heimerdinger": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Comment": "These are the turrets",
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "APDamage": [6, 9, 12, 15, 18],
+                        "APScale": 0.35,
+                        "APDamageTwo": [40, 60, 80, 100, 120],
+                        "APScaleTwo": 0.55,
+                        "Comment": "Damage and Scale 2 are the beams when turrets are 100% charged"
+                    },
+                    "FormTwo": {
+                        "Name": "Upgrade",
+                        "APDamage": [80, 100, 120],
+                        "APScale": 0.35,
+                        "APDamageTwo": [100, 140, 180],
+                        "APScaleTwo": 0.7,
+                        "Comment": "Same as FormOne"
+                    }
+                }
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "APDamage": [50, 80, 110, 140, 170],
+                        "APScale": 0.45,
+                        "APDamageTwo": [90, 144, 198, 252, 306],
+                        "APScaleTwo": 0.93,
+                        "Comment": "Damage 2 and scale 2 are total damage"
+                    },
+                    "FormTwo": {
+                        "Name": "Upgrade",
+                        "APDamage": [135, 180, 225],
+                        "APScale": 0.45,
+                        "APDamageTwo": [503, 697.5, 892],
+                        "APScaleTwo": 1.83,
+                        "Comment": "Same as FormOne"
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "APDamage": [60, 100, 140, 180, 220],
+                        "APScale": 0.6
+                    },
+                    "FormTwo": {
+                        "Name": "Upgrade",
+                        "APDamage": [100, 200, 300],
+                        "APScale": 0.6
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": true
+            }
+        }
+    ],
+
+    "Illaoi": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180],
+                "ADScale": 1.2,
+                "APScale": 0.4
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [0.1, 0.15, 0.2, 0.25, 0.3],
+                "Comment": "Increases tentacle damage"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [20, 30, 40, 50, 60],
+                "TMHPScale": [0.03, 0.035, 0.04, 0.045, 0.05],
+                "Comment": "BADDamage is minimum physical damage that can be dealt, BADDamage also increase +2% per 100 AD",
+                "Comment2": "Makes tentacles nearby attck target"
+            }  
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "Damage": [0.25, 0.3, 0.35, 0.4, 0.45],
+                "Comment": "Damage transmission increases +8% per 100 AD, also spawns tentacles when over"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [150, 250, 350],
+                "BADScale": 0.5
+            }
+        }
+    ],
+
+    "Irelia": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "Stack": 0,
+                "type": 1,
+                "APDamage": [15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66],
+                "ADScale": 0.25 
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [5, 25, 45, 65, 85],
+                "ADScale": 0.6
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [10, 25, 40, 55, 70],
+                "ADScale": 0.5,
+                "APScale": 0.4,
+                "Comment": "Maximum damage(fully charged) are these numbers x2"
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 125, 170, 215, 260],
+                "APScale": 0.8
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "APDamage" : [125, 225, 325],
+                "APScale": 0.7,
+                "APDamageTwo": [125, 200, 275],
+                "APScaleTwo": 0.7,
+                "Comment": "Damage and Scale 2 are from running into the swords"
+            }
+        }
+    ],
+
+    "Ivern": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 125, 170, 215, 260],
+                "APScale": 0.7
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "BAPDamage": [30, 37.5, 45, 52.5, 60],
+                "APScale": 0.3
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70, 95, 120, 145, 170],
+                "APScale": 0.8
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70, 100, 170],
+                "APScale": 0.3,
+                "Comment": "This is Daisy!"
+            }
+        }
+    ],
+
+    "Janna": [
         {
             "Passive": {
                 "worksForAPI": true
@@ -1160,6 +1836,37 @@
         }
     ],
 
+    "JarvanIV": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": true
+            }
+        }
+    ],
 
 
 
