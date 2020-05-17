@@ -263,9 +263,12 @@ function calculateSpell(champA, champD, spellsChampSpell, level) {
                 totalDamage += spellsChampSpell.ADDamage[champA.level-1] + (spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD))
         }
         else { 
-            if (spellsChampSpell.ADScale.length != 18) 
-                totalDamage+= spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD)
-            else
+            if (spellsChampSpell.ADScale.length != 18) {
+                if (spellsChampSpell.ADScale.length!= undefined) 
+                    totalDamage+= spellsChampSpell.ADScale[level-1]*(champA.bonusAD+champA.baseAD)
+                else
+                    totalDamage+= spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD)
+            } else
                 totalDamage+= spellsChampSpell.ADScale[champA.level-1]*(champA.bonusAD+champA.baseAD)
         }
     }
