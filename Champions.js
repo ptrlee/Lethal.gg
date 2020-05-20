@@ -43,7 +43,7 @@ export function spellDamage() {
 
     let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
     console.log(spellsChamp);
-    let totalDamage = [[0],[0],[0],[0],[0]];
+    let totalDamage = [[[0]],[[0]],[[0]],[[0]],[[0]]];
     let damageOverTime = [[0],[0],[0],[0],[0],[0]];
     let aaDMG;
     for (let i = 0; i < 5; i++) {
@@ -355,11 +355,11 @@ function calculateSpell(champA, champD, spellsChampSpell, level) {
         else { 
             if (spellsChampSpell.ADScale.length != 18) {
                 if (spellsChampSpell.ADScale.length!= undefined) 
-                    totalDamage+= spellsChampSpell.ADScale[level-1]*(champA.bonusAD+champA.baseAD)
+                    totalDamage+= spellsChampSpell.ADScale[level-1]*(champA.bonusAD+champA.baseAD);
                 else
-                    totalDamage+= spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD)
+                    totalDamage+= spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD);
             } else
-                totalDamage+= spellsChampSpell.ADScale[champA.level-1]*(champA.bonusAD+champA.baseAD)
+                totalDamage+= spellsChampSpell.ADScale[champA.level-1]*(champA.bonusAD+champA.baseAD);
         }
     }
 
@@ -378,8 +378,12 @@ function calculateSpell(champA, champD, spellsChampSpell, level) {
                 else
                     totalDamage += (spellsChampSpell.APDamage[level-1]+(spellsChampSpell.APScale[level-1]*(champA.bonusAP)));
             }
-            else 
-                totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale*(champA.bonusAP);
+            else {
+                if (spellsChampSpell.APScale.length!= 18) 
+                    totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale*(champA.bonusAP);
+                else 
+                    totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale[champA.level-1]*(champA.bonusAP);
+            }
         }
         else 
             totalDamage += spellsChampSpell.APScale*(champA.bonusAP);
