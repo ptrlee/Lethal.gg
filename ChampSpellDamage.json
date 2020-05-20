@@ -12,24 +12,30 @@
             "worksForAPI": false,   
             "type": 0,
             "SweetSpot": false,
-            "FirstCast": [10,30,50,70,90],
-            "SecondCast": [12.5,37.5,62.5,87.5,112.5],
-            "ThirdCast": [15,45,75,105,135],
-            "FirstADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
-            "SecondADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
-            "ThirdADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
-            "SweetSpotComment": "Hitting the targets in Aatrox's sweet spot"
+            "ADDamage": [10,30,50,70,90],
+            "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
+            "Condition": {
+                "type": 0,
+                "ADDamage": [12.5,37.5,62.5,87.5,112.5],
+                "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
+                "Condition": {           
+                    "ADDamage": [15,45,75,105,135],
+                    "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
+                    "type": 0
+                }
+            }
         }},
             {
         "WBaseDamage": {
             "worksForAPI": false,
             "type": 0,
-            "Chained": false,
-            "PhysicalDamage": [30,40,50,60,70],
-            "TotalDamage": [60,80,100,120,140],
-            "FirstScale": 0.4,
-            "TotalScale": 0.8,
-            "ChainedComment": "Enemy stays chained and gets pulled"
+            "ADDamage": [30,40,50,60,70],
+            "ADScale": 0.4,
+            "Condition": {
+                "type": 0,
+                "ADDamage": [30,40,50,60,70],
+                "ADScale": 0.4
+            }
             }},
             {
         "EBaseDamage" : {
@@ -39,7 +45,7 @@
         "RBaseDamage": {
             "worksForAPI": false,
             "BonusMS": [60,80,100],
-            "ADScale": [20,25,30],
+            "AD": [20,25,30],
             "IncHeal": [50,60,70]
         }
 
@@ -48,12 +54,20 @@
     "Ahri": [
         {
             "Passive" : {
-                "worksForAPI": true
+                "worksForAPI": false
             }
         },
         {
         "QBaseDamage": {
-            "worksForAPI": true
+            "worksForAPI": false,
+            "type": 1,
+            "APDamage": [40,65,90,115,140],
+            "APScale": 0.35,
+            "Condition" : {
+                "type": 2,
+                "APDamage": [40,65,90,115,140],
+                "APScale": 0.35
+            }
             }
         },
 
@@ -61,9 +75,18 @@
         "WBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "Charmed": false,
             "APDamage": [40,65,90,115,140],
-            "APScale": 0.3
+            "APScale": 0.3,
+            "Condition": {
+                "type": 1,
+                "APDamage": [12,19.5,27,34.5,42],
+                "APScale": 0.09,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [12,19.5,27,34.5,42],
+                    "APScale": 0.09
+                }
+            }
             }
         },
 
@@ -77,8 +100,18 @@
         "RBaseDamage": {
             "type": 1,
             "worksForAPI": false,
-            "APDamage": [180,270,360],
-            "APScale": 1.05
+            "APDamage": [60,90,120],
+            "APScale": 0.35,
+            "Condition": {
+                "type": 1,
+                "APDamage": [60,90,120],
+                "APScale": 0.35,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [60,90,120],
+                    "APScale": 0.35
+                }
+            }
             }
         }
     ],
@@ -115,20 +148,29 @@
         "EBaseDamage": {
             "worksForAPI": false,
             "type": 0,
-            "ADDamage": [100, 170, 240, 310, 380],
-            "ADScale": 0.70,
-            "APScale": 1.0
+            "ADDamage": [50, 85, 120, 155, 190],
+            "ADScale": 0.35,
+            "APScale": 0.5,
+            "Condition": {
+                "type": 0,
+                "ADDamage": [50, 85, 120, 155, 190],
+                "ADScale": 0.35,
+                "APScale": 0.5
+            }
             }
         },
 
         {
         "RBaseDamage": {
-            "type": 3,
+            "type": 0,
             "worksForAPI": false,
             "ADDamage": [125, 225, 325],
-            "ADScale": 0.5,
-            "APDamage": [75, 145, 215],
-            "APScale": 0.3
+            "BADScale": 0.5,
+            "Condition": {
+                "APDamage": [75, 145, 215],
+                "APScale": 0.3,
+                "type": 1
+            }
             }
         }
     ],
@@ -193,8 +235,13 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "APDamage": [120, 170, 220, 270, 320],
-                "APScale": 0.9
+                "APDamage": [60,85,110,135,160],
+                "APScale": 0.45,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [60,85,110,135,160],
+                    "APScale": 0.45
+                }
             }
         },
 
@@ -431,7 +478,17 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [100,200,300],
-                "APScale": 0.25
+                "APScale": 0.25,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [100,200,300],
+                    "APScale": 0.25,
+                    "Condition": {
+                        "type": 1,
+                        "APDamage": [100,200,300],
+                        "APScale": 0.25
+                    }
+                }
             }
         }
     ],
@@ -532,7 +589,8 @@
         "QBaseDamage": {
             "worksForAPI": false,
             "type": 0,
-            "FirstCastDamage": [0.2,0.25,0.3,0.35,0.4],
+            "ADDamage": [0,0,0,0,0],
+            "ADScale": [1.2,1.25,1.3,1.35,1.4],
             "SecondCastDamage": [0.4,0.5,0.6,0.7,0.8],
             "Comment": "Both arrays contain ADScale, second cast also has some true damage based on level"
             }
@@ -931,8 +989,13 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type":1,
-                "APDamage": [100,140,180,220,260],
-                "APScale": 0.9
+                "APDamage": [60,75,90,105,120],
+                "APScale": 0.3,
+                "Condition" :{
+                    "type":1,
+                    "APDamage": [40,65,90,115,140],
+                    "APScale": 0.6
+                }
             }
         },
 
@@ -948,11 +1011,14 @@
         {
             "EBaseDamage": {
                 "worksForAPI": false,
-                "type": 3,
+                "type": 1,
                 "APDamage": [50,75,100,125,150],
                 "APScale": 0.4,
-                "ADDamage": [0,0,0,0,0],
-                "ADScale": 1
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [0,0,0,0,0],
+                    "ADScale": 1
+                }
             }
         },
 
@@ -1592,7 +1658,12 @@
                 "type": 1,
                 "APDamage": [20, 50, 80, 110, 140],
                 "APScale": 0.5,
-                "TMisHPScale": 0.07
+                "targetHPScale": 0.07,
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [0,0,0,0,0],
+                    "ADScale": 1.0
+                }
             }
         },
 
@@ -1632,8 +1703,11 @@
                 "type": 0,
                 "ADDamage": [45, 60, 75, 90, 105],
                 "BADScale": 1,
-                "ADDamageTwo": [85, 120, 155, 190, 225],
-                "BADScaleTwo": [0.4, 0.7, 1, 1.3, 1.6],
+                "Condition": {
+                    "ADDamage": [85, 120, 155, 190, 225],
+                    "type": 0,
+                    "BADScale": [0.4, 0.7, 1, 1.3, 1.6]
+                },
                 "Comment": "Damage and Scale Two are explosion damages" 
             }
         },
@@ -2212,7 +2286,12 @@
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [23.33, 40,56.67,73.33,90],
+                "APScale": 0.3334,
+                "TickRate": 0.5,
+                "Time": 1.5
             }
         },
 
@@ -2414,13 +2493,18 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": false
+                "worksForAPI": true
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": false
+                "worksForAPI": false,
+                "APDamage": [30,50,70,90,110],
+                "type": 1,
+                "APScale": 0.20,
+                "TickRate": 1,
+                "Time": 50
             }
         },
 
@@ -2490,7 +2574,7 @@
                 "type": 1,
                 "APDamage": [68, 72, 77, 82, 89, 96, 103, 112, 121, 131, 142, 154, 166, 180, 194, 208, 224, 240],
                 "BADScale": 1,
-                "APScale": [0.55, 0.66, 0.77, 0.88],
+                "APScale": [0.55,0.55,0.55,0.55,0.55, 0.66, 0.66, 0.66, 0.66, 0.66, 0.77, 0.77, 0.77, 0.77, 0.77, 0.88, 0.88, 0.88],
                 "Comment": "APScale increases at level [1, 6, 11, 16]"
             }
         },
@@ -2520,7 +2604,8 @@
                 "APDamage": [25, 37.5, 50],
                 "BADScale": 0.22,
                 "APScale": 0.19,
-                "Time": 0.166,
+                "Time": 2.5,
+                "TickRate": 0.166,
                 "Comment": "Ult lasts 2.5 seconds, Damage and scale are per dagger, dagger are thrown at every 'Time' variable"
             }
         }
@@ -2686,7 +2771,7 @@
                 "type": 1, 
                 "APDamage": [80, 120, 160, 200, 240],
                 "APScale": 0.8,
-                "BatkSpeedSteroid": [0.4, 0.5, 0.6, 0.7, 0.8],
+                "atkSpeedSteroid": [0.4, 0.5, 0.6, 0.7, 0.8],
                 "Comment": "lasts for 4 seconds after spell ends, the atk speed boost"
             }
         },
@@ -2696,9 +2781,11 @@
                 "worksForAPI": false,
                 "APDamage": [40, 75, 110],
                 "APScale": 0.2,
+                "comment": "does 10% extra dmg per strike up to 150%",
                 "APDamageTwo": [300, 562.5, 825],
                 "APScaleTwo": 1.5,
-                "Time": 0.5,
+                "Time": 3.0,
+                "TickRate": 0.5,
                 "Comment": "Lasts 3 seconds, Damage and Scale Two is maximum damage, Slicing Maelstrom deals 10% increased damage with each successive strike against a target"
             }
         }
@@ -3791,6 +3878,232 @@
 
         {
             "QBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Human",
+                        "type": 1,
+                        "APDamage": [70, 85, 100, 115, 130],
+                        "APScale": 0.5,
+                        "DistScale": [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+                    },
+                    "FormTwo": {
+                        "Name": "Cougar",
+                        "type": 1,
+                        "APDamage": [5, 30, 55, 80],
+                        "ADScale": 0.75,
+                        "APScale": 0.4,
+                        "TMisHPScale": [1, 1.25, 1.5, 1.75],
+                        "PassiveBonus": 0.4,
+                        "Comment": "TMisHPScale is that amount per 1% of targets missing HP"
+                    }
+                }
+                
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Human",
+                        "type": 1,
+                        "APDamage": [10, 20, 30, 40, 50],
+                        "APScale": 0.05,
+                        "TickRate": 1,
+                        "Time": 4
+                    },
+                    "FormTwo": {
+                        "Name": "Cougar",
+                        "type": 1,
+                        "APDamage": [60, 110, 160, 210],
+                        "APScale": 0.3
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Human",
+                        "atkSpeedSteroid": [0.2, 0.3, 0.4, 0.5, 0.6],
+                        "TMisHPScale": "+1% per targets 1% missing HP",
+                        "Comment": "Target in this case refers to ally or herself"
+                    },
+                    "FormTwo": {
+                        "Name": "Cougar",
+                        "type": 1,
+                        "APDamage": [80, 140, 200, 260],
+                        "APScale": 0.45
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": true
+            }
+        }
+    ],
+
+    "Nocturne": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": 0.2,
+                "Comment": "Can crit"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [65, 110, 155, 200, 245],
+                "BADScale": 0.75,
+                "BADDamage": [20, 30, 40, 50, 60]
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "atkSpeedSteroid": [0.3, 0.35, 0.4, 0.45, 0.5]
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 125, 170, 215, 260],
+                "APScale": 1
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [150, 275, 400],
+                "BADScale": 1.2
+            }
+        }
+    ],
+
+    "Nunu": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "atkSpeedSteroid": 0.2,
+                "ADDamage": 0.3
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60, 100, 140, 180, 220],
+                "APScale": 0.5,
+                "BHPScale": 0.05
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [36, 45, 54, 63, 72],
+                "APScale": 0.3,
+                "ChargeScale": [0, 0, 1, 2, 3, 4]
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [48, 72, 96, 120, 144],
+                "APScale": 0.18,
+                "APDamageTwo": [20, 30, 40, 50, 60],
+                "APScaleTwo": 0.8,
+                "Comment": "APDamage and APScale is per volley (total three volley), Damage and scale two is the snowbound effect damage"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [625, 950, 1275],
+                "APScale": 2.5,
+                "ChargeReduc": [100, 66.67, 33.33, 0],
+                "Comment": "Value shown is max damage when fully charged"
+            }
+        }
+    ],
+
+    "Olaf": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "atkSpeedSteroid": 0.01,
+                "Comment": "1% per 1% missing HP"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "atkSpeedSteroid": [0.55, 0.65, 0.75, 0.85, 0.95]
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [15, 20, 25],
+                "ADScale": 0.3
+            }
+        }
+    ],
+
+    "Orianna": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "Stack": 0,
+                "BAPDamage": [10, 18, 26, 34, 42, 50],
+                "APScale": 0.15,
+                "BonusDamage": 0.2,
+                "Comment": "Basic attack deals 20% more damage per stack"
+            }
+        },
+
+        {
+            "QBaseDamage": {
                 "worksForAPI": true
             }
         },
@@ -3809,12 +4122,980 @@
 
         {
             "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [200, 275, 350],
+                "APScale": 0.8
+            }
+        }
+    ],
+
+    "Ornn": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "Brittle": false,
+                "TMHPScale": [0.1, 0.1047, 0.1094, 0.1141, 0.1188, 0.1235, 0.1282, 0.1329, 0.1376, 0.1424, 0.1471, 0.1518, 0.1565, 0.1612, 0.1659, 0.1706, 0.1753, 0.18] 
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [20, 45, 70, 95, 120],
+                "ADScale": 1.1
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "TMHPScale": [0.024, 0.026, 0.028, 0.03, 0.032],
+                "TickRate": 0.15,
+                "Time": 0.75
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [80, 125, 170, 215, 260],
+                "ArmorScale": 0.4,
+                "BMRScale": 0.4
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [125, 175, 225],
+                "APScale": 0.2,
+                "Comment": "Has two parts, x2 for max damage"
+            }
+        }
+    ],
+
+    "Pantheon": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 0,
+                        "ADDamage": [75, 110, 145, 180, 215],
+                        "BADScale": 1,
+                        "ADDamageTwo": [155, 240, 325, 410, 495],
+                        "BADScaleTwo": 2,
+                        "Comment": "Damage and Scale 2 are increased damage aganist targets below 20% of thier max HP"
+                    }, 
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 0,
+                        "BADDamage": [20, 32.94, 45.88, 58.82, 71.76, 84.71, 97.65, 110.59, 123.53, 136.47, 149.41, 162.35, 175.29, 188.24, 201.18, 214.12, 227.06, 240],
+                        "BADScale": 1
+                    }
+                }
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 0,
+                        "ADDamage": [60, 80, 100, 120, 140],
+                        "APScale": 1
+                    }, 
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 0,
+                        "ADDamage": [1.35, 1.3676, 1.3853, 1.4029, 1.4206, 1.4382, 1.4559, 1.4735, 1.4912, 1.5088, 1.5265, 1.5441, 1.5618, 1.5794, 1.5971, 1.6147, 1.6324, 1.65],
+                        "Comment": "These numbers are combined 3 basic attacks,  /3 for each one, each basic attack can crit"
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 0,
+                        "ADDamage": [55, 105, 155, 205, 255],
+                        "BADScale": 1.5,
+                        "Damage": 1,
+                        "Comment": "ADDamage and BADScale are numbers for the slam part, Damage is the actual invulnerability part"
+                    }, 
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 0,
+                        "ADDamage": [55, 105, 155, 205, 255],
+                        "BADScale": 1.5,
+                        "Damage": 1.66,
+                        "Comment": "Same as previous, but Damage is now 1.66 AD instead of 1"
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [300, 500, 700],
+                "APScale": 1,
+                "Comment": "Values are max Damage,  /2 for min damage for targets at edge of ult"
+            }
+        }
+    ],
+
+    "Poppy": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "BAPDamage": [20, 29.41, 38.82, 48.24, 57.65, 67.06, 76.47, 85.88, 95.29, 104.71, 114.12, 123.53, 132.94, 142.35, 151.76, 161.18, 170.59, 180]
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [40, 60, 80, 100, 120],
+                "BADScale": 0.9,
+                "TMHPScale": 0.08,
+                "Comment": "These values are minimum damage numbers (one part), x2 to get maximum"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [60, 80, 100, 120, 140],
+                "BADScale": 0.5,
+                "Comment": "Like Q, these are minimum damage values, x2 for max, if target collides into terrain"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [100, 150, 200],
+                "BADScale": 0.45,
+                "Comment": "Minimum damage numbers again, x2 for max damage"
+            }
+        }
+    ],
+
+    "Pyke": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 2,
+                "TrueDamage": [250, 290, 330, 370, 400, 430, 450, 470, 490, 510, 530, 550],
+                "BADScale": 0.8,
+                "LethalScale": "+1.5 per 1 Lethality"
+            }
+        }
+    ],
+
+    "Qiyana": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71, 75, 79, 83],
+                "BADScale": 0.55,
+                "APScale": 0.3
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [60, 85, 110, 135, 160],
+                "BADSclae": 0.9,
+                "BADDamage": [36, 51, 66, 81, 96],
+                "BADScaleTwo": 0.54,
+                "Comment": "BADDamage and BADScaleTwo are only applied if Qiyana has red element and opponent is <50% HP"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "atkSpeedSteroid": [0.05, 0.1, 0.15, 0.2, 0.25],
+                "BAPDamage": [8, 16, 24, 32, 40],
+                "BADScale": 0.2,
+                "APScale": 0.3
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [60, 95, 130, 165, 200],
+                "BADScale": 0.7
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [100, 170, 240],
+                "BADScale": 1.7,
+                "TMHPScale": 0.1
+            }
+        }
+    ],
+    
+    "Quinn": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "Vulnerable": false,
+                "BADDamage": [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+                "ADScale": [0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5]
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [20, 45, 70, 95, 120],
+                "ADScale": [0.8, 0.9, 1, 1.1, 1.2],
+                "APScale": 0.5
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "atkSpeedSteroid": [0.2, 0.35, 0.5, 0.65, 0.8]
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": 0.4,
+                "Comment": "This is skystrike, R2"
+            }
+        }
+    ],
+
+    "Rakan": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70, 120, 170, 220, 270],
+                "APScale": 0.7
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [100, 200, 300],
+                "APScale": 0.5
+            }
+        }
+    ],
+
+    "Rammus": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "BAPDamage": 10,
+                "ArmorScale": 0.1,
+                "Comment": "Damage increases by 50% if W is active"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true,
+                "Comment": "Applies passive damage(basic attack) on champions that attack him"
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "atkSpeedSteroid": [0.2, 0.25, 0.3, 0.35, 0.4]
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [30, 60, 90],
+                "APScale": 0.2,
+                "TickRate": 1,
+                "Time": 8
+            }
+        }
+    ],
+
+    "RekSai": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Unburrowed",
+                        "type": 0,
+                        "ADDamage": [20, 25, 30, 35, 40],
+                        "BADScale": 0.5,
+                        "Comment": "Damage values are for each basic attack, total 3 basic attacks so x3 fpr max damage"
+                    },
+                    "FormTwo": {
+                        "Name": "Burrowed",
+                        "type": 0,
+                        "ADDamage": [60, 90, 120, 150, 180],
+                        "BADScale": 0.5,
+                        "APScale": 0.7
+                    }
+                }
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Unburrowed",
+                        "Comment": "Does nothing"
+                    },
+                    "FormTwo": {
+                        "Name": "Burrowed",
+                        "type": 0,
+                        "ADDamage": [55, 70, 85, 100, 115],
+                        "BADScale": 0.8
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Unburrowed",
+                        "ADDamage": [50, 60, 70, 80, 90],
+                        "BADScale": 0.85,
+                        "Comment": "These values are for physical damage, if Rek'Sai has full fury stacks, this does double the damage and true damage"
+                    },
+                    "FormTwo": {
+                        "Name": "Burrowed",
+                        "Comment": "Does nothing"
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [100, 250, 400],
+                "BADScale": 1.75,
+                "TMisHPScale": [0.2, 0.25, 0.3]
+            }
+        }
+    ],
+
+    "Renekton": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [65, 100, 135, 170, 205],
+                "BADScale": 0.8,
+                "ADDamageTwo": [100, 150, 200, 250, 300],
+                "BADScaleTwo": 1.2,
+                "Comment": "Damage and Scale Two are when Q is used at max fury" 
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [10, 30, 50, 70, 90],
+                "ADScale": 1.5,
+                "ADDAmageTwo": [15, 45, 75, 105, 135],
+                "ADScaleTwo": 2.25,
+                "Comment": "These values are total damage for each basic attack, each basic attack applies on-hit effcts, Damage and Scale two applies are max fury and is 3 basic attacks" 
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [40, 70, 100, 130, 160],
+                "BADScale": 0.9,
+                "ADDamageTwo": [70, 115, 160, 205, 250],
+                "BADScaleTwo": 1.35,
+                "Comment": "First values are for one dash, x2 for max damage; second value is the enhanced damage of the second dash at max fury"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [20, 40, 60],
+                "APScale": 0.1,
+                "TickRate": 0.5,
+                "Time": 15
+            }
+        }
+    ],
+
+    "Rengar": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [0.01, 0.04, 0.09, 0.16, 0.25, 0.36],
+                "Comment": "Based on number of trophies Rengar has"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 0,
+                        "atkSpeedSteroid": 0.4,
+                        "BADDamage": [30, 60, 90, 120, 150],
+                        "ADScale": [0, 0.05, 0.1, 0.15, 0.2]
+                    },
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 0,
+                        "BADDamage": [30, 45, 60, 75, 90, 105, 120, 135, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240],
+                        "ADScale": 0.4,
+                        "atkSpeedSteroid": [0.5, 0.53, 0.56, 0.59, 0.62, 0.65, 0.68, 0.71, 0.74, 0.77, 0.80, 0.83, 0.86, 0.89, 0.92, 0.95, 0.98, 1.01]
+                    }
+                }
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 1,
+                        "APDamage": [50, 80, 110, 140, 170],
+                        "APScale": 0.8
+                    },
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 1,
+                        "APDamage": [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220],
+                        "APScale": 0.8
+                    }
+                }
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "Form": {
+                    "FormOne": {
+                        "Name": "Normal",
+                        "type": 0,
+                        "ADDamage": [55, 100, 145, 190, 235],
+                        "BADScale": 0.8 
+                    },
+                    "FormTwo": {
+                        "Name": "Empowered",
+                        "type": 0,
+                        "ADDamage": [50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290, 305],
+                        "BADScale": 0.8
+                    }
+                }
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": 0.5
+            }
+        }
+    ],
+
+    "Riven": [
+        {
+            "Passive": {
+                "worksForAPI": true,
+                "type": 1,
+                "BADDamage": [0.25, 0.30, 0.35, 0.4, 0.45, 0.5],
+                "Comment": "Damage increases at level [1, 6, 9, 12, 15, 18]"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [15, 35, 55, 75, 95],
+                "ADScale": [0.45, 0.5, 0.55, 0.6, 0.65],
+                "Comment": "These values are per cast, Q has 3 total casts, x3 for max damage"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": 0.2,
+                "ADDamage": [100, 150, 200],
+                "BADScale": 0.6,
+                "TMisHPScale": [0, 0.25, 0.50, 0.75, 1, 1.25, 1.5, 1.75, 2],
+                "Comment": "ADDamage and BADScale is for the wind slash, TMisHPScale = +2.667% per 1% missing HP, max 200% at 75% missing HP"
+            }
+        }
+    ],
+
+    "Rumble": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "Overheat": false,
+                "BAPDamage": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 110],
+                "APScale": 0.3,
+                "Comment": "AP damage boost applies on his basic attack for 6 seconds"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [14.583, 17.5, 20.417, 23.333, 26.25],
+                "APScale": 0.0917,
+                "TickRate": 0.25,
+                "Time": 3,
+                "Comment": "If in Danger Zone, damage values are x2 for max damage"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60, 85, 110, 135, 160],
+                "APScale": 0.4,
+                "Comment": "If in Danger Zone, does 50% more damage, values are per bullet"
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70, 105, 140],
+                "APScale": 0.175,
+                "TickRate": 6,
+                "Time": 0.5
+            }
+        }
+    ],
+
+    "Ryze": [
+        {
+            "Passive": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [65, 90, 115, 140, 165],
+                "APScale": 0.45,
+                "BManaScale": 0.03
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80, 110, 140, 170, 200],
+                "APScale": 0.6,
+                "BManaScale": 0.04
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60, 80, 100, 120, 140],
+                "APScale": 0.3,
+                "BManaScale": 0.02
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": true
+            }
+        }
+    ],
+
+    "Sejuani": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 1,
+                "Frozen": false,
+                "TMHPScale": 0.1,
+                "Comment": "Basic attack aganist frozen enemies deal 10% of their max HP as Bonus AP"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [20, 25, 30, 35, 40],
+                "APScale": 0.2,
+                "MHPScale": 0.02,
+                "ADDamageTwo": [30, 70, 110, 150, 190],
+                "APScaleTwo": 0.6,
+                "MHPScaleTwo": 0.0525,
+                "Comment": "Ability has two parts, 'Two' ending are values for second part of ability"
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [40, 90, 140, 190, 240],
+                "APScale": 0.6
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [100, 125, 150],
+                "APScale": 0.4,
+                "APDamageTwo": [150, 250, 350],
+                "APScaleTwo": 0.8,
+                "Comment": "Two values are for empowered ult when ult has traveled more than 400 length"
+            }
+        }
+    ],
+
+    "Senna": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "Stack": 0,
+                "TCHPScale": [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16],
+                "CommentOne": "Only goes up to level 11",
+                "BonusAD": 0.75,
+                "CommentTwo": ".75 AD per stack",
+                "BADDamage": 0.2
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [40, 70, 100, 130, 160],
+                "BADScale": 0.4
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [70, 115, 160, 205, 250],
+                "BADScale": 0.7
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [250, 375, 500],
+                "BADScale": 1,
+                "APScale": 0.5
+            }
+        }
+    ],
+
+    "Sett": [
+        {
+            "Passive": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+                "ADScale": 0.15,
+                "Comment": "Only applies to his right punch basic attack"
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "BADDamage": [10, 20, 30, 40, 50],
+                "TMHPScale": [0.01, 0.02, 0.03, 0.04, 0.05],
+                "ADScale": "+1% per 100 AD",
+                "Comment": "Applies to both of his basic attack within 5 seconds of activating this ability"
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [80, 105, 130, 155, 180],
+                "GritScale": "25% of expanded grit",
+                "BADScale": "+10% per bonus AD"
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [50, 80, 110, 140, 170],
+                "ADScale": 0.6
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [200, 300, 400],
+                "BADScale": 1,
+                "TBHPScale": [0.4, 0.5, 0.6]
+            }
+        }
+    ],
+
+    "Shaco": [
+        {
+            "Passive": {
+                "worksForAPI": false
+            }
+        },
+
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false
+            }
+        },
+
+        {
+            "RBaseDamage": {
                 "worksForAPI": false
             }
         }
     ],
 
+    "Shen": [
+        {
+            "Passive": {
+                "worksForAPI": false
+            }
+        },
 
+        {
+            "QBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "WBaseDamage": {
+                "worksForAPI": true
+            }
+        },
+
+        {
+            "EBaseDamage": {
+                "worksForAPI": false
+            }
+        },
+
+        {
+            "RBaseDamage": {
+                "worksForAPI": false
+            }
+        }
+    ],
 
 
     "Velkoz": {
