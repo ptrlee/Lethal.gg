@@ -42,8 +42,8 @@ export function spellDamage() {
     let champA = getAtkChamp();
 
     let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
-    console.log(spellsChamp);
-    let totalDamage = [[[0]],[[0]],[[0]],[[0]],[[0]]];
+    //console.log(spellsChamp);
+    let totalDamage = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] ];
     let damageOverTime = [[0],[0],[0],[0],[0],[0]];
     let aaDMG;
     for (let i = 0; i < 5; i++) {
@@ -70,71 +70,47 @@ export function spellDamage() {
         if (i == 0 || !spellsChamp[i][spellString].worksForAPI) {
             type = spellsChamp[i][spellString].type;
 
+            //renames spellsChamp to access data
             if (i == 0) { //passive
                 spellsChamp[i]=spellsChamp[i].Passive;
-                if (spellsChamp[i].TickRate == null) {
-                    totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[1]);
-                }
-                else {
-                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[1]);
-                    damageOverTime[i][1] = spellsChamp[i].TickRate;
-                    damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
-                    damageOverTime[i][3] = spellsChamp[i].Time;
-                    if (damageOverTime[i][3] != 50) 
-                        damageOverTime[i][4] = damageOverTime[i][2] * damageOverTime[i][3];
-                    else 
-                        damageOverTime[i][4] = undefined;
-                }
             }
             else if (i == 1) { //q
                 spellsChamp[i]=spellsChamp[i].QBaseDamage;
-                if (spellsChamp[i].TickRate == null) {
-                    totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                }
-                else {
-                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                    damageOverTime[i][1] = spellsChamp[i].TickRate;
-                    damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
-                    damageOverTime[i][3] = spellsChamp[i].Time;
-                    if (damageOverTime[i][3] != 50) 
-                        damageOverTime[i][4] = damageOverTime[i][2] * damageOverTime[i][3];
-                    else 
-                        damageOverTime[i][4] = undefined;
-                }
-                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
-                    for (let j = 0; j < 3; j++) {
-                        totalDamage[i][j] = totalDamage[i][0]*(1+0.25*j)
-                        totalDamage[i][j+3] = totalDamage[i][j]*1.5;
-                    }
-                }
             }
             else if (i == 2) { //w
                 spellsChamp[i]=spellsChamp[i].WBaseDamage;
-                if (spellsChamp[i].TickRate == null) {
-                    totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                }
-                else {
-                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                    damageOverTime[i][1] = spellsChamp[i].TickRate;
-                    damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
-                    damageOverTime[i][3] = spellsChamp[i].Time;
-                    if (damageOverTime[i][3] != 50) 
-                        damageOverTime[i][4] = damageOverTime[i][2] * damageOverTime[i][3];
-                    else 
-                        damageOverTime[i][4] = undefined;
-                }
-                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
-                    totalDamage[i][0] = spellsChamp[i].PhysicalDamage[level[i-1]-1] + spellsChamp[i].FirstScale*(champA.bonusAD+champA.baseAD);
-                    totalDamage[i][1] = 2*totalDamage[i][0];
-                }
             }
             else if (i == 3) { //e
                 spellsChamp[i]=spellsChamp[i].EBaseDamage;
-                if (spellsChamp[i].TickRate == null) {
-                    totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+            }
+            else if (i == 4) { //r
+                spellsChamp[i] = spellsChamp[i].RBaseDamage;
+            }
+
+            let w = i-1;
+            if (i == 0)
+                w = 1;
+
+            //calls calculate spell
+            let j = 0;
+            let count = 0;
+            let condition = spellsChamp[i];
+            while (true) {
+                if (count > 0) {
+                    condition = condition.Condition;
+                    j++;
+                    if (condition == null)
+                        break;
+                    type = condition.type;
+                }
+                if (condition.TickRate == null) { //not a DoT ability
+                    if (j == 0) 
+                        totalDamage[i][0][0] = calculateSpell(champA, champD, condition, level[w]);
+                    else 
+                        totalDamage[i].push([calculateSpell(champA, champD, condition, level[w])]);
                 }
                 else {
-                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
+                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[w]);
                     damageOverTime[i][1] = spellsChamp[i].TickRate;
                     damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
                     damageOverTime[i][3] = spellsChamp[i].Time;
@@ -143,37 +119,20 @@ export function spellDamage() {
                     else 
                         damageOverTime[i][4] = undefined;
                 }
-            }
-            else if (i == 4) { //r
-                if (document.getElementById("champ-name-one").innerHTML == "Aatrox") {
-                }
-                else {
-                    spellsChamp[i]=spellsChamp[i].RBaseDamage;
-                    if (spellsChamp[i].TickRate == null) {
-                        totalDamage[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                    }
-                    else {
-                        damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[i-1]);
-                        damageOverTime[i][1] = spellsChamp[i].TickRate;
-                        damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
-                        damageOverTime[i][3] = spellsChamp[i].Time;
-                        if (damageOverTime[i][3] != 50) 
-                            damageOverTime[i][4] = damageOverTime[i][2] * damageOverTime[i][3];
-                        else 
-                            damageOverTime[i][4] = undefined;
-                    }
-                }
-            }
+                count++;
+
             if (spellsChamp[i].TickRate == null) {
-                sortType(totalDamage[i],totalDamage[i].length,0,type,champD.armor,champD.mr)
+                totalDamage[i][j][0] = sortType(totalDamage[i][j][0],type,champD.armor,champD.mr)
             }
             else {
-                sortType(damageOverTime[i], 1, 0,type,champD.armor,champD.mr)
-                sortType(damageOverTime[i], 3, 2,type,champD.armor,champD.mr)
+                damageOverTime[i][0] = sortType(damageOverTime[i][0],type,champD.armor,champD.mr)
+                damageOverTime[i][2] = sortType(damageOverTime[i][2],type,champD.armor,champD.mr)
                 if (damageOverTime[4] != undefined) 
-                    sortType(damageOverTime[i], 5, 4,type,champD.armor,champD.mr)
+                    damageOverTime[i][4] = sortType(damageOverTime[i][4],type,champD.armor,champD.mr)
             }
         }
+
+    }
         else {
 
             spell = champA.abilities[i-1];
@@ -201,14 +160,14 @@ export function spellDamage() {
                         break;
                     }
                     let damage = spellEffect[level[i-1]-1] + champA.bonusAP*spellVar[0].coeff;
-                    totalDamage[i][0] += calculateDMG(damage,champD.mr,0,0);
+                    totalDamage[i][0][0] += calculateDMG(damage,champD.mr,0,0);
                 } else if (type == 2) {
                     if (spellVar.length === 0) {
                         exceptions.push(spell);
                         break;
                     }
 
-                    totalDamage[i][0] += spellEffect[level[i-1]-1] + champA.bonusAP*spellVar[0].coeff;
+                    totalDamage[i][0][0] += spellEffect[level[i-1]-1] + champA.bonusAP*spellVar[0].coeff;
                 } else if (type == 0) { 
                     if (spellVar.length === 0) {
                         exceptions.push(spell);
@@ -218,7 +177,7 @@ export function spellDamage() {
                     let damage = spellVar[0].coeff * (champA.baseAD+champA.bonusAD);
                     // or let damage = spellVar[0].coeff * (champA.bonusAD) for bonus AD scaling
                     // have to implement this
-                    totalDamage[i][0] += calculateDMG(damage,champD.armor,0,0);
+                    totalDamage[i][0][0] += calculateDMG(damage,champD.armor,0,0);
                 }
             }
         }
@@ -250,21 +209,15 @@ export function spellDamage() {
 /** type sorter
  * param totalDamage/tickDamage
  */
-function sortType(damage, length, jstart, type, armor, mr) {
-    if (type == 0) {
-        for (let j = jstart; j < length; j++) {
-            damage[j] = calculateDMG(damage[j], armor, 0, 0)
-        }
-    }
-    else if (type == 1) {
-        for (let j = jstart; j < length; j++) 
-            damage[j] = calculateDMG(damage[j], mr, 0, 0)
-    }
-    else if (type == 3) {
-        for (let j =jstart; j < length; j++) {
-            damage;
-        }
-    }
+function sortType(damage, type, armor, mr) {
+    if (type == 0) 
+        return calculateDMG(damage, armor, 0, 0);
+    else if (type == 1) 
+        return calculateDMG(damage, mr, 0, 0);
+    else if (type == 2) 
+        return damage;
+    else if (type == undefined) 
+        return damage;
 }
 
 /**
