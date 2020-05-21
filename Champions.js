@@ -94,6 +94,7 @@ export function spellDamage() {
             //calls calculate spell
             let j = 0;
             let count = 0;
+            let k = 0;
             let condition = spellsChamp[i];
             while (true) {
                 if (count > 0) {
@@ -130,11 +131,28 @@ export function spellDamage() {
                 if (damageOverTime[4] != undefined) 
                     damageOverTime[i][4] = sortType(damageOverTime[i][4],type,champD.armor,champD.mr)
             }
+            let count2 = 0;
+            let ampob = condition.amp;
+            let k = 0;
+            while (condition.amp != undefined) {
+                if (count2 > 0) {
+                    ampob = ampob.amp;
+                    k++;
+                    if (ampob == undefined)
+                        break;
+                }
+                if (ampob.flatAmp != undefined) {
+                    totalDamage[i][j].push(totalDamage[i][j][0]+ sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w])),ampob.flatAmp.type,champD.armor,champD.mr);
+                }
+                if (ampob.ampMult != undefined) {
+                    totalDamage[i][j].push(totalDamage[i][j][0]*ampob.ampMult);
+                }
+                count2++;
+                k++;
+            }
         }
-
     }
         else {
-
             spell = champA.abilities[i-1];
             spellEffect = spell.effect[1]; //base value
             spellVar = spell.vars; // scaling value
