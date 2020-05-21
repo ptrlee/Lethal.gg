@@ -12,17 +12,23 @@
             "worksForAPI": false,   
             "type": 0,
             "SweetSpot": false,
-            "amp": 1.5,
+            "amp": {
+                "ampMult": 1.5
+            },
             "ADDamage": [10,30,50,70,90],
             "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
             "Condition": {
                 "type": 0,
-                "amp": 1.5,
+                "amp": {
+                    "ampMult": 1.5
+                },
                 "ADDamage": [12.5,37.5,62.5,87.5,112.5],
                 "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
                 "Condition": {           
                     "ADDamage": [15,45,75,105,135],
-                    "amp": 1.5,
+                    "amp": {
+                        "ampMult": 1.5
+                    },
                     "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
                     "type": 0
                 }
@@ -609,6 +615,13 @@
                 "targetHPScale": 0.0023077,
                 "TickRate": 0.25,
                 "Time": 3.25,
+                "Condition": {
+                    "APDamage": [0],
+                    "APScale": 0,
+                    "targetHPScale": [0.12,0.125,0.13,0.135,0.14,0.145,0.15,0.155,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.16],
+                    "targetHPScalePer100AP": 0.015,
+                    "type": 1
+                },
                 "type": 1,
                 "Comment": "targets Blaze ablaze for 4 seconds, damaging them for 「 3% of their maximum health over 3.25 seconds 」",
                 "CommentTwo": "12% − 16% (based on level)「 (+ 1.5% per 100 AP) 」 of their maximum health as magic damage"
@@ -832,6 +845,13 @@
                 "APScale": 0.10,
                 "TickRate": 0.75,
                 "Time": 50,
+                "Condition" : {
+                    "APDamage":  [10,30,50,70,90],
+                    "APScale": 0.6,
+                    "type": 1,
+                    "TickRate": 0.75,
+                    "Time": 50
+                },
                 "type": 1
             }
         },

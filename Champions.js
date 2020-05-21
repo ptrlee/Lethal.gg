@@ -44,7 +44,7 @@ export function spellDamage() {
     let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
     //console.log(spellsChamp);
     let totalDamage = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] ];
-    let damageOverTime = [[0],[0],[0],[0],[0],[0]];
+    let damageOverTime = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] , [[0]]];
     let aaDMG;
     for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
@@ -111,14 +111,26 @@ export function spellDamage() {
                         totalDamage[i].push([calculateSpell(champA, champD, condition, level[w])]);
                 }
                 else {
-                    damageOverTime[i][0] = calculateSpell(champA, champD, spellsChamp[i], level[w]);
-                    damageOverTime[i][1] = spellsChamp[i].TickRate;
-                    damageOverTime[i][2] = damageOverTime[i][0] /damageOverTime[i][1];
-                    damageOverTime[i][3] = spellsChamp[i].Time;
-                    if (damageOverTime[i][3] != 50) 
-                        damageOverTime[i][4] = damageOverTime[i][2] * damageOverTime[i][3];
-                    else 
-                        damageOverTime[i][4] = undefined;
+                    if (j==0) {
+                        damageOverTime[i][0][0] = calculateSpell(champA, champD, condition, level[w]);
+                        damageOverTime[i][0][1] = condition.TickRate;
+                        damageOverTime[i][0][2] = damageOverTime[i][0][0] /damageOverTime[i][0][1];
+                        damageOverTime[i][0][3] = condition.Time;
+                        if (damageOverTime[i][0][3] != 50) 
+                            damageOverTime[i][0][4] = damageOverTime[i][0][2] * damageOverTime[i][0][3];
+                        else 
+                            damageOverTime[i][0][4] = undefined;
+                    }
+                    else {
+                        damageOverTime[i].push([calculateSpell(champA, champD, condition, level[w])]);
+                        damageOverTime[i][j].push(spellsChamp[i].TickRate);
+                        damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
+                        damageOverTime[i][j].push(spellsChamp[i].Time);
+                        if (damageOverTime[i][0][3] != 50) 
+                            damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
+                        else 
+                            damageOverTime[i][j].push(undefined);
+                    }
                 }
                 count++;
 
@@ -126,10 +138,12 @@ export function spellDamage() {
                 totalDamage[i][j][0] = sortType(totalDamage[i][j][0],type,champD.armor,champD.mr)
             }
             else {
-                damageOverTime[i][0] = sortType(damageOverTime[i][0],type,champD.armor,champD.mr)
-                damageOverTime[i][2] = sortType(damageOverTime[i][2],type,champD.armor,champD.mr)
-                if (damageOverTime[4] != undefined) 
-                    damageOverTime[i][4] = sortType(damageOverTime[i][4],type,champD.armor,champD.mr)
+                for (let b = 0; b < damageOverTime[i].length; b++) {
+                    damageOverTime[i][b][0] = sortType(damageOverTime[i][b][0],type,champD.armor,champD.mr)
+                    damageOverTime[i][b][2] = sortType(damageOverTime[i][b][2],type,champD.armor,champD.mr)
+                    if (damageOverTime[i][b][4] != undefined) 
+                        damageOverTime[i][b][4] = sortType(damageOverTime[i][b][4],type,champD.armor,champD.mr)
+                }
             }
             let count2 = 0;
             let ampob = condition.amp;
@@ -200,6 +214,7 @@ export function spellDamage() {
             }
         }
     }   
+    /** 
     /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
     aaDMG = (champA.baseAD + champA.bonusAD) * (1+champA.critMult)*(champA.crit+1);
     damageOverTime[5][0] = aaDMG; //dmg per aa
@@ -209,7 +224,7 @@ export function spellDamage() {
     damageOverTime[5][3] = 50;
     damageOverTime[5][4] = undefined;
     //no 'total damage' value
-    
+    */
     let inputAD = 100 + .7 * 62.4
     let inputAP = 125 + .65 * 62.4
     let debugAD = 100/(100+20.88)
