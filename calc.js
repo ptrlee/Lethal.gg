@@ -336,18 +336,31 @@ function renderItemChoices(num){
 
 function renderRunesAndStatsButton(num) {
     const $champPics = $(`#champ-pictures-${num}`);
+    let statsDiv = "";
+    let runesDiv = "";
+    let clicked = false;
     let hold = `
     <div>
-        <button id="stats-button"> Stats </button>
+        <button id="stats-button-${num}"> Stats </button>
 
         <button id="runes-button-${num}"> Runes </button>
     </div>
     `;
     $champPics.append(hold)
 
-    $(`#runes-button-${num}`).on('click', function(e) {        
-        renderRunes(num);
-        $(`#champ-stats-${num}`).remove();
+    $(`#runes-button-${num}`).on('click', function(e) {      
+        if (!clicked) {  
+            renderRunes(num);
+            clicked = true;
+        }
+        statsDiv = $(`#champ-stats-${num}`).detach();
+        $champPics.append(runesDiv);
+        e.preventDefault();
+    });
+
+    $(`#stats-button-${num}`).on('click', function(e) {
+        $champPics.append(statsDiv)
+        runesDiv = $(`#primary-runes-${num}`).detach();
         e.preventDefault();
     });
     
