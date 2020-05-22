@@ -396,9 +396,14 @@
                 "worksForAPI": false,
                 "APDamage": [150,275,400],
                 "APScale": 0.75,
-                "BurnDamage": [20,30,40],
-                "BurnAPScale": 0.12,
-                "type": 1
+                "type": 1,
+                "Condition": {
+                    "APDamage": [20,30,40],
+                    "APScale": 0.12,
+                    "type": 1,
+                    "TickRate": 1,
+                    "Time": 45
+                }
             }
         }
     ],
@@ -976,6 +981,38 @@
                 "Time": 5,
                 "Comment": "is actually 12 + level, damages every 1.25s for 5s",
                 "BADScale": 0.06,
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [2.6,2.8,3,3.2,3.4,3.6,3.8,4,4.2,4.4,4.6,4.8,5,5.2,5.4,5.6,5.8,6.0],
+                    "TickRate": 1.25,
+                    "Time": 5,
+                    "Comment": "is actually 12 + level, damages every 1.25s for 5s",
+                    "BADScale": 0.06,
+                    "Condition": {
+                        "type": 0,
+                        "ADDamage": [2.6,2.8,3,3.2,3.4,3.6,3.8,4,4.2,4.4,4.6,4.8,5,5.2,5.4,5.6,5.8,6.0],
+                        "TickRate": 1.25,
+                        "Time": 5,
+                        "Comment": "is actually 12 + level, damages every 1.25s for 5s",
+                        "BADScale": 0.06,
+                        "Condition": {
+                            "type": 0,
+                            "ADDamage": [2.6,2.8,3,3.2,3.4,3.6,3.8,4,4.2,4.4,4.6,4.8,5,5.2,5.4,5.6,5.8,6.0],
+                            "TickRate": 1.25,
+                            "Time": 5,
+                            "Comment": "is actually 12 + level, damages every 1.25s for 5s",
+                            "BADScale": 0.06,
+                            "Condition": {
+                                "type": 0,
+                                "ADDamage": [2.6,2.8,3,3.2,3.4,3.6,3.8,4,4.2,4.4,4.6,4.8,5,5.2,5.4,5.6,5.8,6.0],
+                                "TickRate": 1.25,
+                                "Time": 5,
+                                "Comment": "is actually 12 + level, damages every 1.25s for 5s",
+                                "BADScale": 0.06
+                            }
+                        }
+                    }
+                },
                 "Stack": 0,
                 "MaxStack": {
                     "ADDamage": [13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
@@ -1017,7 +1054,7 @@
                 "Condition": {
                     "amp": "1+0.2perstackupto5"
                 }
-                }
+            }
         }
     ],
 
@@ -1524,18 +1561,18 @@
         {
             "WBaseDamage": {
                 "worksForAPI": false,
-                "Passive": {
-                    "type": 3,
-                    "APDamage": [20, 30, 40, 50,  60],
-                    "APScale": 0.4,
-                    "Comment": "These numbers are total damage, not per tick"
-                },
-                "Death": false,
                 "type": 1,
-                "BonusAPDamage": [50, 70, 90, 110, 130],
-                "APScale": 0.5,
-                "BonusOnHitDamage": [10, 15, 20, 25, 30],
-                "APScaleTwo": 0.35,
+                "APDamage": [3.33,5,6.67,8.33,10],
+                "APScale": 0.0667,
+                "TickRate": 0.5,
+                "Time": 3,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [50, 70, 90, 110, 130],
+                    "APScale": 0.5,
+                    "BonusOnHitDamage": [10, 15, 20, 25, 30],
+                    "APScaleTwo": 0.35
+                },
                 "Comment": "APScale is for BonusAPDamage, APScaleTwo is for BonusOnHitDamage; APScaleTwo and BonusOnHitDamage are only applied if target doesn't die"
             }
         },
@@ -1556,13 +1593,19 @@
                 "LengthTraveled": 0,
                 "APDamage": [150, 250, 350],
                 "APScale": 0.8,
-                "Chomper" : {
-                    "APDamage": [225, 325, 425],
-                    "APScale": 1
-                },
-                "Gigalodon" : {
-                    "APDamage": [300, 400, 500],
-                    "APScale": 1.2
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [225, 325, 425],
+                        "APScale": 1,
+                        "type": 1
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "APDamage": [300, 400, 500],
+                            "APScale": 1.2,
+                            "type": 1
+                        }
+                    }
                 }
             }
         }
@@ -1586,10 +1629,15 @@
                 "type": 1,
                 "APDamage": [80, 115, 150, 185, 220],
                 "APScale": 0.75,
-                "targetHPScale": 0.02,
-                "targetHPscalePer100AP": 0.066,
-                "TickRate": 0.5,
-                "Time": 2.0,
+                "Condition": {
+                    "APDamage": [0,0,0,0,0],
+                    "type": 1,
+                    "APScale": 0,
+                    "targetHPScale": 0.02,
+                    "targetHPscalePer100AP": 0.066,
+                    "TickRate": 0.5,
+                    "Time": 2.0
+                },
                 "APDamagePerTick": "2% (+ 0.66% per 100 AP) of target's maximum health"
             }
         },

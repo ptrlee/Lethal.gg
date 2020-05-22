@@ -87,31 +87,41 @@ export function spellDamage() {
                 spellsChamp[i] = spellsChamp[i].RBaseDamage;
             }
 
+            //w is the index of the levelOFSpell -- replace with input later
+            // w = 1 is for the passive where you can't level it 
             let w = i-1;
             if (i == 0)
                 w = 1;
 
             //calls calculate spell
-            let j = 0;
-            let count = 0;
-            let k = 0;
-            let condition = spellsChamp[i];
+            let j = 0; //keeps track of the parts of a spell (ahri q will have 2)
+            let count = 0; //tracker used for .push and assignment  
+
+            let condition = spellsChamp[i]; //recursive definition of spellsChamp used for conditions(parts)
             while (true) {
                 if (count > 0) {
-                    condition = condition.Condition;
-                    j++;
-                    if (condition == null)
+                    condition = condition.Condition; //recursive def 
+                    j++; //increments index of part 
+                    if (condition == null) //breaks if the next part doesnt exist
                         break;
                     type = condition.type;
                 }
                 if (condition.TickRate == null) { //not a DoT ability
-                    if (j == 0) 
+                    if (j == 0) { //assigns to pre-existing index
                         totalDamage[i][0][0] = calculateSpell(champA, champD, condition, level[w]);
-                    else 
+                    }
+                    else //index doesn't exist -- dynamic array
                         totalDamage[i].push([calculateSpell(champA, champD, condition, level[w])]);
                 }
-                else {
-                    if (j==0) {
+                else { //DoT ability
+                    if (j==0) { // pre-existing index 
+                        /**
+                         * 0 = native damage / tick rate
+                         * 1 = tick rate
+                         * 2 = damage / second
+                         * 3 = total duration
+                         * 4 = total damage 
+                         */
                         damageOverTime[i][0][0] = calculateSpell(champA, champD, condition, level[w]);
                         damageOverTime[i][0][1] = condition.TickRate;
                         damageOverTime[i][0][2] = damageOverTime[i][0][0] /damageOverTime[i][0][1];
@@ -121,11 +131,11 @@ export function spellDamage() {
                         else 
                             damageOverTime[i][0][4] = undefined;
                     }
-                    else {
+                    else { //push if more than one DoT condition
                         damageOverTime[i].push([calculateSpell(champA, champD, condition, level[w])]);
-                        damageOverTime[i][j].push(spellsChamp[i].TickRate);
+                        damageOverTime[i][j].push(condition.TickRate);
                         damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
-                        damageOverTime[i][j].push(spellsChamp[i].Time);
+                        damageOverTime[i][j].push(condition.Time);
                         if (damageOverTime[i][0][3] != 50) 
                             damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
                         else 
@@ -134,35 +144,31 @@ export function spellDamage() {
                 }
                 count++;
 
-            if (spellsChamp[i].TickRate == null) {
+            //Sorts type and sends to calculate based on resistances
+            if (condition.TickRate == null) { //burst
                 totalDamage[i][j][0] = sortType(totalDamage[i][j][0],type,champD.armor,champD.mr)
             }
-            else {
-                for (let b = 0; b < damageOverTime[i].length; b++) {
-                    damageOverTime[i][b][0] = sortType(damageOverTime[i][b][0],type,champD.armor,champD.mr)
-                    damageOverTime[i][b][2] = sortType(damageOverTime[i][b][2],type,champD.armor,champD.mr)
-                    if (damageOverTime[i][b][4] != undefined) 
-                        damageOverTime[i][b][4] = sortType(damageOverTime[i][b][4],type,champD.armor,champD.mr)
-                }
+            else {  //DoT
+                    damageOverTime[i][j][0] = sortType(damageOverTime[i][j][0],type,champD.armor,champD.mr)
+                    damageOverTime[i][j][2] = sortType(damageOverTime[i][j][2],type,champD.armor,champD.mr)
+                    if (damageOverTime[i][j][4] != undefined) 
+                        damageOverTime[i][j][4] = sortType(damageOverTime[i][j][4],type,champD.armor,champD.mr)
             }
-            let count2 = 0;
-            let ampob = condition.amp;
-            let k = 0;
-            while (condition.amp != undefined) {
+            let count2 = 0; //checker for static array 
+            let ampob = condition.amp; //recursive definition of amp (special effect multiplier like ahri e)
+            while (condition.amp != undefined) { //if the amp exists
                 if (count2 > 0) {
-                    ampob = ampob.amp;
-                    k++;
-                    if (ampob == undefined)
+                    ampob = ampob.amp; //recursive definition
+                    if (ampob == undefined) //breaks if next amp object doesnt exist
                         break;
                 }
-                if (ampob.flatAmp != undefined) {
-                    totalDamage[i][j].push(totalDamage[i][j][0]+ sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w])),ampob.flatAmp.type,champD.armor,champD.mr);
+                if (ampob.flatAmp != undefined) { //flat bonus damage (cass E)
+                        totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w]),ampob.flatAmp.type,champD.armor,champD.mr));
                 }
-                if (ampob.ampMult != undefined) {
+                if (ampob.ampMult != undefined) { //multiplier damage (ahri e)
                     totalDamage[i][j].push(totalDamage[i][j][0]*ampob.ampMult);
                 }
                 count2++;
-                k++;
             }
         }
     }
@@ -225,37 +231,31 @@ export function spellDamage() {
     damageOverTime[5][4] = undefined;
     //no 'total damage' value
     */
-    let inputAD = 100 + .7 * 62.4
-    let inputAP = 125 + .65 * 62.4
-    let debugAD = 100/(100+20.88)
-    let debugAP = 100/(100+30)
-
-    /** 
-    console.log(inputAD*debugAD);
-    console.log(inputAP*debugAP);
-    */
 
    console.log(totalDamage);
    console.log(damageOverTime);
 }
 
 /** type sorter
- * param totalDamage/tickDamage
+ * @param totalDamage/tickDamage 
+ * @param allresists self-explanatory
  */
 function sortType(damage, type, armor, mr) {
-    if (type == 0) 
+    if (type == 0) //phys dmg
         return calculateDMG(damage, armor, 0, 0);
-    else if (type == 1) 
+    else if (type == 1) //magic damage
         return calculateDMG(damage, mr, 0, 0);
-    else if (type == 2) 
+    else if (type == 2) //true damage
         return damage;
-    else if (type == undefined) 
+    else if (type == undefined) //too lazy to fix if type isn't defined 
         return damage;
 }
 
 /**
  * calculates damage done based on reduction
- * @param all self-explanatory
+ * @param damage
+ * @param reduction -- mr / armor
+ * @param penetration -- mag pen, arm pen, leth 
  * does not factor in total damage reduction or percentile conversion like conqueror
  */
 function calculateDMG(damage, reduction, flatPen, percentPen) {
@@ -597,119 +597,3 @@ function itemStats(items, champion) {
         }
     }
 }
-
-// att champion item calculations
-// exception bloodrazor, bork, hydra, roa, any active items, armor/ap penetration items, leth items
-// sheen items, rab, ie mod
-// takes into acount ad, ap, as, and crit 
-
-// let itemplaceholder1 = [3029, 3022, 3046, 1000, 1000, 1000]; // 1000 is no item, attk champ
-// let itemplaceholder2 = [3029, 3022, 3065, 3110, 1000, 1000]; // 1000 is no item, def champ
-//3029 = roa, 3022 = froze mallet, 3065 spirit visage, 3046 phandtom dancer, 3110 frozen heart
-
-
-/**
- * Ability calculations
- * @param tooltip parsed by func parseTooltip 
- * parsing the return value for important values
- * separates based on damage
- * calculates scaling/base damage @param level, @param allstats
- */
-
-/** 
- for (i = 0; i < 4; i++) { //iterates for every spell
-    let bigString = parseTooltip(placeholder1.spells[i].tooltip)
-
-    for (let j = 0; j < bigString.length; j++) { //iterates for every damage calculation
-        */
-        /**
-         * looks for '<' to find the base damage, general case {{e1}}
-         */
-/*
-         let k = 0;
-         let cont = true;
-         while (cont) {
-            break;
-         }
-         break;
-    }
-    break;
- }
- */
-
-//attk hero damage calculations 
-// necessary parameters: lvl of abilities 
-//champA.spelldmg[0] += placeholder1.spells[0].effect[champA.lvlOfspell[0]];
-//champA.spelldmg[1] += placeholder1.spells[1].effect[champA.lvlOfspell[1]];
-//champA.spelldmg[2] += placeholder1.spells[2].effect[champA.lvlOfspell[2]];
-//champA.spelldmg[3] += placeholder1.spells[3].effect[champA.lvlOfspell[3]];
-
-//scaling ability damage 
-// do after items/runes have been calculated
-// need to add champs with multiple scaling damage
-/** 
-for (i = 0; i < 4; i++) {
-    if (champA.ratiotypeofSpell[i] == 0) { //magic scaling
-        if (placeholder1.spells[i].vars[0] != null) {
-            //champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * champA.bonusAP;
-        }
-    }
-    else if (champA.ratiotypeSpell[i] == 1) { //tAD scaling
-        if (placeholder1.spells[i].vars[0] != null) {
-            //champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.bonusAD + champA.baseAD);
-        }
-    }
-    else if (champA.ratiotypeSpell[i] == 2) { //bAD scaling
-        if (placeholder1.spells[i].vars[0] != null) {
-           // champA.spelldmg[i] += placeholder1.spells[i].vars[0].coeff * (champA.baseAD);
-        }
-    }
-    else if (champA.ratiotypeSpell[i] == 3) { //hp scaling
-        //exception 
-    }
-    else if (champA.ratiotypeSpell[i] == 4) { //mana scaling
-        //exception 
-    }
-    else if (champA.ratiotypeSpell[i] == 5) { //enemy hp scaling
-        //exception 
-    }
-    else if (champA.ratiotypeSpell[i] == 6) { //mspd scaling (heca)
-        //exception 
-    }
-}
-**/
-
-// calculates what type of damage each spell is
-// need to figure out
-/*
-for (i = 0; i < 4; i++) {
-    i = 5;
-}
-*/
-
-/* 
-//type separator damage 
-//physical 0, magic 1, true 2, neither 3
-for (i=0;i<5;i++) {
-    if(champA.typeofSpell[i] == 0) {
-        champA.physical += champA.spelldmg[i];
-    }
-    else if (champA.typeofSpell[i] == 1) {
-        champA.magic += champA.spelldmg[i];
-    }
-    else if (champA.typeofSpell[i] == 2) {
-        champA.true += champA.spelldmg[i];
-    }
-}
-champA.physical += champA.aaDMG;
-
-*/
-
-//attack damage calculations
-// do after items and runes
-
-
-//Commented this out temperarily
-
-
-//total = calculateDMG(champA.physical, champA.magic, champA.true, champion.armor, champion.mr)
