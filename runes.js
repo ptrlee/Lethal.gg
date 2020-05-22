@@ -9,7 +9,6 @@ export function renderRunes(num) {
         <image id="Inspiration-${num}" class="clickable runes" src="Assets/Runes/Inspiration.png"></image>
 
         <div id="keystones-${num}">
-
         </div>
     </div>
     `;
@@ -28,19 +27,19 @@ function renderKeystones(runes, num){
     $("#"+ runes).on('click', function(e) {
         switch(l) {
             case "Precision": 
-            renderImages(l, 4, num);
+            renderImages(l, num);
                 break;
             case "Domination":
-            renderImages(l, 4, num);
+            renderImages(l, num);
                 break;
             case "Sorcery":
-            renderImages(l, 3, num);
+            renderImages(l, num);
                 break;
             case "Resolve": 
-            renderImages(l, 3, num);
+            renderImages(l, num);
                 break;
             case "Inspiration":
-            renderImages(l, 3, num);
+            renderImages(l, num);
                 break;
 
         }        
@@ -48,11 +47,45 @@ function renderKeystones(runes, num){
     });
 }
 
-function renderImages(type, length, num) {
+function renderImages(type, num) {
     const $runePics = $(`#keystones-${num}`);
+    let keystoneLength = 3;
     let hold = "";
-    for (let i = 0; i < length; i++) {
-        hold += `<image width=50px length=50px src="Assets/Runes/${type}/Keystones/${i}.png"> </image>`
+    if (type == "Precision" || type == "Domination") {
+        keystoneLength = 4;
     }
+
+    for (let i = 0; i < keystoneLength; i++) {
+        hold += `<image id="keyStone-${i}-${num}" width=50px length=50px src="Assets/Runes/${type}/Keystones/${i}.png"> </image>`
+    }
+ 
     $runePics.append(hold)
+
+    let subs = `
+    <div>
+        ${subRunes(type, "LineOne", num)}
+    </div>
+
+    <div>
+        ${subRunes(type, "LineTwo", num)}
+    </div>
+
+    <div>
+        ${subRunes(type, "LineThree", num)}
+    </div>
+    `;
+
+    $runePics.append(subs)
+}
+
+function subRunes(type, line, num){
+    let hold = "";
+    let length = 3;
+    if (type == "Domination" && line == "LineThree") {
+        length = 4;
+    }
+    for (let i = 0; i < length; i++) {
+        hold += `<image id="${type}-${line}-${i}-${num}" src="Assets/Runes/${type}/${line}/${i}.png">`
+    }
+    return hold;
 }
