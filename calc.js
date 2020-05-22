@@ -1,5 +1,6 @@
-import { spellDamage } from "./Champions.js"
-import { getDefChamp, getAtkChamp } from "./Champions.js"
+import { spellDamage } from "./Champions.js";
+import { getDefChamp, getAtkChamp } from "./Champions.js";
+import { renderRunes } from "./runes.js"
 
 const $root = $("#root");
 const $champs = $("#champs");
@@ -82,6 +83,8 @@ $('#calc-button').on('click', function(e) {
     renderChampLists();
     renderItemChoices("one");
     renderItemChoices("two");
+    renderRunesAndStatsButton("one");
+    renderRunesAndStatsButton("two")
 
     e.preventDefault();
 });
@@ -260,7 +263,7 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsOne.push(id);
         for (let i = 0; i < itemIdsOne.length; i++) {
             imgOne = `
-                <img class="pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+                <img class="clickable pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
             `;
             $champPics.append(imgOne);
             removeImage("one", itemIdsOne, i);
@@ -273,7 +276,7 @@ function makeItemImages(item, array1, array2, num) {
         itemIdsTwo.push(id);
         for (let i = 0; i < itemIdsTwo.length; i++) {
             imgTwo = `
-                <img class="pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
+                <img class="clickable pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
             `;
             $champPics.append(imgTwo);
             removeImage("two", itemIdsTwo, i);
@@ -311,24 +314,43 @@ function removeImage(num, array, i) {
 
 //Render the Add Items button
 function renderItemChoices(num){
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-stats-${num}`);
     let hold = `
     <div id="champ-items-${num}">
         <button id="add-item-button-${num}"> Add Item </button>
     </div>
     `;
-    $champPics.append(hold);
+    $champPics.prepend(hold);
 
 
 
     /**
-     * Handles Damage Calculator button press
+     * Handles Add Item button press
      */
     $(`#add-item-button-${num}`).on('click', function(e) {        
         $(`#add-item-button-${num}`).remove();
         getItemsList(num);
         e.preventDefault();
     });
+}
+
+function renderRunesAndStatsButton(num) {
+    const $champPics = $(`#champ-pictures-${num}`);
+    let hold = `
+    <div>
+        <button id="stats-button"> Stats </button>
+
+        <button id="runes-button-${num}"> Runes </button>
+    </div>
+    `;
+    $champPics.append(hold)
+
+    $(`#runes-button-${num}`).on('click', function(e) {        
+        renderRunes(num);
+        $(`#champ-stats-${num}`).remove();
+        e.preventDefault();
+    });
+    
 }
 
 //Gets the first champion's items

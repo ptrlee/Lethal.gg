@@ -2,3 +2,19 @@
     position:relative;
     left: -200px;
 }
+
+.runes{
+    filter: grayscale(100%);
+}
+
+.runes:hover{
+    filter: grayscale(0%);
+}
+
+button {
+    cursor: pointer;
+}
+
+.clickable {
+    cursor: pointer;
+}
