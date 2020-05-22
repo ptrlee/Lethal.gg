@@ -11,6 +11,10 @@
     filter: grayscale(0%);
 }
 
+.runes:active{
+    filter: grayscale(0%);
+}
+
 button {
     cursor: pointer;
 }
