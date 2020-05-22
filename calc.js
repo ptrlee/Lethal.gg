@@ -360,7 +360,7 @@ function renderRunesAndStatsButton(num) {
 
     $(`#stats-button-${num}`).on('click', function(e) {
         $champPics.append(statsDiv)
-        runesDiv = $(`#primary-runes-${num}`).detach();
+        runesDiv = $(`#runes-${num}`).detach();
         e.preventDefault();
     });
     

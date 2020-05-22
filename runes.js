@@ -14,16 +14,15 @@ export function renderRunes(num) {
     `;
     $champPics.append(hold);
 
-    renderKeystones(`Precision-${num}`, num);
-    renderKeystones(`Domination-${num}`, num);
-    renderKeystones(`Sorcery-${num}`, num);
-    renderKeystones(`Resolve-${num}`, num);
-    renderKeystones(`Inspiration-${num}`, num);
+    runesClick(`Precision-${num}`, num);
+    runesClick(`Domination-${num}`, num);
+    runesClick(`Sorcery-${num}`, num);
+    runesClick(`Resolve-${num}`, num);
+    runesClick(`Inspiration-${num}`, num);
 }
 
-function renderKeystones(runes, num){
+function runesClick(runes, num){
     let l = runes.split("-")[0];
-    console.log(l);
     $("#"+ runes).on('click', function(e) {
         $(`#primary-runes-${num}`).remove();
         switch(l) {
@@ -62,10 +61,12 @@ function renderImages(type, num) {
     }
 
     for (let i = 0; i < keystoneLength; i++) {
-        hold += `<image id="keyStone-${i}-${num}" class="clickable runes" width=50px length=50px src="Assets/Runes/${type}/Keystones/${i}.png"> </image>`
+        hold = `<image id="${type}-keystone-${i}-${num}" class="clickable runes keystones-${num}" width=50px length=50px src="Assets/Runes/${type}/Keystones/${i}.png"> </image>`
+        $primaryPics.append(hold)
+        keystoneClick(type, i, num);
     }
  
-    $primaryPics.append(hold)
+    
 
     let subs = `
     <div>
@@ -82,6 +83,12 @@ function renderImages(type, num) {
     `;
 
     $primaryPics.append(subs);
+    for (let i=0; i<3; i++) {
+        lineClick(type, "LineOne", i, num);
+        lineClick(type, "LineTwo", i, num);
+        lineClick(type, "LineThree", i, num);    
+    }
+    lineClick(type, "LineThree", 3, num);
 }
 
 function subRunes(type, line, num){
@@ -91,7 +98,23 @@ function subRunes(type, line, num){
         length = 4;
     }
     for (let i = 0; i < length; i++) {
-        hold += `<image class="clickable runes ${line}" id="${type}-${line}-${i}-${num}" src="Assets/Runes/${type}/${line}/${i}.png">`
+        hold += `<image class="clickable runes ${line}-${num}" id="${type}-${line}-${i}-${num}" src="Assets/Runes/${type}/${line}/${i}.png"></image>`
     }
     return hold;
 }
+
+function keystoneClick(type, i, num) {
+    $(`#${type}-keystone-${i}-${num}`).on('click', function(e) {
+        $(`.keystones-${num}`).removeClass('active');        
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+}
+
+function lineClick(type, line, i, num) {
+    $(`#${type}-${line}-${i}-${num}`).on('click', function(e) {
+        $(`.${line}-${num}`).removeClass('active');        
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+} 
