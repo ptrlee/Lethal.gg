@@ -48,6 +48,10 @@ function runesClick(runes, num){
     });
 }
 
+/**
+ * Renders keystones and all the runes of a certain rune type, as well as apply 
+ * click events to the pictures
+ */
 function renderImages(type, num) {
     const $runePics = $(`#runes-${num}`);
     let keystoneLength = 3;
@@ -91,6 +95,9 @@ function renderImages(type, num) {
     lineClick(type, "LineThree", 3, num);
 }
 
+/**
+ * Renders the images of the sub runes
+ */
 function subRunes(type, line, num){
     let hold = "";
     let length = 3;
@@ -103,6 +110,9 @@ function subRunes(type, line, num){
     return hold;
 }
 
+/**
+ * Creates onclick events for the keystone pictures given their ids
+ */
 function keystoneClick(type, i, num) {
     $(`#${type}-keystone-${i}-${num}`).on('click', function(e) {
         $(`.keystones-${num}`).removeClass('active');        
@@ -111,6 +121,9 @@ function keystoneClick(type, i, num) {
     });
 }
 
+/**
+ * Creates onclick events for the sub runes pictures given their ids
+ */
 function lineClick(type, line, i, num) {
     $(`#${type}-${line}-${i}-${num}`).on('click', function(e) {
         $(`.${line}-${num}`).removeClass('active');        

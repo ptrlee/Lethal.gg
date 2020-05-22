@@ -112,7 +112,7 @@ function levelChange(num) {
     let hold = `
         <div id="input-level-${num}">
             <label> Level: </label>
-            <input placeholder="Enter Level" id="champ-level-list-${num}" value = 1 type="text"/>
+            <input placeholder="Enter Level" id="champ-level-list-${num}" value=1 type="text"/>
         </div>
     `;
     $stats.prepend(hold);
@@ -166,6 +166,8 @@ jQuery.extend({
  */
 export function getAbilities(num){
     $(`#champ-spell-${num}`).remove();
+    let spellLevel = [0, 0, 0, 0]
+    let spellPoints = 18;   
     let x = document.getElementById("champ-name-" + num).textContent;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
    
@@ -174,17 +176,47 @@ export function getAbilities(num){
     
     let spells = "";
     for (let i = 0; i < 4; i++) {
-        spells += `<image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
+        spells += `<image id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
     }
+
+    let levels = "";
+    for (let i = 0; i < 4; i++) {
+        levels += `<label id="champ-spell-level-${i}-${num}"> 0 </label>`;
+    }
+
+
     let hold = ` 
     <div id="champ-spell-${num}">
-        <span>
         <image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
-            ${spells}
-        </span>
+        ${spells}
+        <div>
+            ${levels}
+        </div>
+
     </div>
     `;
     $champPics.append(hold);
+    increaseSpellLevel(0 , num);
+    increaseSpellLevel(1 , num);
+    increaseSpellLevel(2 , num);
+    increaseSpellLevel(3 , num);
+}
+
+function increaseSpellLevel(i, num) {
+    $(`#champ-spell-${i}-${num}`).mousedown(function(event) {
+        switch (event.which) {
+            case 1: 
+            if (document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 5)
+                alert("Left: " + "You cannot level up this spell anymore");
+            document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
+                break;
+            case 3: 
+            if(document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 0)
+                alert("Right: " + "you cannot level down anymore");
+            document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML--;
+                break;
+        }
+    });
 }
 
 function VSColumn() {
@@ -335,7 +367,7 @@ function renderItemChoices(num){
 }
 
 function renderRunesAndStatsButton(num) {
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-buttons-${num}`);
     let statsDiv = "";
     let runesDiv = "";
     let clicked = false;
@@ -375,12 +407,6 @@ export function getChampOneItems(){
 export function getChampionTwoItems(){
     return itemIdsTwo;
 }
-
-Array.prototype.remove = function(from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
-};
 
 
 

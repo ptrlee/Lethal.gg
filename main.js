@@ -68,6 +68,10 @@ function renderChampStats(num) {
             <img width=150px length=300px id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ahri_0.jpg">  </img>
         </div>
 
+        <div id="champ-buttons-${num}">
+
+        </div>
+
         <div id="champ-stats-${num}">
             <div id="level-${num}">
                 Level: 1
