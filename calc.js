@@ -7,6 +7,8 @@ const $champs = $("#champs");
 let champions;
 let itemIdsOne=[];
 let itemIdsTwo=[]
+let spellPointsOne = 1;
+let spellPointsTwo = 1;
 
 /**
  * Renders the two champion lists
@@ -59,10 +61,12 @@ function renderChampLists() {
         });
 
         $('#champ-level-list-one').change(function() {
+            spellPointsOne = this.value;
             championChangeStats("one");
         });
 
         $('#champ-level-list-two').change(function() {
+            spellPointsTwo = this.value;
             championChangeStats("two");
         });
     });
@@ -166,8 +170,6 @@ jQuery.extend({
  */
 export function getAbilities(num){
     $(`#champ-spell-${num}`).remove();
-    let spellLevel = [0, 0, 0, 0]
-    let spellPoints = 18;   
     let x = document.getElementById("champ-name-" + num).textContent;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
    
@@ -206,15 +208,32 @@ function increaseSpellLevel(i, num) {
     $(`#champ-spell-${i}-${num}`).mousedown(function(event) {
         switch (event.which) {
             case 1: 
-            if (document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 5)
+            if (document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 5) {
                 alert("Left: " + "You cannot level up this spell anymore");
-            document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
+            } else if (i == 3 && document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 3) {
+                alert("Left: " + "You cannot level up this spell anymore");
+            } else if (spellPointsOne == 0 || spellPointsTwo == 0) {
+                alert("You have no spell points to level up any spells");
+            } else {
+                document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
+                if (num == "one")
+                    spellPointsOne--;
+                else if (num == "two")
+                    spellPointsTwo--;
+            }
                 break;
             case 3: 
-            if(document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 0)
+            if (document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 0) {
                 alert("Right: " + "you cannot level down anymore");
-            document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML--;
-                break;
+            }
+            else {
+                document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML--;
+                if (num == "one")
+                    spellPointsOne++;
+                else if (num == "two")
+                    spellPointsTwo++;   
+            }
+            break;
         }
     });
 }
