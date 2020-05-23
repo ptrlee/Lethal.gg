@@ -1179,11 +1179,34 @@
                 "ADDamage": [100, 200, 300],
                 "BADScale": 0.75,
                 "amp": {
-                    "statChange": {
-                        "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230],
-                        "type": 2,
-                        "ADDamage": [100, 200, 300],
-                        "BADScale": 0.75
+                    "ampMult": {
+                        "value": 1.2
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 1.4
+                        },
+                        "amp": {
+                            "ampMult": {
+                                "value": 1.6
+                            },
+                            "amp": {
+                                "ampMult": {
+                                    "value": 1.8
+                                },
+                                "amp": {
+                                    "ampMult": {
+                                        "value": 2.0,
+                                        "statChange": {
+                                            "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230],
+                                            "type": 2,
+                                            "ADDamage": [100, 200, 300],
+                                            "BADScale": 0.75
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

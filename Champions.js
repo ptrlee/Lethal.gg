@@ -165,32 +165,32 @@ export function spellDamage() {
                     if (ampob == undefined) //breaks if next amp object doesnt exist
                         break;
                 }
-                if (ampob.statChange != undefined) {
-                    if (ampob.statChange.percentileAD != undefined) {
+                if (ampob.statChange != undefined) { //stat change is defined 
+                    if (ampob.statChange.percentileAD != undefined) { //percent AD increase (aatrox ex)
                         champA.baseAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
                         champA.bonusAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
                     }
-                    if (ampob.statChange.flatADPerLevel != undefined) {
+                    if (ampob.statChange.flatADPerLevel != undefined) { //flat ad increase darius ex
                         champA.bonusAD += ampob.statChange.flatADPerLevel[champA.level-1];
                     }
-                    if (ampob.statChange.TickRate == undefined) {
+                    if (ampob.statChange.TickRate == undefined) { //calculates dmg 
                         totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level[w]),ampob.statChange.type,champD.armor,champD.mr));
                     }
-                    else {
+                    else { //calculates DoT
                         damageOverTime[i].push([sortType(calculateSpell(champA,champD,ampob.statChange,level[w]),ampob.statChange.type,champD.armor,champD.mr)]);
-                        damageOverTime[i][j].push(ampob.statChange.TickRate);
-                        damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
-                        damageOverTime[i][j].push(ampob.statChange.Time);
-                        if (damageOverTime[i][j][3] != 50) 
-                            damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
+                        damageOverTime[i][j+1].push(ampob.statChange.TickRate);
+                        damageOverTime[i][j+1].push(damageOverTime[i][j+1][0] /damageOverTime[i][j+1][1]);
+                        damageOverTime[i][j+1].push(ampob.statChange.Time);
+                        if (damageOverTime[i][j+1][3] != 50) 
+                            damageOverTime[i][j+1].push(damageOverTime[i][j+1][2] * damageOverTime[i][j+1][3]);
                         else 
-                            damageOverTime[i][j].push(undefined);
+                            damageOverTime[i][j+1].push(undefined);
                     }
-                    if (ampob.statChange.percentileAD !=undefined) {
+                    if (ampob.statChange.percentileAD !=undefined) { //undoes percent ad change
                         champA.baseAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
                         champA.bonusAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
                     }
-                    if (ampob.statChange.flatADPerLevel != undefined) {
+                    if (ampob.statChange.flatADPerLevel != undefined) { //undoes flat ad change
                         champA.bonusAD -= ampob.statChange.flatADPerLevel[champA.level-1]
                     }
                 }
@@ -199,7 +199,10 @@ export function spellDamage() {
                 }
                 if (ampob.ampMult != undefined) { //multiplier damage (ahri e)
                     totalDamage[i][j].push(totalDamage[i][j][0]*ampob.ampMult.value);
-                    if (ampob.ampMult.statChange != undefined) {
+                    if (ampob.ampMult.statChange != undefined) { //stat change w/ amp 
+                        /*
+                        hasn't been bug tested
+                        */
                         if (ampob.ampMult.statChange.percentileAD != undefined) {
                             champA.baseAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
                             champA.bonusAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
@@ -212,13 +215,13 @@ export function spellDamage() {
                         }
                         else {
                             damageOverTime[i].push([ampob.ampMult.value*sortType(calculateSpell(champA,champD,ampob.ampMult.statChange,level[w]),ampob.ampMult.statChange.type,champD.armor,champD.mr)]);
-                            damageOverTime[i][j].push(ampob.statChange.TickRate);
-                            damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
-                            damageOverTime[i][j].push(ampob.statChange.Time);
-                            if (damageOverTime[i][j][3] != 50) 
-                                damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
+                            damageOverTime[i][j+1].push(ampob.statChange.TickRate);
+                            damageOverTime[i][j+1].push(damageOverTime[i][j+1][0] /damageOverTime[i][j+1][1]);
+                            damageOverTime[i][j+1].push(ampob.statChange.Time);
+                            if (damageOverTime[i][j+1][3] != 50) 
+                                damageOverTime[i][j+1].push(damageOverTime[i][j+1][2] * damageOverTime[i][j+1][3]);
                             else 
-                                damageOverTime[i][j].push(undefined);
+                                damageOverTime[i][j+1].push(undefined);
                         }
                         if (ampob.ampMult.statChange.percentileAD !=undefined) {
                             champA.baseAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
