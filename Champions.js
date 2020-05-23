@@ -133,6 +133,10 @@ export function spellDamage() {
                             damageOverTime[i][0][4] = undefined;
                     }
                     else { //push if more than one DoT condition
+                        if (damageOverTime[i][j] == undefined) { //lazy solution to everything
+                            for (let m = 0; m < j; m++)
+                            damageOverTime[i][m] = [0];
+                        }
                         damageOverTime[i].push([calculateSpell(champA, champD, condition, level[w])]);
                         damageOverTime[i][j].push(condition.TickRate);
                         damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
@@ -143,8 +147,6 @@ export function spellDamage() {
                             damageOverTime[i][j].push(undefined);
                     }
                 }
-                if (damageOverTime[i][j] == undefined) 
-                    damageOverTime[i][j] = [0];
                 count++;
 
             //Sorts type and sends to calculate based on resistances
@@ -507,6 +509,7 @@ export function getAtkChamp() {
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
     let champ = att_champ[x];
     let champA = {
+        passive: champ.passive.image.full,
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
         abilities: champ.spells,
         level: document.getElementById("champ-level-list-one").value,
@@ -520,13 +523,8 @@ export function getAtkChamp() {
         atkSpeed: 0,
         bAtkSpeed: 0,
         bonusAP: 0,
-        spelldmg: [[0,0,0], [0,0,0], [0,0,0],[0,0,0]],
         lvlOfspell: [1,1,1,1],
         item: 0, //not coded yet 
-        physical: 0,
-        magical: 0,
-        true: 0,
-        damage_amp: 0, //not coded yet
         health: 0,
         bonushealth: 0,
         armor: 0,
@@ -566,7 +564,6 @@ export function getDefChamp() {
         bonusAP: 0,
         baseAD: 0,
         bonusAD: 0,
-        mana: 0,
     }
     if (champD.level == undefined) {
         champD.level = 1;
