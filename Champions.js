@@ -196,7 +196,7 @@ export function spellDamage() {
                         champA.bonusAD -= ampob.statChange.flatADPerLevel[champA.level-1]
                     }
                 }
-                if (ampob.flatAmp != undefined) { //flat bonus damage (cass E)
+                if (ampob.flatAmp != undefined) { //flat bonus damage (eve e)
                     totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w]),ampob.flatAmp.type,champD.armor,champD.mr));
                 }
                 if (ampob.ampMult != undefined) { //multiplier damage (ahri e)
@@ -352,10 +352,12 @@ function calculateSpell(champA, champD, spellsChampSpell, level) {
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale + (spellsChampSpell.targetHPScalePer100AP*(Math.floor(champA.bonusAP/100))));
             }
             else {
-                if (spellsChampSpell.targetHPScalePer100AP == null)
+                if (spellsChampSpell.targetHPScalePer100AP == null && spellsChampSpell.targetHPScalePer100BAD == null)
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level-1]);
-                else
+                else if (spellsChampSpell.targetHPScalePer100AP != null)
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level-1] + (spellsChampSpell.targetHPScalePer100AP*(Math.floor(champA.bonusAP/100))));
+                else 
+                    totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level-1] + (spellsChampSpell.targetHPScalePer100BAD*(Math.floor(champA.bonusAD/100))));
             }
         }
     }

@@ -901,7 +901,13 @@
             "type": 0,
             "ADDamage": [70,100,130,160,190],
             "BADScale": 0.6,
-            "OuterDamage": [0.06, 0.065, 0.07, 0.075, 0.08],
+            "Condition": {
+                "ADDamage": [70,100,130,160,190],
+                "BADScale": 0.6,
+                "targetHPScale": [0.06, 0.065, 0.07, 0.075, 0.08],
+                "targetHPScalePer100BAD": 0.03334,
+                "type": 0
+            },
             "Comment": "Outer damage increases based on opponent's max health and 3.3% per 100 bonus AD"
             }
         },
@@ -1280,11 +1286,29 @@
         "RBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "APDamage": [200, 300, 400],
-            "APScale": 0.6,
-            "APDamagePerChamp": [35, 60, 85],
-            "BonusAPScale": 0.15
+            "APDamage": [235, 360, 485],
+            "APScale": 0.75,
+            "Condition" : {
+                "APDamage": [270, 420, 570],
+                "APScale": 0.90,
+                "type": 1,
+                "Condition" : {
+                    "APDamage": [305, 480, 655],
+                    "APScale": 1.05,
+                    "type": 1,
+                    "Condition" : {
+                        "APDamage": [340, 540, 740],
+                        "APScale": 1.2,
+                        "type": 1,
+                        "Condition" : {
+                            "APDamage": [375, 600, 825],
+                            "type": 1,
+                            "APScale": 1.35
+                        }
+                    }
+                }
             }
+        }
         }
     ],
 
@@ -1524,7 +1548,25 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [30,35,40,45,50],
+                "APScale": 0.30,
+                "type": 1,
+                "Condition": {
+                    "APDamage": [40,55,70,85,100],
+                    "APScale": 0.55,
+                    "type": 1,
+                    "Condition": {
+                        "APDamage": [40,55,70,85,100],
+                        "APScale": 0.55,
+                        "type": 1,
+                        "Condition": {
+                            "APDamage": [40,55,70,85,100],
+                            "APScale": 0.55,
+                            "type": 1
+                        }
+                    }
+                }
             }
         },
 
@@ -1546,10 +1588,14 @@
                 "APScale": 0,
                 "targetHPScale": 0.03,
                 "targetHPScalePer100AP": 0.015,
-                "Condition": {
-                    "APDamage": [75,100,125,150,175],
-                    "targetHPScale": 0.04,
-                    "targetHPScalePer100AP": 0.025
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [75,100,125,150,175],
+                        "APScale": 0,
+                        "targetHPScale": 0.04,
+                        "targetHPScalePer100AP": 0.025,
+                        "type": 1
+                    }
                 }
             }
         },
@@ -1621,7 +1667,10 @@
     "Fiddlesticks": [
         {
             "Passive": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0,0,0,0,0],
+                "APScale": 0
             }
         },
 
@@ -1663,6 +1712,7 @@
                 "APDamage": [31.25, 56.25, 81.25],
                 "APScale": 0.1125,
                 "Time": 5,
+                "type": 1,
                 "TickRate": 0.25,
                 "Comment": "Deals damage every 0.25s for 5s"
             }
@@ -1677,7 +1727,7 @@
                 "Comment2": "need ot implement extra base AD damage which is physical",
                 "ADDamage": 0,
                 "targetHPScale": 0.025,
-                "targetHPscalePer100BAD": 0.045,
+                "targetHPScalePer100BAD": 0.045,
                 "Comment": "deal 2.5% (+ 4.5% per 100 bonus AD) of target's maximum health Hybrid penetration bonus true damage"
             }
         },
@@ -1730,6 +1780,12 @@
                 "worksForAPI": true,
                 "APDamage": [10, 25, 40, 55,70],
                 "APScale": 0.55,
+                "type": 1,
+                "Condition": {
+                    "ADDamage": [0,0,0,0,0],
+                    "ADScale": 1.0,
+                    "type": 0
+                },
                 "ADDamage": "100% of his AD"
             }
         },
