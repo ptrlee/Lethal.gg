@@ -8,6 +8,8 @@ html, body {
 
 .damage{
     border:  solid yellow;
+    position: relative;
+    top: 35px;
 }
 
 

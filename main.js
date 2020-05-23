@@ -34,9 +34,8 @@ function renderChampionOne() {
 function renderDamageNumbers() {
     let hold = `
     <div id='total-damage' class="column ">
-        VS
         <div id="ability-damage" class= columns> 
-            <div id="Passive-Damage" class="column"> Passive </div>
+            <div id="P-damage" class="column damage"> Passive </div>
             <div id="Q-damage" class="column damage"> Q </div>
             <div id="W-damage" class="column damage"> W </div>
             <div id="E-damage" class="column damage"> E </div>
