@@ -61,11 +61,25 @@ function renderChampLists() {
         });
 
         $('#champ-level-list-one').change(function() {
+            if (this.value <= 0) {
+                alert("Your level cannot be below zero");
+                this.value = 1;
+            } else if (this.value > 18) {
+                alert("Maximum possible level is 18");
+                this.value = 18;
+            }
             spellPointsOne = this.value;
             championChangeStats("one");
         });
 
         $('#champ-level-list-two').change(function() {
+            if (this.value <= 0) {
+                alert("Your level cannot be below zero");
+                this.value = 1;
+            } else if (this.value > 18) {
+                alert("Maximum possible level is 18");
+                this.value = 18;
+            }
             spellPointsTwo = this.value;
             championChangeStats("two");
         });
