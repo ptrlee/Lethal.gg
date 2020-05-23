@@ -5,7 +5,17 @@
             "type": 0,
             "targetHPScale": 0.04588,
             "targetHPScalePerLevel": 0.00412,
-            "Heal": 1
+            "ADScale": 1.0,
+            "amp": {
+                "statChange": {
+                    "type": 0,
+                    "percentileAD": [0.2,0.25,0.3],
+                    "targetHPScale": 0.04588,
+                    "targetHPScalePerLevel": 0.00412,
+                    "ADScale": 1.0,
+                    "StatSpell": 4
+                }
+            }
         }},
             {
         "QBaseDamage": {
@@ -13,21 +23,48 @@
             "type": 0,
             "SweetSpot": false,
             "amp": {
-                "ampMult": 1.5
+                "statChange": {
+                    "percentileAD": [0.2,0.25,0.3],
+                    "type": 0,
+                    "ADDamage": [10,30,50,70,90],
+                    "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
+                    "StatSpell": 4
+                },
+                "ampMult": {
+                    "value": 1.5
+                }
             },
             "ADDamage": [10,30,50,70,90],
             "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
             "Condition": {
                 "type": 0,
                 "amp": {
-                    "ampMult": 1.5
+                    "ampMult": {
+                        "value": 1.5
+                    },
+                    "statChange": {
+                        "percentileAD": [0.2,0.25,0.3],
+                        "type": 0,
+                        "ADDamage": [12.5,37.5,62.5,87.5,112.5],
+                        "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
+                        "StatSpell": 4
+                    }
                 },
                 "ADDamage": [12.5,37.5,62.5,87.5,112.5],
                 "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
                 "Condition": {           
                     "ADDamage": [15,45,75,105,135],
                     "amp": {
-                        "ampMult": 1.5
+                        "ampMult": {
+                            "value": 1.5
+                        },
+                        "statChange": {
+                            "percentileAD": [0.2,0.25,0.3],
+                            "type": 0,
+                            "ADDamage": [15,45,75,105,135],
+                            "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
+                            "StatSpell": 4
+                        }
                     },
                     "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
                     "type": 0
@@ -40,10 +77,28 @@
             "type": 0,
             "ADDamage": [30,40,50,60,70],
             "ADScale": 0.4,
+            "amp": {
+                "statChange": {
+                    "percentileAD": [0.2,0.25,0.3],
+                    "type": 0,
+                    "ADDamage": [30,40,50,60,70],
+                    "ADScale": 0.4,
+                    "StatSpell": 4
+                }
+            },
             "Condition": {
                 "type": 0,
                 "ADDamage": [30,40,50,60,70],
-                "ADScale": 0.4
+                "ADScale": 0.4,
+                "amp": {
+                    "statChange": {
+                        "percentileAD": [0.2,0.25,0.3],
+                        "type": 0,
+                        "ADDamage": [30,40,50,60,70],
+                        "ADScale": 0.4,
+                        "StatSpell": 4
+                    }
+                }
             }
             }},
             {
@@ -74,7 +129,9 @@
             "worksForAPI": false,
             "type": 1,
             "amp": {
-                "ampMult": 1.2
+                "ampMult": {
+                    "value": 1.2
+                }
             },
             "APDamage": [40,65,90,115,140],
             "APScale": 0.35,
@@ -82,7 +139,9 @@
                 "type": 2,
                 "APDamage": [40,65,90,115,140],
                 "amp": {
-                    "ampMult": 1.2
+                    "ampMult": {
+                        "value": 1.2
+                    }
                 },
                 "APScale": 0.35
             }
@@ -94,7 +153,9 @@
             "worksForAPI": false,
             "type": 1,
             "amp": {
-                "ampMult": 1.2
+                "ampMult": {
+                    "value": 1.2
+                }
             },
             "APDamage": [40,65,90,115,140],
             "APScale": 0.3,
@@ -103,14 +164,18 @@
                 "APDamage": [12,19.5,27,34.5,42],
                 "APScale": 0.09,
                 "amp": {
-                    "ampMult": 1.2
+                    "ampMult": {
+                        "value": 1.2
+                    }
                 },
                 "Condition": {
                     "type": 1,
                     "APDamage": [12,19.5,27,34.5,42],
                     "APScale": 0.09,
                     "amp": {
-                        "ampMult": 1.2
+                        "ampMult": {
+                            "value": 1.2
+                        }
                     }
                 }
             }
@@ -129,21 +194,27 @@
             "worksForAPI": false,
             "APDamage": [60,90,120],
             "amp": {
-                "ampMult": 1.2
+                "ampMult": {
+                    "value": 1.2
+                }
             },
             "APScale": 0.35,
             "Condition": {
                 "type": 1,
                 "APDamage": [60,90,120],
                 "amp": {
-                    "ampMult": 1.2
+                    "ampMult": {
+                        "value": 1.2
+                    }
                 },
                 "APScale": 0.35,
                 "Condition": {
                     "type": 1,
                     "APDamage": [60,90,120],
                     "amp": {
-                        "ampMult": 1.2
+                        "ampMult": {
+                            "value": 1.2
+                        }
                     },
                     "APScale": 0.35
                 }
@@ -240,12 +311,20 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "Stack": 0,
-                "APDamage": [8, 11, 14, 17, 20],
-                "APScale": 0.04,
-                "TickRate": 0.5,
-                "Time": 5,
-                "BAPDamage": [35, 50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290],
+                "APDamage": [35,50,65,80,95,110,125,140,155,170,185,200,215,230,245,260,275,290],
+                "APScale": 0,
+                "Condition": {
+                    "ADScale": 1.0,
+                    "ADDamage": [0,0,0,0,0],
+                    "type": 0,
+                    "Condition" : {
+                        "type": 1,
+                        "APDamage": [8, 11, 14, 17, 20],
+                        "APScale": 0.04,
+                        "TickRate": 0.5,
+                        "Time": 5
+                    }
+                },
                 "Comment": "BAPDamage is applied to next basic attack after getting 5 stacks"
             }
         },
@@ -340,7 +419,9 @@
                 "APDamage": [50,75,100,125,150],
                 "APScale": 0.5,
                 "amp": {
-                    "ampMult": 2.0
+                    "ampMult": {
+                        "value": 2.0
+                    }
                 }
             }
         },
@@ -402,7 +483,14 @@
                     "APScale": 0.12,
                     "type": 1,
                     "TickRate": 1,
-                    "Time": 45
+                    "Time": 50,
+                    "Condition": {
+                        "APDamage": [50,75,100],
+                        "APScale": 0.15,
+                        "type": 1,
+                        "TickRate": 1.6,
+                        "Time": 50
+                    }
                 }
             }
         }
@@ -586,8 +674,7 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true,
-                "BonusAtkSpeed": [0.3, 0.38, 0.46, 0.54, 0.62]
+                "worksForAPI": true
             }
         },
 
@@ -608,6 +695,11 @@
             "PassiveAPScale": 0.3,
             "APScale": 1 
             }
+        },
+        {
+        "autoattack": {
+            "BonusAtkSpeed": [0.3, 0.38, 0.46, 0.54, 0.62]
+        }
         }
     ],
 
@@ -646,7 +738,9 @@
                 "APScale": 0.60,
                 "type": 1,
                 "amp": {
-                    "ampMult": 1.25
+                    "ampMult": {
+                        "value": 1.25
+                    }
                 }
             }
         },
@@ -965,7 +1059,9 @@
             "ADScale": [0.15, 0.45, 0.75],
             "APScale": 0.2,
             "amp": {
-                "ampMult": 2.0
+                "ampMult": {
+                    "value": 2.0
+                }
             }
             }
         }
@@ -1008,7 +1104,17 @@
                                 "TickRate": 1.25,
                                 "Time": 5,
                                 "Comment": "is actually 12 + level, damages every 1.25s for 5s",
-                                "BADScale": 0.06
+                                "BADScale": 0.06,
+                                "amp": {
+                                    "statChange": {
+                                        "type": 0,  
+                                        "ADDamage": [13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+                                        "BADScale": 0.3,
+                                        "TickRate": 1.25,
+                                        "Time": 5,
+                                        "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230]
+                                    }
+                                }
                             }
                         }
                     }
@@ -1028,7 +1134,21 @@
                 "ADDamage": [17.5,28,38.5,49,59.5],
                 "ADScale": [0.35,0.385,0.42,0.455,0.49],
                 "amp": {
-                    "ampMult": 2.857
+                    "statChange": {
+                        "type": 0,  
+                        "ADDamage": [17.5,28,38.5,49,59.5],
+                        "ADScale": [0.35,0.385,0.42,0.455,0.49],
+                        "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230]
+                    },
+                    "ampMult": {
+                        "value": 2.857,
+                        "statChange": {
+                            "type": 0,  
+                            "ADDamage": [17.5,28,38.5,49,59.5],
+                            "ADScale": [0.35,0.385,0.42,0.455,0.49],
+                            "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230]
+                        }
+                    }
                 }
              }
         },
@@ -1036,7 +1156,14 @@
             "WBaseDamage":{
                 "worksForAPI": false,
                 "type": 0,
-                "ADScale": [1.4, 1.45, 1.5, 1.55, 1.6]
+                "ADScale": [1.4, 1.45, 1.5, 1.55, 1.6],
+                "amp": {
+                    "statChange": {
+                        "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230],
+                        "type": 0,
+                        "ADScale": [1.4, 1.45, 1.5, 1.55, 1.6]
+                    }
+                }
             }
         },
         {
@@ -1051,8 +1178,13 @@
                 "type": 2,
                 "ADDamage": [100, 200, 300],
                 "BADScale": 0.75,
-                "Condition": {
-                    "amp": "1+0.2perstackupto5"
+                "amp": {
+                    "statChange": {
+                        "flatADPerLevel": [30,35,40,45,50,55,60,65,70,7585,95,105,130,155,180,205,230],
+                        "type": 2,
+                        "ADDamage": [100, 200, 300],
+                        "BADScale": 0.75
+                    }
                 }
             }
         }
@@ -1649,7 +1781,9 @@
                 "APDamage": [20, 35, 50, 65, 80],
                 "APScale": 0.3,
                 "amp": {
-                    "ampMult": 2.0
+                    "ampMult": {
+                        "value": 2.0
+                    }
                 },
                 "Formula": "100% + (25% per 0.25 charged)",
                 "Comment": "APDamage only shows minimum magic damage"
@@ -1886,7 +2020,9 @@
                 "type": 1,
                 "APDamage": [80, 120, 160, 200, 240],
                 "amp": {
-                    "ampMult": 1.5
+                    "ampMult": {
+                        "value": 1.5
+                    }
                 },
                 "APScale": 0.7,
                 "Comment": "These number are for minimum damage",
@@ -1973,7 +2109,9 @@
                 "ADDamage": [250, 400, 550],
                 "BADScale": 1.5,
                 "amp": {
-                    "ampMult": 0.8
+                    "ampMult": {
+                        "value": 0.8
+                    }
                 },
                 "Comment": "Same thing as Q, damage and scale two are explosion damages"
             }
@@ -1997,9 +2135,13 @@
                 "ADDamage": [55, 95, 135, 175, 215],
                 "BADScale": 0.7,
                 "amp": {
-                    "ampMult": 1.05,
+                    "ampMult": {
+                        "value": 1.05
+                    },
                     "amp": {
-                        "ampMult": 1.10
+                        "ampMult": {
+                            "value": 1.10
+                        }
                     }
                 },
                 "Comment": "If Hecarim damages at least one enemy with Rampage, its base Cooldown reduction icon cooldown is reduced by 1 second and the damage is increased by 5% for 8 seconds, stacking up to two times."
@@ -2024,7 +2166,9 @@
                 "ADDamage": [45,75,105,135,165],
                 "BADScale": 0.5,
                 "amp": {
-                    "ampMult":2.0
+                    "ampMult": {
+                        "value": 2.0
+                    }
                 }
             }
         },

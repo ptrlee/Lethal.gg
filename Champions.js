@@ -137,12 +137,14 @@ export function spellDamage() {
                         damageOverTime[i][j].push(condition.TickRate);
                         damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
                         damageOverTime[i][j].push(condition.Time);
-                        if (damageOverTime[i][0][3] != 50) 
+                        if (damageOverTime[i][j][3] != 50) 
                             damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
                         else 
                             damageOverTime[i][j].push(undefined);
                     }
                 }
+                if (damageOverTime[i][j] == undefined) 
+                    damageOverTime[i][j] = [0];
                 count++;
 
             //Sorts type and sends to calculate based on resistances
@@ -163,11 +165,69 @@ export function spellDamage() {
                     if (ampob == undefined) //breaks if next amp object doesnt exist
                         break;
                 }
+                if (ampob.statChange != undefined) {
+                    if (ampob.statChange.percentileAD != undefined) {
+                        champA.baseAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        champA.bonusAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                    }
+                    if (ampob.statChange.flatADPerLevel != undefined) {
+                        champA.bonusAD += ampob.statChange.flatADPerLevel[champA.level-1];
+                    }
+                    if (ampob.statChange.TickRate == undefined) {
+                        totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level[w]),ampob.statChange.type,champD.armor,champD.mr));
+                    }
+                    else {
+                        damageOverTime[i].push([sortType(calculateSpell(champA,champD,ampob.statChange,level[w]),ampob.statChange.type,champD.armor,champD.mr)]);
+                        damageOverTime[i][j].push(ampob.statChange.TickRate);
+                        damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
+                        damageOverTime[i][j].push(ampob.statChange.Time);
+                        if (damageOverTime[i][j][3] != 50) 
+                            damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
+                        else 
+                            damageOverTime[i][j].push(undefined);
+                    }
+                    if (ampob.statChange.percentileAD !=undefined) {
+                        champA.baseAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        champA.bonusAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                    }
+                    if (ampob.statChange.flatADPerLevel != undefined) {
+                        champA.bonusAD -= ampob.statChange.flatADPerLevel[champA.level-1]
+                    }
+                }
                 if (ampob.flatAmp != undefined) { //flat bonus damage (cass E)
-                        totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w]),ampob.flatAmp.type,champD.armor,champD.mr));
+                    totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.flatAmp,level[w]),ampob.flatAmp.type,champD.armor,champD.mr));
                 }
                 if (ampob.ampMult != undefined) { //multiplier damage (ahri e)
-                    totalDamage[i][j].push(totalDamage[i][j][0]*ampob.ampMult);
+                    totalDamage[i][j].push(totalDamage[i][j][0]*ampob.ampMult.value);
+                    if (ampob.ampMult.statChange != undefined) {
+                        if (ampob.ampMult.statChange.percentileAD != undefined) {
+                            champA.baseAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                            champA.bonusAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        }
+                        if (ampob.ampMult.statChange.flatADPerLevel != undefined) {
+                            champA.bonusAD += ampob.ampMult.statChange.flatADPerLevel[champA.level-1];
+                        }
+                        if (ampob.ampMult.statChange.TickRate == undefined) {
+                            totalDamage[i][j].push(ampob.ampMult.value*sortType(calculateSpell(champA,champD,ampob.ampMult.statChange,level[w]),ampob.ampMult.statChange.type,champD.armor,champD.mr));
+                        }
+                        else {
+                            damageOverTime[i].push([ampob.ampMult.value*sortType(calculateSpell(champA,champD,ampob.ampMult.statChange,level[w]),ampob.ampMult.statChange.type,champD.armor,champD.mr)]);
+                            damageOverTime[i][j].push(ampob.statChange.TickRate);
+                            damageOverTime[i][j].push(damageOverTime[i][j][0] /damageOverTime[i][j][1]);
+                            damageOverTime[i][j].push(ampob.statChange.Time);
+                            if (damageOverTime[i][j][3] != 50) 
+                                damageOverTime[i][j].push(damageOverTime[i][j][2] * damageOverTime[i][j][3]);
+                            else 
+                                damageOverTime[i][j].push(undefined);
+                        }
+                        if (ampob.ampMult.statChange.percentileAD !=undefined) {
+                            champA.baseAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                            champA.bonusAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        }
+                        if (ampob.ampMult.statChange.flatADPerLevel != undefined) {
+                            champA.bonusAD -= ampob.ampMult.statChange.flatADPerLevel[champA.level-1]
+                        }
+                    }
                 }
                 count2++;
             }
@@ -221,17 +281,16 @@ export function spellDamage() {
             }
         }
     }   
-    /** 
-    /// aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
     aaDMG = (champA.baseAD + champA.bonusAD) * (1+champA.critMult)*(champA.crit+1);
-    damageOverTime[5][0] = aaDMG; //dmg per aa
+    damageOverTime[5][0][0] = aaDMG; //dmg per aa
     aaDMG = aaDMG* champA.atkSpeed*(1+champA.bAtkSpeed);
-    damageOverTime[5][1] = champA.atkSpeed*(1+champA.bAtkSpeed); //tick rate 
-    damageOverTime[5][2] = aaDMG; //dmg per second
-    damageOverTime[5][3] = 50;
-    damageOverTime[5][4] = undefined;
+    damageOverTime[5][0][1] = (1/(champA.atkSpeed*(1+champA.bAtkSpeed))); //tick rate 
+    damageOverTime[5][0][2] = aaDMG * damageOverTime[5][0][1]; //dmg per second
+    damageOverTime[5][0][3] = 50;
+    damageOverTime[5][0][4] = undefined;
+
     //no 'total damage' value
-    */
 
    console.log(totalDamage);
    console.log(damageOverTime);
