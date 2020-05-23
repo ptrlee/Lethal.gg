@@ -11,6 +11,7 @@ let spellPointsOne = 1;
 let spellPointsTwo = 1;
 let damage;
 
+
 /**
  * Renders the two champion lists
  */
@@ -44,8 +45,10 @@ function renderChampLists() {
             championChangeStats("one");
             getAbilities("one");
             damage = spellDamage();
+            damageColumn();
+            showDamage();
             console.log(damage);
-            VSColumn();
+
         });
 
         $('#champ-input-list-one').on("click", function() {
@@ -105,7 +108,6 @@ $('#calc-button').on('click', function(e) {
     renderItemChoices("two");
     renderRunesAndStatsButton("one");
     renderRunesAndStatsButton("two")
-
     e.preventDefault();
 });
 
@@ -191,10 +193,9 @@ export function getAbilities(num){
    
     const $champPics = $(`#champ-pictures-${num}`);
     let y = champ[x].spells;
-    
     let spells = "";
     for (let i = 0; i < 4; i++) {
-        spells += `<image id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
+        spells += `<image class="clickable ability" id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${y[i].id}.png"> </image>`;
     }
 
     let levels = "";
@@ -205,8 +206,9 @@ export function getAbilities(num){
 
     let hold = ` 
     <div id="champ-spell-${num}">
-        <image width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
-        ${spells}
+            <image class="ability" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
+            ${spells}
+
         <div>
             ${levels}
         </div>
@@ -254,47 +256,61 @@ function increaseSpellLevel(i, num) {
     });
 }
 
-function VSColumn() {
-    $(`champ-spell-middle`).remove();
-    console.log(damage);
-    let x = document.getElementById("champ-name-one").textContent;
-    let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
-   
-    let y = champ[x].spells;
+function damageColumn() {
+    let atkChamp = getAtkChamp();
+    document.getElementById("Q-damage").innerHTML = `<image src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[0].id}.png" > </image>`;
+    document.getElementById("W-damage").innerHTML = `<image src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[1].id}.png" > </image>`;
+    document.getElementById("E-damage").innerHTML = `<image src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[2].id}.png" > </image>`;
+    document.getElementById("R-damage").innerHTML = `<image src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[3].id}.png" > </image>`;
     
-    let spells = ["","","",""];
-    for (let i = 0; i < 4; i++) {
-        spells[i] += `<image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/spell/${y[i].id}.png"> </image>`;
-    }
-    let hold = `
-        <div>
-            <image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>\
-            <div>${spells[0]} ${showDamage()}</div>
-            <div>${spells[1]}</div>
-            <div>${spells[2]}</div>
-            <div>${spells[3]}</div>
-        </div>
-    `;
-
-    $("#dumbocss5123").append(hold)
 }
 
 function showDamage(){
-    let hold = ``;
-    for (let i = 0; i < damage.length; i++) {
-        for (let j = 0; j < damage[i].length; j++) {
-            for (let k = 0; k < damage[i][j].length; k++) {
-                for (let l = 0; l < damage[i][j][k].length; l++) {
-                    hold += `
-                    <div>
-                        ${damage[i][j][k][l]}
-                    </div>
-                    `
-                }
-            }
+    let $Qdamage = $("#Q-damage");
+    let $Wdamage = $("#W-damage");
+    let $Edamage = $("#E-damage");
+    let $Rdamage = $("#R-damage");
+
+    let qdama = "";
+    let wdama = "";
+    let edama = "";
+    let rdama = "";
+
+    let totalDamage = damage[0];
+    let DoT = damage[1];
+
+    console.log(totalDamage);
+    for (let i = 0; i < totalDamage[1].length; i++) {
+        for (let j = 0; j < totalDamage[1][i].length; j++) {
+            qdama += `<div> ${totalDamage[1][i][j]} </div>`; 
         }
     }
-    return hold;
+
+    for (let i = 0; i < totalDamage[2].length; i++) {
+        for (let j = 0; j < totalDamage[2][i].length; j++) {
+            wdama += `<div> ${totalDamage[2][i][j]} </div>`; 
+        }
+    }
+
+    for (let i = 0; i < totalDamage[3].length; i++) {
+        for (let j = 0; j < totalDamage[3][i].length; j++) {
+            edama += `<div> ${totalDamage[3][i][j]} </div>`; 
+        }
+    }
+
+    for (let i = 0; i < totalDamage[4].length; i++) {
+        for (let j = 0; j < totalDamage[4][i].length; j++) {
+            rdama += `<div> ${totalDamage[4][i][j]} </div>`; 
+        }
+    }
+
+
+    $Qdamage.append(qdama);
+    $Wdamage.append(wdama);
+    $Edamage.append(edama);
+    $Rdamage.append(rdama);
+
+
 }
 
 

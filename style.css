@@ -1,7 +1,15 @@
-.dumbocss{
-    position: relative;
-    left: -200px;
+html, body {
+    background: rgb(25, 25, 50);
 }
+
+#champs {
+    color: white;
+}
+
+.damage{
+    border:  solid yellow;
+}
+
 
 .runes{
     filter: grayscale(100%);

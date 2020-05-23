@@ -5,6 +5,7 @@ const $champs = $("#champs");
 
 renderSummonerSearchbar();
 renderChampionOne();
+renderDamageNumbers();
 renderChampionTwo();
 getAbilities("one");
 getAbilities("two");
@@ -26,12 +27,22 @@ function renderSummonerSearchbar() {
  * Renders the first champion
  */
 function renderChampionOne() {
+    let hold = `${renderChampStats("one")}`;
+    $champs.append(hold);
+}
+
+function renderDamageNumbers() {
     let hold = `
-    ${renderChampStats("one")}
-    <div id='dumbocss5123' class="column">
-    VS
-    </div>
-    `;
+    <div id='total-damage' class="column ">
+        VS
+        <div id="ability-damage" class= columns> 
+            <div id="Passive-Damage" class="column"> Passive </div>
+            <div id="Q-damage" class="column damage"> Q </div>
+            <div id="W-damage" class="column damage"> W </div>
+            <div id="E-damage" class="column damage"> E </div>
+            <div id="R-damage" class="column damage"> R </div>
+        </div>
+    </div>`
     $champs.append(hold);
 }
 
