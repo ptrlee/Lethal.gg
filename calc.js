@@ -269,7 +269,7 @@ function VSColumn() {
     let hold = `
         <div>
             <image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>\
-            <div>${spells[0]} ${damage[0][1][0][0]}</div>
+            <div>${spells[0]} ${showDamage()}</div>
             <div>${spells[1]}</div>
             <div>${spells[2]}</div>
             <div>${spells[3]}</div>
@@ -277,6 +277,24 @@ function VSColumn() {
     `;
 
     $("#dumbocss5123").append(hold)
+}
+
+function showDamage(){
+    let hold = ``;
+    for (let i = 0; i < damage.length; i++) {
+        for (let j = 0; j < damage[i].length; j++) {
+            for (let k = 0; k < damage[i][j].length; k++) {
+                for (let l = 0; l < damage[i][j][k].length; l++) {
+                    hold += `
+                    <div>
+                        ${damage[i][j][k][l]}
+                    </div>
+                    `
+                }
+            }
+        }
+    }
+    return hold;
 }
 
 
