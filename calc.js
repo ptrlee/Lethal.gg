@@ -9,6 +9,7 @@ let itemIdsOne=[];
 let itemIdsTwo=[]
 let spellPointsOne = 1;
 let spellPointsTwo = 1;
+let damage;
 
 /**
  * Renders the two champion lists
@@ -42,7 +43,8 @@ function renderChampLists() {
         $('#champ-input-list-one').change(function() {
             championChangeStats("one");
             getAbilities("one");
-            spellDamage();
+            damage = spellDamage();
+            console.log(damage);
             VSColumn();
         });
 
@@ -57,7 +59,7 @@ function renderChampLists() {
         $('#champ-input-list-two').change(function() {
             championChangeStats("two");
             getAbilities("two");
-            spellDamage();
+            damage = spellDamage();
         });
 
         $('#champ-level-list-one').change(function() {
@@ -254,6 +256,7 @@ function increaseSpellLevel(i, num) {
 
 function VSColumn() {
     $(`champ-spell-middle`).remove();
+    console.log(damage);
     let x = document.getElementById("champ-name-one").textContent;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
    
@@ -266,7 +269,7 @@ function VSColumn() {
     let hold = `
         <div>
             <image class=dumbocss width=48px length=48px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>\
-            <div>${spells[0]}</div>
+            <div>${spells[0]} ${damage[0][1][0][0]}</div>
             <div>${spells[1]}</div>
             <div>${spells[2]}</div>
             <div>${spells[3]}</div>

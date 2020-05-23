@@ -45,6 +45,7 @@ export function spellDamage() {
     //console.log(spellsChamp);
     let totalDamage = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] ];
     let damageOverTime = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] , [[0]]];
+    let combinedDamage = [totalDamage, damageOverTime];
     let aaDMG;
     for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
@@ -234,6 +235,7 @@ export function spellDamage() {
 
    console.log(totalDamage);
    console.log(damageOverTime);
+   return combinedDamage;
 }
 
 /** type sorter
