@@ -85,7 +85,7 @@ function renderChampStats(num) {
         <div id="champ-buttons-${num}"></div>
         <div id="champ-items-${num}"></div>
 
-        <div id="champ-stats-${num}">
+        <div class="stats-and-runes" id="champ-stats-${num}">
             <div id="level-${num}">
                 Level: 1
             </div>

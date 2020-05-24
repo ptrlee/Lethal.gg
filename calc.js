@@ -432,9 +432,9 @@ function renderRunesAndStatsButton(num) {
     let clicked = false;
     let hold = `
     <div>
-        <button id="stats-button-${num}"> Stats </button>
+        <button class="s-r-button" id="stats-button-${num}"> Stats </button>
 
-        <button id="runes-button-${num}"> Runes </button>
+        <button class="s-r-button" id="runes-button-${num}"> Runes </button>
     </div>
     `;
     $champPics.append(hold)
@@ -448,6 +448,8 @@ function renderRunesAndStatsButton(num) {
         $champPics.append(runesDiv);
         $(`#stats-button-${num}`).removeAttr('disabled');
         $(this).attr('disabled', "disabled");
+        $(this).addClass('clicked');
+        $(`#stats-button-${num}`).removeClass('clicked');
         e.preventDefault();
     });
 
@@ -456,6 +458,8 @@ function renderRunesAndStatsButton(num) {
         runesDiv = $(`#runes-${num}`).detach();
         $(`#runes-button-${num}`).removeAttr('disabled');
         $(this).attr('disabled', "disabled");
+        $(this).addClass("clicked");
+        $(`#runes-button-${num}`).removeClass('clicked');
         e.preventDefault();
     });
     

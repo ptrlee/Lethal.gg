@@ -1,5 +1,6 @@
 body {
-    background: rgb(25, 25, 50);
+    background: lightblue;
+    color: black;
 }
 
 #header {
@@ -7,21 +8,18 @@ body {
     color: red;
 }
 
-#champs {
-    color: white;
-}
 
 #input-champs {
     border: solid;
     border-bottom: none;
-    border-color: gray; 
+    border-color: yellow; 
     border-left: none;
     border-right: none;
     padding-top: 25px;
 }
 
 .damage{
-    border:  solid white;
+    border:  solid yellow;
     position: relative;
     top: 35px;
 }
@@ -50,13 +48,13 @@ body {
 button {
     cursor: pointer;
     background-color: Transparent;
-    color: white;
+    color: black;
     margin: 10px;
 }
 
 input {
     background-color: Transparent;
-    color: white;
+    color: black;
     margin: 10px;
 }
 
@@ -70,4 +68,35 @@ input {
 
 input::-webkit-calendar-picker-indicator {
     opacity: 100;
- }
+}
+
+.stats-and-runes {
+    border: solid;
+    background-color: lightgray;
+}
+
+.s-r-button {
+    width: 60px; 
+    border: solid;
+    position: relative;
+    top: 10px;
+    padding: 10px;
+    border-bottom: none;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.clicked {
+    background-color: lightgray;
+    color: black;
+}
+
+.subrunes {
+    height: 32px;
+    width: 32px;
+}
+
+.keystones {
+    height: 45px;
+    width: 45px;
+}
