@@ -566,6 +566,8 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [12,14,16,18,20,23,26,32,38,44,50,60,70,80,90,100,110,120],
+                "APDamageBasedOnOtherAbility": [5,10,15,20,25],
+                "OtherAbility": 1,
                 "APScale": 0.25
             }
         },
@@ -580,7 +582,8 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "BonusDamage": [5,10,15,20,25],
+                "APDamage": [16.8, 196, 22.4, 25.2,28,32.2,36.4,44.8,53.2,61.6,70,84,98,112,126,140,154,168],
+                "BonusAPDamage": [7,14,21,28,35],
                 "APScale": 0.35
             }
         },
@@ -2371,7 +2374,9 @@
                 "type": 0,
                 "ADDamage": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180],
                 "ADScale": 1.2,
-                "APScale": 0.4
+                "APScale": 0.4,
+                "APDamageBasedOnOtherAbilityPercentile": [1.1,1.15,1.2,1.25,1.3],
+                "OtherAbility": 0
             }
         },
 
@@ -2388,8 +2393,10 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [20, 30, 40, 50, 60],
+                "ADDamage": [0,0,0,0,0],
+                "ADScale": 1.0,
                 "targetHPScale": [0.03, 0.035, 0.04, 0.045, 0.05],
+                "targetHPScalePer100BAD": 0.02,
                 "Comment": "BADDamage is minimum physical damage that can be dealt, BADDamage also increase +2% per 100 AD",
                 "Comment2": "Makes tentacles nearby attck target"
             }  
@@ -2398,7 +2405,7 @@
         {
             "EBaseDamage": {
                 "worksForAPI": false,
-                "Damage": [0.25, 0.3, 0.35, 0.4, 0.45],
+                "DamageTransfer": [0.25, 0.3, 0.35, 0.4, 0.45],
                 "Comment": "Damage transmission increases +8% per 100 AD, also spawns tentacles when over"
             }
         },
@@ -2421,7 +2428,8 @@
                 "Stack": 0,
                 "type": 1,
                 "APDamage": [15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66],
-                "ADScale": 0.25 
+                "APScale": 0,
+                "BADScale": 0.25 
             }
         },
 
@@ -2441,6 +2449,11 @@
                 "ADDamage": [10, 25, 40, 55, 70],
                 "ADScale": 0.5,
                 "APScale": 0.4,
+                "amp": {
+                    "ampMult": {
+                        "value": 2.0
+                    }
+                },
                 "Comment": "Maximum damage(fully charged) are these numbers x2"
             }
         },
@@ -2459,8 +2472,12 @@
                 "worksForAPI": false,
                 "APDamage" : [125, 225, 325],
                 "APScale": 0.7,
-                "APDamageTwo": [125, 200, 275],
-                "APScaleTwo": 0.7,
+                "type": 1,
+                "Condition": {
+                    "APDamage": [125, 200, 275],
+                    "APScale": 0.7,
+                    "type": 1
+                },
                 "Comment": "Damage and Scale 2 are from running into the swords"
             }
         }
@@ -2469,7 +2486,10 @@
     "Ivern": [
         {
             "Passive": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0],
+                "APScale":0
             }
         },
 
@@ -2486,7 +2506,7 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [30, 37.5, 45, 52.5, 60],
+                "APDamage": [30, 37.5, 45, 52.5, 60],
                 "APScale": 0.3
             }
         },
@@ -2503,7 +2523,7 @@
         {
             "RBaseDamage": {
                 "worksForAPI": false,
-                "type": 1,
+                "type": 0,
                 "APDamage": [70, 100, 170],
                 "APScale": 0.3,
                 "Comment": "This is Daisy!"
@@ -2520,7 +2540,17 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false, 
+                "APDamage": [60,85,110,135,160],
+                "APScale": 0.35,
+                "type": 1,
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [15,20,25,30,35],
+                        "APScale": 0.35,
+                        "type": 1
+                    }
+                }
             }
         },
 
@@ -2539,14 +2569,17 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADScale": [0.1, 0.175, 0.25, 0.325, 0.4],
+                "BonusAD": [0.1, 0.175, 0.25, 0.325, 0.4],
                 "APScale": 0.1
             }
         },
 
         {
             "RBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0,0,0],
+                "APScale": 0
             }
         }
     ],
@@ -2556,7 +2589,7 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 0,
-                "TCHPScale": 0.08,
+                "targetcurrentHPscale": 0.08,
                 "ADDamage": 20,
                 "Comment": "Minimum damage is 20, refreshes every 6 seconds" 
             }
@@ -2564,7 +2597,10 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [80,120,160,200,240],
+                "BADScale": 1.2,
+                "type": 0
             }
         },
 
@@ -2576,7 +2612,11 @@
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [80,120,160,200,240],
+                "APScale": 0.8,
+                "type": 1,
+                "BonusAtkSpeed": [0.20]
             }
         },
 
@@ -2599,19 +2639,58 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [65,105,145,185,225],
+                "BADScale": 1.0,
+                "APScale": 0.6,
+                "type": 0
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [40,75,110,145,180],
+                "APScale": 0.60,
+                "type": 1,
+                "Condition": {
+                    "ADScale": 1.0,
+                    "type": 0
+                }
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [55,80,105,130,155],
+                "BADScale": 0.50,
+                "type": 0,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.2
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 1.4
+                        },
+                        "amp": {
+                            "ampMult": {
+                                "value": 1.6
+                            },
+                            "amp": {
+                                "ampMult": {
+                                    "value": 1.8
+                                },
+                                "amp": {
+                                    "ampMult": {
+                                        "value": 2.0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
 
@@ -2620,8 +2699,12 @@
                 "worksForAPI": false,
                 "type": 1,
                 "Stack": 0,
-                "BAPDamage": [100, 140, 180],
-                "APScale": 0.7
+                "APDamage": [100, 140, 180],
+                "APScale": 0.7,
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
+                }
             }
         }
     ],
@@ -2728,19 +2811,50 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [45,70,95,120,145],
+                "ADScale": [0.45,0.525,0.6,0.675,0.75],
+                "type": 0,
+                "APScale": 0.6,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.35
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 1.7
+                        },
+                        "amp": {
+                            "ampMult": {
+                                "value": 2.05
+                            }
+                        }
+                    }
+                }
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [50,85,120,155,190],
+                "ADScale": 0.50,
+                "type": 0
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [20,80,140,200,260],
+                "ADScale": 1.2,
+                "APScale": 1.0,
+                "amp": {
+                    "ampMult": {
+                        "value": 0.65
+                    }
+                }
             }
         },
 
@@ -2771,7 +2885,10 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [10,60,110,160,210],
+                "ADScale": 1.6,
+                "type": 0
             }
         },
 
@@ -2817,12 +2934,23 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [101.25, 137.8125, 174.375, 210.9375, 247.5],
-                "BADScale": 0.7875,
-                "APScale": 0.5625,
-                "ADDamageTwo": [168.75, 229.6875, 290.625, 351.5625, 412.5],
-                "BADScaleTwo": 1.3125,
-                "APScaleTWo": 0.9375,
+                "ADDamage": [45,61.25,77.5,93.75,110],
+                "BADScale": 0.35,
+                "APScale": 0.25,
+                "amp": {
+                    "flatAmp": {
+                        "ADDamage": [101.25, 137.8125, 174.375, 210.9375, 247.5],
+                        "BADScale": 0.7875,
+                        "APScale": 0.5625
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "ADDamage": [168.75, 229.6875, 290.625, 351.5625, 412.5],
+                            "BADScale": 1.3125,
+                            "APScale": 0.9375
+                        }
+                    }
+                },
                 "Comment": "Two is for evolved Q"
             }
         },
@@ -2846,7 +2974,10 @@
 
         {
             "RBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false, 
+                "ADDamage": [25,35,45],
+                "BADscale": 0.15,
+                "targetMissingHPScale": [0.25,0.30,0.35]
             }
         }
     ],
@@ -2873,7 +3004,8 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "Stack": 0,
-                "TMHPScale": [0.1, 0.12, 0.14, 0.16, 0.18],
+                "type": 1,
+                "targetHPScale": [0.1, 0.12, 0.14, 0.16, 0.18],
                 "Comment": "Damage above is bonus AP Damage"
             }
         },
@@ -2907,21 +3039,21 @@
         {
             "QBaseDamage": {
                 "worksForAPI": false,
-                "Form": {
-                    "FormOne": {
-                        "Name": "Normal",
+                "type": 1,
+                "APDamage": [90, 135, 180, 225, 270],
+                "APScale": 0.4,
+                "amp": {
+                    "flatAmp": {
                         "type": 1,
                         "APDamage": [90, 135, 180, 225, 270],
-                        "APScale": 0.4
-                    }, 
-                    "FormTwo": {
-                        "Name": "Mantra",
-                        "type": 1,
-                        "BAPDamage": [25, 75, 125, 175],
-                        "APScale": 0.3,
-                        "BAPDamageTwo": [35, 140, 245, 350],
-                        "APScaleTwo": 0.6,
-                        "Comment": "Two is the detonation damage"
+                        "APDamageBasedOnOtherAbility": [25,75,125,175],
+                        "OtherAbility": 3,
+                        "APScale": 0.7
+                    },
+                    "Condition": {
+                        "APDamage": [35, 140, 245, 350],
+                        "APScale": 0.6,
+                        "type": 1
                     }
                 }
             }
@@ -2978,7 +3110,15 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [45,65,85,105,125],
+                "APScale": 0.30,
+                "type": 1,
+                "Condition": {
+                    "APDamage": [90,130,170,210,250],
+                    "APScale": 0.60,
+                    "type": 1
+                }
             }
         },
 
@@ -3018,7 +3158,10 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [65,95,125,155,185],
+                "APScale": 0.70,
+                "type": 1
             }
         },
 
@@ -3030,10 +3173,12 @@
                     "BAPDamage": 20,
                     "APScale": 0.1
                 },
-                "Active": {
-                    "type": 1,
-                    "BAPDamage": [70, 95, 120, 145, 170],
-                    "APScale": 0.8  
+                "type": 1,
+                "APDamage": [70, 95, 120, 145, 170],
+                "APScale": 0.8,
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
                 }
             }
         },
@@ -3049,10 +3194,40 @@
                 "worksForAPI": false,
                 "APDamage": [80, 100, 120],
                 "APScale": 0.4,
+                "type": 1,
                 "ManaScale": 0.02,
-                "APDamageTwo": [40, 50, 60],
-                "APScaleTwo": 0.1,
-                "ManaScaleTwo": 0.01,
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [120,150,180],
+                        "APScale": 0.5,
+                        "type": 1,
+                        "ManaScale": 0.03
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "APDamage": [160,200,240],
+                            "APScale": 0.6,
+                            "type": 1,
+                            "ManaScale": 0.04
+                        },
+                        "amp": {
+                            "flatAmp": {
+                                "APDamage": [200,250,300],
+                                "APScale": 0.7,
+                                "type": 1,
+                                "ManaScale": 0.05
+                            },
+                            "amp": {
+                                "flatAmp": {
+                                    "APDamage": [240,300,360],
+                                    "APScale": 0.8,
+                                    "type": 1,
+                                    "ManaScale": 0.06
+                                }
+                            }
+                        }
+                    }
+                },
                 "Comment": "Two is damage per stack, up to 4 stacks, manascale is from maximum mana"
             }
         }
@@ -3084,7 +3259,11 @@
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [15,30,45,60,75],
+                "APScale": 0.25,
+                "ADScale": 0.50
             }
         },
 
@@ -3252,7 +3431,21 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60,85,110,135,160],
+                "APScale": 0.8,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [10,20,30,40,50],   
+                    "APScale": 0.20,
+                    "ADDamage": [0,0,0,0,0],
+                    "BADScale": [0.6,0.7,0.8,0.9,1.0],
+                    "Condition": {
+                        "type": 0,
+                        "ADScale": 1.0
+                    }
+                }
             }
         },
 
@@ -3287,8 +3480,13 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94, 102, 110, 118, 126, 134, 142, 150],
-                "BADScale": 0.4
+                "APDamage": [14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94, 102, 110, 118, 126, 134, 142, 150],
+                "APScale": 0,
+                "BADScale": 0.4,
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
+                }
             }
         },
 
@@ -3298,6 +3496,11 @@
                 "type": 0,
                 "ADDamage": [60, 85, 110, 135, 160],
                 "BADScale": 1.3,
+                "amp": {
+                    "ampMult": {
+                        "value": 2.0
+                    }
+                },
                 "Comment": "Maximum damage x2 if target is isolated"
             }
         },
@@ -3336,7 +3539,10 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "ADDamage": [60,80,100,120,140],
+                "BADScale": 0.65,
+                "type": 0
             }
         },
 
@@ -3486,14 +3692,17 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "TMHPScale": [0.03, 0.0375, 0.045, 0.0525, 0.06],
-                "APScale": "+1% per 100 AP, added onto TMHPScale"
+                "targetHPScale": [0.03, 0.0375, 0.045, 0.0525, 0.06],
+                "targetHPScalePer100AP": 0.01
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [75,120,165,210,255],
+                "APScale": 0.5
             }
         },
 
@@ -3513,7 +3722,7 @@
     "Leblanc": [
         {
             "Passive": {
-                "worksForAPI": true
+                "worksForAPI": true 
             }
         },
 
@@ -3523,8 +3732,11 @@
                 "type": 1,
                 "APDamage": [55, 80, 105, 130, 155],
                 "APScale": 0.4,
-                "APDamageTwo": [110, 160, 210, 260, 310],
-                "APScaleTwo": 0.8,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [55, 80, 105, 130, 155],
+                    "APScale": 0.4
+                },
                 "Comment": "Damage and scale two is max damage after mark is consumed"
             }
         },
@@ -3542,8 +3754,11 @@
                 "Chained": false,
                 "APDamage": [40, 60, 80, 100, 120],
                 "APScale": 0.3,
-                "APDamageTwo": [70, 110, 150, 190, 230],
-                "APScaleTwo": 0.7,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [70, 110, 150, 190, 230],
+                    "APScale": 0.7
+                },
                 "Comment": "Damage and Scale two is applied when target get chained"
             }
         },
@@ -3574,68 +3789,53 @@
         {
             "QBaseDamage": {
                 "worksForAPI": false,
-                "Form": {
-                    "FormOne": {
-                        "Name": "PartOne",
-                        "type": 0,
-                        "ADDamage": [55, 80, 105, 130, 155],
-                        "BADScale": 1
-                    },
-                    "FormTwo": {
-                        "Name": "PartTwo",
+                    "type": 0,
+                    "ADDamage": [55, 80, 105, 130, 155],
+                    "BADScale": 1,
+                    "Condition": {
                         "type": 0,
                         "ADDamage": [55, 80, 105, 130, 155],
                         "BADScale": 1,
-                        "TMisHPScale": 0.01,
-                        "Comment": "TMisHPScale 1% per 1% of opponents missing HP"
-                    }
-                }
+                        "TMisHPScale": 0.01
+                    },
+                    "Comment": "TMisHPScale 1% per 1% of opponents missing HP"
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0,0,0,0,0],
+                "APScale": 0
             }
         },
 
         {
             "EBaseDamage": {
                 "worksForAPI": false,
-                "Form": {
-                    "FormOne": {
-                        "Name": "PartOne",
-                        "type": 1,
-                        "APDamage": [80, 120, 160, 200, 240],
-                        "BADScale": 1   
-                    },
-                    "FormTwo": {
-                        "Name": "PartTwo",
-                        "Comment": "This just slows"
-                    }
-                }
+                "type": 1,
+                "APScale": 0,
+                "APDamage": [80, 120, 160, 200, 240],
+                "BADScale": 1    
             }
         },
 
         {
             "RBaseDamage": {
                 "worksForAPI": false,
-                "Form": {
-                    "FormOne": {
-                        "Name": "Kick",
-                        "type": 0,
-                        "ADDamage": [175, 400, 625],
-                        "BADScale": 2
-                    },
-                    "FormTwo": {
-                        "Name": "Collision",
+                "type": 0,
+                "ADDamage": [175, 400, 625],
+                "BADScale": 2,
+                "amp": {
+                    "flatAmp": {
                         "type": 0,
                         "ADDamage": [175, 400, 625],
                         "BADScale": 2,
-                        "TBHPScale": [0.12, 0.15, 0.18],
-                        "Comment": "TBHPScale = kicked targets BONUS health"
+                        "TBHPScale": [0.12, 0.15, 0.18]
                     }
                 }
+
             }
         }
     ],
@@ -3645,7 +3845,8 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [25, 32, 39, 46, 53, 60, 67, 74, 81, 88, 95, 102, 109, 116, 123, 130, 137, 144]
+                "APScale": 0,
+                "APDamage": [25, 32, 39, 46, 53, 60, 67, 74, 81, 88, 95, 102, 109, 116, 123, 130, 137, 144]
             }
         },
 
@@ -3653,8 +3854,13 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [10, 35, 60, 85, 110],
-                "APScale": 0.3
+                "APDamage": [10, 35, 60, 85, 110],
+                "APScale": 0.3,
+                "Condition": {
+                    "ADScale": 1.0,
+                    "ADDamage": [0,0,0,0,0],
+                    "type": 0
+                }
             }
         },
 
