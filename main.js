@@ -33,7 +33,7 @@ function renderChampionOne() {
 
 function renderDamageNumbers() {
     let hold = `
-    <div id='total-damage' class="column ">
+    <div id='total-damage' class="column">
         <div id="ability-damage" class= columns> 
             <div id="P-damage" class="column damage"> Passive </div>
             <div id="Q-damage" class="column damage"> Q </div>
@@ -62,6 +62,10 @@ $('#live-game-button').on('click', function(e) {
     $(`#input-level-two`).remove();
     $(`#add-item-button-one`).remove();
     $(`#add-item-button-two`).remove();
+    $(`#stats-button-one`).remove();
+    $(`#stats-button-two`).remove();
+    $(`#runes-button-one`).remove();
+    $(`#runes-button-two`).remove();
     $("#calc-button").removeAttr('disabled');
     $(this).attr('disabled', "disabled");
     renderSummonerSearchbar();
@@ -78,9 +82,8 @@ function renderChampStats(num) {
             <img width=150px length=300px id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ahri_0.jpg">  </img>
         </div>
 
-        <div id="champ-buttons-${num}">
-
-        </div>
+        <div id="champ-buttons-${num}"></div>
+        <div id="champ-items-${num}"></div>
 
         <div id="champ-stats-${num}">
             <div id="level-${num}">

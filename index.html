@@ -7,13 +7,13 @@
     <title id="title">LoL Damage Calculator</title>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>    
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.8.1/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
   <body class="has-text-centered" id="full-body">
 
-    <div class="title is-1 hero-body has-text-danger" id="header">
+    <div class="title is-1 hero-body" id="header">
       Lethal.gg
     </div>
 
@@ -23,7 +23,8 @@
    </div>
 
    <div id="root"></div>
-   <div id="champs" class="columns"></div>
+   <div id="input-champs"> </div>
+   <div id="champs" class="columns is-marginless"></div>
 
     <!-- Include links to JavaScript files below -->
     <script src="Champions.js" type="module"></script>

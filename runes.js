@@ -1,5 +1,5 @@
 export function renderRunes(num) {
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-buttons-${num}`);
     let hold = `
     <div id="runes-${num}">
         <image id="Precision-${num}" class="clickable runes runes-${num}" src="Assets/Runes/Precision.png"></image>

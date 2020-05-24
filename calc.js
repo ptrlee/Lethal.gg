@@ -3,7 +3,7 @@ import { getDefChamp, getAtkChamp } from "./Champions.js";
 import { renderRunes } from "./runes.js"
 
 const $root = $("#root");
-const $champs = $("#champs");
+const $champs = $("#input-champs");
 let champions;
 let itemIdsOne=[];
 let itemIdsTwo=[]
@@ -38,7 +38,7 @@ function renderChampLists() {
     </div>
     `;
     
-    $root.append(hold);  
+    $champs.prepend(hold);  
 
     $(function(ready){
         $('#champ-input-list-one').change(function() {
@@ -134,7 +134,7 @@ function levelChange(num) {
     let hold = `
         <div id="input-level-${num}">
             <label> Level: </label>
-            <input placeholder="Enter Level" id="champ-level-list-${num}" value=1 type="text"/>
+            <input class="level-input" id="champ-level-list-${num}" value=1 type="text"/>
         </div>
     `;
     $stats.prepend(hold);
@@ -194,20 +194,32 @@ export function getAbilities(num){
     const $champPics = $(`#champ-pictures-${num}`);
     let y = champ[x].spells;
     let spells = "";
-    for (let i = 0; i < 4; i++) {
-        spells += `<image class="clickable ability" id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${y[i].id}.png"> </image>`;
-    }
-
     let levels = "";
     for (let i = 0; i < 4; i++) {
-        levels += `<label id="champ-spell-level-${i}-${num}"> 0 </label>`;
+        spells += `
+        <div class="column is-narrow spells">
+            <image class="clickable ability" id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${y[i].id}.png"> </image>
+        
+            <div>
+                <label id="champ-spell-level-${i}-${num}"> 0 </label>
+            </div>
+        </div>
+        
+        `;
     }
+
+    
+    // for (let i = 0; i < 4; i++) {
+    //     levels += ;
+    // }
 
 
     let hold = ` 
-    <div id="champ-spell-${num}">
+    <div class="columns is-gapless" id="champ-spell-${num}">
+        <div class="column is-narrow spells">
             <image class="ability" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
-            ${spells}
+        </div>    
+        ${spells}
 
         <div>
             ${levels}
@@ -295,7 +307,7 @@ function showDamage(){
  * Render the item input box 
  */
 export function getItemsList(num) {
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-items-${num}`);
     let temp = "";
     let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
     let items = Object.keys(item);
@@ -328,7 +340,7 @@ export function getItemsList(num) {
  */
 function makeItemImages(item, array1, array2, num) {
     $(`.pic-${num}`).remove();
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-items-${num}`);
     let id;
     let imgOne="";
     let imgTwo="";
@@ -434,12 +446,16 @@ function renderRunesAndStatsButton(num) {
         }
         statsDiv = $(`#champ-stats-${num}`).detach();
         $champPics.append(runesDiv);
+        $(`#stats-button-${num}`).removeAttr('disabled');
+        $(this).attr('disabled', "disabled");
         e.preventDefault();
     });
 
     $(`#stats-button-${num}`).on('click', function(e) {
         $champPics.append(statsDiv)
         runesDiv = $(`#runes-${num}`).detach();
+        $(`#runes-button-${num}`).removeAttr('disabled');
+        $(this).attr('disabled', "disabled");
         e.preventDefault();
     });
     

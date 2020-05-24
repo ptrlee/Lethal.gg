@@ -1,17 +1,39 @@
-html, body {
+body {
     background: rgb(25, 25, 50);
+}
+
+#header {
+    background-color: black;
+    color: red;
 }
 
 #champs {
     color: white;
 }
 
+#input-champs {
+    border: solid;
+    border-bottom: none;
+    border-color: gray; 
+    border-left: none;
+    border-right: none;
+    padding-top: 25px;
+}
+
 .damage{
-    border:  solid yellow;
+    border:  solid white;
     position: relative;
     top: 35px;
 }
 
+.spells {
+    position: relative;
+    left: 119px;
+}
+
+.short {
+    margin: auto 0;
+}
 
 .runes{
     filter: grayscale(100%);
@@ -27,8 +49,25 @@ html, body {
 
 button {
     cursor: pointer;
+    background-color: Transparent;
+    color: white;
+    margin: 10px;
+}
+
+input {
+    background-color: Transparent;
+    color: white;
+    margin: 10px;
 }
 
 .clickable {
     cursor: pointer;
 }
+
+.level-input {
+    width: 20px;
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 100;
+ }
