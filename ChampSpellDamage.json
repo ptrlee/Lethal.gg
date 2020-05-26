@@ -1,7 +1,6 @@
 {
     "Aatrox": [{
         "Passive": {
-            "weqrqwrwqet": "Werqwe",
             "worksForAPI": false,
             "type": 0,
             "targetHPScale": 0.04588,
@@ -782,14 +781,18 @@
                 "type": 1,
                 "APDamage": [100,200,300],
                 "APScale": 0.25,
-                "Condition": {
-                    "type": 1,
-                    "APDamage": [100,200,300],
-                    "APScale": 0.25,
-                    "Condition": {
+                "amp": {
+                    "flatAmp": {
                         "type": 1,
                         "APDamage": [100,200,300],
                         "APScale": 0.25
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "type": 1,
+                            "APDamage": [100,200,300],
+                            "APScale": 0.25
+                        }
                     }
                 }
             }
@@ -3895,8 +3898,16 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 1,
-                "APDamage": [120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 370, 400, 430, 460, 490, 520],
-                "APScale": 0.5
+                "APDamage": [0],
+                "APScale": 0,
+                "amp": {
+                    "flatAmp": {
+                        "type": 1,
+                        "APDamage": [120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 370, 400, 430, 460, 490, 520],
+                        "APScale": 0.5
+                    }
+                }
+                
             }
         },
 
@@ -3933,7 +3944,8 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [0.5, 0.55, 0.6],
+                "ADDamage": [0],
+                "ADScale": [1.5,1.5,1.5,1.5,1.5,1.5,1.55,1.55,1.55,1.55,1.55,1.55,1.6,1.6,1.6,1.6,1.6,1.6],
                 "Comment": "This number is his second shot, which can crit, first shot is just a normal basic attack"
             }
         },
@@ -3949,7 +3961,10 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [75,110,145,180,215],
+                "APScale": 0
             }
         },
 
@@ -3966,9 +3981,6 @@
                 "ADDamage": [20, 40, 60],
                 "ADScale": 0.25,
                 "APScale": 0.1,
-                "ADDamageTwo": [400, 1000, 1800],
-                "ADScaleTwo": [5, 6.25, 7.5],
-                "APScaleTwo": [2, 2.5, 3],
                 "Comment": "Twos stand for total damage [20, 25, 30] <- total # of bullets, Ones are per bullet"
             }
         }
@@ -3986,19 +3998,29 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [80,125,170,215,260],
+                "APScale":  0.50
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0,0,0,0,0],
+                "APScale": 0,
+                "BonusAtkSpeed": [0.25,0.3,0.35,0.4,0.45]
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [80,120,160,200,240],
+                "type": 1,
+                "APScale": 0.4
             }
         },
 
@@ -4014,7 +4036,7 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190],
+                "APDamage": [20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190],
                 "APScale": 0.2
             }
         },
@@ -4027,13 +4049,19 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [0,0,0,0,0],
+                "APScale": 0
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60,105,150,195,240],
+                "APScale": 0.60
             }
         },
 
@@ -4064,8 +4092,9 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [30, 45, 60, 75, 90],
+                "ADDamage": [30, 45, 60, 75, 90],
                 "APScale": 0.2,
+                "ADScale": 1.0,
                 "ArmorScale": 0.15
             }
         },
@@ -4119,7 +4148,7 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [10, 14.375, 18.75, 23.125, 27.5],
-                "Tickrate": 0.5,
+                "TickRate": 0.5,
                 "Time": 4,
                 "APScale": 0.1
             }
@@ -4130,13 +4159,17 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [12.5, 20, 27.5],
+                "APScale": 0.08,
                 "TickRate": 0.25,
                 "Time": 2.5,
-                "APScale": 0.08,
-                "TickRateTwo": 0.5,
-                "TimeTwo": 5,
-                "TMHPScale": [0.01, 0.015, 0.02],
-                "Comment": "Time and Tickrate 2 is the null zone which is also +0.25% per 100 AP added onto TMHPScale"
+                "Condition": {
+                    "type": 1,
+                    "APScale": 0,
+                    "TickRate": 0.5,
+                    "Time": 5,
+                    "targetHPScale": [0.01,0.015,0.02],
+                    "targetHPScalePer100AP": 0.0025
+                }
             }
         }
     ],
@@ -4165,9 +4198,18 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [25, 50, 75, 100, 125],
-                "TMHPScale": [0.07, 0.0725, 0.075, 0.075, 0.08],
-                "APScale": "+1% per 100 AP added onto TMHPScale",
-                "Comment": "x2 for max damage if saplings were in brush"
+                "APScale": 0,
+                "targetHPScale": [0.07, 0.0725, 0.075, 0.075, 0.08],
+                "targetHPScalePer100AP": 0.01,
+                "amp": {
+                    "flatAmp": {
+                        "type": 1,
+                        "APScale": 0,
+                        "APDamage": [50,100,150,200,250],
+                        "targetHPScale": [0.14,0.145,0.15,0.155,0.16],
+                        "targetHPScalePer100AP": 0.02 
+                    }
+                }
             }
         },
 
@@ -4187,7 +4229,8 @@
                 "worksForAPI": false,
                 "type": 0,
                 "Stack": 0,
-                "ADDamage": 0.5,
+                "ADDamage": 0,
+                "ADscale": 1.5,
                 "Comment": "Same as Lucian, ADDamage aplies to second strike, can be crit, applies on-hit effects"
             }
         },
@@ -4198,9 +4241,9 @@
                 "type": 0,
                 "ADDamage": [25, 60, 95, 130, 165],
                 "ADScale": 1,
-                "ADDamageTwo": [43.75, 105, 166.25, 227.5, 288.75],
-                "ADScaleTwo": 1.75,
-                "Comment": "As usual, two represents total damage"
+                "Condition": {
+
+                }
             }
         },
 

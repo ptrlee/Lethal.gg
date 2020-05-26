@@ -133,9 +133,10 @@ export function spellDamage() {
                             damageOverTime[i][0][4] = undefined;
                     }
                     else { //push if more than one DoT condition
-                        if (damageOverTime[i][j] == undefined) { //lazy solution to everything
+                        if (damageOverTime[i][j-1] == undefined) { //lazy solution to everything
                             for (let m = 0; m < j; m++)
-                            damageOverTime[i][m] = [0];
+                                if (damageOverTime[i][m] == undefined)
+                                    damageOverTime[i][m] = [0];
                         }
                         damageOverTime[i].push([calculateSpell(champA, champD, condition, level,w)]);
                         damageOverTime[i][j].push(condition.TickRate);
