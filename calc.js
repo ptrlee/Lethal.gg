@@ -1,6 +1,7 @@
 import { spellDamage } from "./Champions.js";
 import { getDefChamp, getAtkChamp } from "./Champions.js";
-import { renderRunes } from "./runes.js"
+import { renderRunes } from "./runes.js";
+import { damageColumn, showDamage } from "./damage.js";
 
 const $root = $("#root");
 const $champs = $("#input-champs");
@@ -47,7 +48,6 @@ function renderChampLists() {
             damage = spellDamage();
             damageColumn();
             showDamage();
-            console.log(damage);
 
         });
 
@@ -268,40 +268,6 @@ function increaseSpellLevel(i, num) {
     });
 }
 
-function damageColumn() {
-    let atkChamp = getAtkChamp();
-    console.log(atkChamp.passive);
-    document.getElementById("P-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${atkChamp.passive}"> </image>`;
-    document.getElementById("Q-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[0].id}.png" > </image>`;
-    document.getElementById("W-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[1].id}.png" > </image>`;
-    document.getElementById("E-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[2].id}.png" > </image>`;
-    document.getElementById("R-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${atkChamp.abilities[3].id}.png" > </image>`;
-    
-}
-
-function shortenedDamage(letter, num){
-    let $letterDamage = $(`#${letter}-damage`);
-    let ldama = "";
-    let totalDamage = damage[0];
-    let DoT = damage[1];
-
-    for (let i = 0; i < totalDamage[num].length; i++) {
-        for (let j = 0; j < totalDamage[num][i].length; j++) {
-            ldama += `<div> ${Math.round(totalDamage[num][i][j])} </div>`; 
-        }
-    }
-
-    $letterDamage.append(ldama);
-}
-
-function showDamage(){
-    shortenedDamage("P", 0);
-    shortenedDamage("Q", 1);
-    shortenedDamage("W", 2);
-    shortenedDamage("E", 3);
-    shortenedDamage("R", 4);
-}
-
 
 /**
  * Render the item input box 
@@ -475,6 +441,9 @@ export function getChampionTwoItems(){
     return itemIdsTwo;
 }
 
+export function getDamage() {
+    return damage;
+}
 
 
 

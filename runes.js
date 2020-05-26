@@ -71,8 +71,16 @@ function runesClick(ary, runes, num){
                 }
                 break;
         }
-        $(`.runes-${num}`).removeClass('active');        
-        $(this).addClass('active');
+        if (ary == "#primary-") {
+            $(`.runes-${num}`).removeClass('active');    
+            $(this).addClass('active');
+        } else {
+            $(`.secondary-runes-${num}`).removeClass('active');   
+            $(this).addClass(`active`);
+        }
+
+       
+
         e.preventDefault();
     });
 }
@@ -174,7 +182,7 @@ function renderSecondaryRunes(rune, num) {
     array.splice(index, 1);
 
     for (let i = 0; i < array.length; i++) {
-        images += `<image id="secondary-${array[i]}-${num}" class="clickable runes runes-${num}" src="Assets/Runes/${array[i]}.png"></image>`
+        images += `<image id="secondary-${array[i]}-${num}" class="clickable runes secondary-runes-${num}" src="Assets/Runes/${array[i]}.png"></image>`
     }
 
     $secondary.append(images);

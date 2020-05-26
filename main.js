@@ -1,4 +1,5 @@
-import {getAbilities} from "./calc.js"
+import { getAbilities } from "./calc.js";
+import { renderAbilityDamageButtons } from "./damage.js";
 const $root = $("#root");
 const $champs = $("#champs");
 
@@ -6,6 +7,7 @@ const $champs = $("#champs");
 renderSummonerSearchbar();
 renderChampionOne();
 renderDamageNumbers();
+renderAbilityDamageButtons();
 renderChampionTwo();
 getAbilities("one");
 getAbilities("two");
@@ -34,6 +36,8 @@ function renderChampionOne() {
 function renderDamageNumbers() {
     let hold = `
     <div id='total-damage' class="column">
+        <div id="ability-damage-buttons"> 
+        </div>
         <div id="ability-damage" class= columns> 
             <div id="P-damage" class="column damage"> Passive </div>
             <div id="Q-damage" class="column damage"> Q </div>
