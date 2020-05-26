@@ -6,7 +6,7 @@ export function renderRunes(num) {
         images += `<image id="primary-${runes[i]}-${num}" class="clickable runes runes-${num}" src="Assets/Runes/${runes[i]}.png"></image>`
     }
     let hold = `
-    <div class="stats-and-runes columns" id="runes-${num}">
+    <div class="stats-and-runes columns is-marginless" id="runes-${num}">
         <div class="column" id="primary-runes-${num}">
             ${images}
         </div>
@@ -134,7 +134,7 @@ function subRunes(ary, type, line, num){
         length = 4;
     }
     for (let i = 0; i < length; i++) {
-        hold += `<image class="subrunes clickable runes ${line}-${num}" id="${ary}-${type}-${line}-${i}-${num}" src="Assets/Runes/${type}/${line}/${i}.png"></image>`
+        hold += `<image class="subrunes clickable runes ${ary}-${line}-${num}" id="${ary}-${type}-${line}-${i}-${num}" src="Assets/Runes/${type}/${line}/${i}.png"></image>`
     }
     return hold;
 }
@@ -155,7 +155,7 @@ function keystoneClick(type, i, num) {
  */
 function lineClick(ary, type, line, i, num) {
     $(`#${ary}-${type}-${line}-${i}-${num}`).on('click', function(e) {
-        $(`.${line}-${num}`).removeClass('active');        
+        $(`.${ary}-${line}-${num}`).removeClass('active');        
         $(this).addClass('active');
         e.preventDefault();
     });
