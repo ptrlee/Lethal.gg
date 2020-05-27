@@ -1,5 +1,5 @@
 html, body {
-    background: lightblue;
+    background: lightskyblue;
     color: black;
 }
 
@@ -8,18 +8,19 @@ html, body {
     color: red;
 }
 
-
+/*
 #input-champs {
     border: solid;
     border-bottom: none;
-    border-color: yellow; 
+    border-color: black; 
     border-left: none;
     border-right: none;
     padding-top: 25px;
 }
+*/
 
 .damage{
-    border:  solid yellow;
+    border:  solid black;
     position: relative;
     top: 35px;
 }
@@ -99,4 +100,44 @@ input::-webkit-calendar-picker-indicator {
 .keystones {
     height: 45px;
     width: 45px;
+}
+
+#name-inputbox {
+    border: none;
+    outline: none;
+    background-color: white;
+    height: 35px;
+    width: 500px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: gray;
+    position: relative;
+    top: -26px;
+  }
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a.disable {
+    pointer-events: none;
+    cursor: default;
+    background-color: lightskyblue;
 }

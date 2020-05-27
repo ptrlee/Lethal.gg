@@ -17,14 +17,19 @@
       Lethal.gg
     </div>
 
-    <div>
-      <button id="live-game-button" disabled> Live Game </button>
-      <button id="calc-button"> Damage Calculator </button>
-   </div>
+    <ul>
+      <li><a id="live-game-button" class="disable"> Live Game </a> </li>
+      <li><a id="calc-button"> Damage Calculator </a> </li>
+      <li><a id="hold-button"> How-To-Use </a> </li>
+      <li><a id="temp-button"> Changelog </a> </li>
+    </ul>
 
    <div id="root"></div>
-   <div id="input-champs"> </div>
-   <div id="champs" class="columns is-marginless"></div>
+
+    <div id="champions">
+      <div id="input-champs"> </div>
+      <div id="champs" class="columns is-marginless"></div>
+    </div>
 
     <!-- Include links to JavaScript files below -->
     <script src="Champions.js" type="module"></script>

@@ -1,7 +1,8 @@
 import { spellDamage } from "./Champions.js";
 import { getDefChamp, getAtkChamp } from "./Champions.js";
 import { renderRunes } from "./runes.js";
-import { damageColumn, showDamage } from "./damage.js";
+import { damageColumn, showDamage, renderAbilityDamageButtons } from "./damage.js";
+import { getChamps } from "./main.js";
 
 const $root = $("#root");
 const $champs = $("#input-champs");
@@ -11,6 +12,7 @@ let itemIdsTwo=[]
 let spellPointsOne = 1;
 let spellPointsTwo = 1;
 let damage;
+let clicked = false;
 
 
 /**
@@ -96,18 +98,38 @@ function renderChampLists() {
 /**
  * Handles Damage Calculator button press
  */
-$('#calc-button').on('click', function(e) {        
+$('#calc-button').on('click', function(e) {    
+    $("#live-game-button").removeClass('disable');
+    $(this).addClass('disable');
     $("#live-game").remove();
-    $("#name-inputbox").remove();
-    levelChange("one");
-    levelChange("two");
-    $("#live-game-button").removeAttr('disabled');
-    $(this).attr('disabled', "disabled");
-    renderChampLists();
-    renderItemChoices("one");
-    renderItemChoices("two");
-    renderRunesAndStatsButton("one");
-    renderRunesAndStatsButton("two")
+    if (!clicked) {
+        $("#live-game").remove();
+        $("#name-inputbox").remove();
+        document.getElementById("champ-name-one").innerHTML = "Ahri";
+        document.getElementById("champ-name-two").innerHTML = "Ahri";
+        levelChange("one");
+        levelChange("two");
+        renderChampLists();
+        renderItemChoices("one");
+        renderItemChoices("two");
+        renderRunesAndStatsButton("one");
+        renderRunesAndStatsButton("two");
+        renderAbilityDamageButtons();
+        championChangeStats("one");
+        championChangeStats("two");
+        $(`#P-damage`).addClass("damage");
+        $(`#Q-damage`).addClass("damage");
+        $(`#W-damage`).addClass("damage");
+        $(`#E-damage`).addClass("damage");
+        $(`#R-damage`).addClass("damage");
+        $("#champ-stats-one").addClass("stats-and-runes");
+        $("#champ-stats-two").addClass("stats-and-runes");
+        getAbilities("one");
+        getAbilities("two");
+        clicked = true;
+    } else {
+        $root.append(getChamps());
+    }
     e.preventDefault();
 });
 

@@ -1,16 +1,13 @@
 import { getAbilities } from "./calc.js";
-import { renderAbilityDamageButtons } from "./damage.js";
 const $root = $("#root");
 const $champs = $("#champs");
-
+let champs = "";
 
 renderSummonerSearchbar();
-renderChampionOne();
+$champs.append(renderChampStats("one"));
 renderDamageNumbers();
-renderAbilityDamageButtons();
-renderChampionTwo();
-getAbilities("one");
-getAbilities("two");
+$champs.append(renderChampStats("two"));
+
 
 
 /**
@@ -25,35 +22,19 @@ function renderSummonerSearchbar() {
     $root.append(hold);
 }
 
-/**
- * Renders the first champion
- */
-function renderChampionOne() {
-    let hold = `${renderChampStats("one")}`;
-    $champs.append(hold);
-}
-
 function renderDamageNumbers() {
     let hold = `
     <div id='total-damage' class="column">
         <div id="ability-damage-buttons"> 
         </div>
         <div id="ability-damage" class= columns> 
-            <div id="P-damage" class="column damage"> Passive </div>
-            <div id="Q-damage" class="column damage"> Q </div>
-            <div id="W-damage" class="column damage"> W </div>
-            <div id="E-damage" class="column damage"> E </div>
-            <div id="R-damage" class="column damage"> R </div>
+            <div id="P-damage" class="column"></div>
+            <div id="Q-damage" class="column"></div>
+            <div id="W-damage" class="column"></div>
+            <div id="E-damage" class="column"></div>
+            <div id="R-damage" class="column"></div>
         </div>
     </div>`
-    $champs.append(hold);
-}
-
-/**
- * Renders the second champion
- */
-function renderChampionTwo() {
-    let hold = `${renderChampStats("two")}`;
     $champs.append(hold);
 }
 
@@ -61,64 +42,62 @@ function renderChampionTwo() {
  * Handles Live Game button press
  */
 $('#live-game-button').on('click', function(e) {        
-    $("#champ-lists").remove();
-    $(`#input-level-one`).remove();
-    $(`#input-level-two`).remove();
-    $(`#add-item-button-one`).remove();
-    $(`#add-item-button-two`).remove();
-    $(`#stats-button-one`).remove();
-    $(`#stats-button-two`).remove();
-    $(`#runes-button-one`).remove();
-    $(`#runes-button-two`).remove();
-    $("#calc-button").removeAttr('disabled');
-    $(this).attr('disabled', "disabled");
+    // $("#champ-lists").remove();
+    // $(`#input-level-one`).remove();
+    // $(`#input-level-two`).remove();
+    // $(`#add-item-button-one`).remove();
+    // $(`#add-item-button-two`).remove();
+    // $(`#stats-button-one`).remove();
+    // $(`#stats-button-two`).remove();
+    // $(`#runes-button-one`).remove();
+    // $(`#runes-button-two`).remove();
+    champs = $("#champions").detach();
+    $("#calc-button").removeClass('disable');
+    $(this).addClass('disable');
     renderSummonerSearchbar();
 
     e.preventDefault();
 });
 
+export function getChamps() {
+    return champs;
+}
+
 function renderChampStats(num) {
     let hold = `
     <div class="column">
-        <div id="champ-name-${num}">Ahri</div>
+        <div id="champ-name-${num}"></div>
 
         <div id="champ-pictures-${num}">
-            <img width=150px length=300px id="image-${num}" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ahri_0.jpg">  </img>
+            <img width=150px length=300px id="image-${num}" ></img>
         </div>
 
         <div id="champ-buttons-${num}"></div>
         <div id="champ-items-${num}"></div>
 
-        <div class="stats-and-runes" id="champ-stats-${num}">
+        <div class="" id="champ-stats-${num}">
             <div id="level-${num}">
-                Level: 1
             </div>
 
             <div id="HP-${num}">
-                HP: 526
             </div>
 
             <div id="MP-${num}">
-                MP: 418/418
             </div>
 
             <div id="damage-${num}">
                 <div id="AD-${num}">
-                    AD: 45
                 </div>
 
                 <div id="AP-${num}">
-                    AP: 0
                 </div>
             </div>
         
             <div id="defense-${num}">
                 <div id="MR-${num}">
-                    MR: 54
                 </div>
 
                 <div id="armor-${num}">
-                    Armor: 45
                 </div>
             </div>
         </div>
