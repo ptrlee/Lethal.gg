@@ -176,6 +176,12 @@ export function spellDamage() {
                     if (ampob.statChange.flatADPerLevel != undefined) { //flat ad increase darius ex
                         champA.bonusAD += ampob.statChange.flatADPerLevel[champA.level-1];
                     }
+                    if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
+                        if (ampob.statChange.flatBonusADScale != undefined) {
+                            champA.bonusAD +=ampob.statChange.flatBonusADScale * (champA.bonusAD+champA.baseAD);
+                        }
+                        champA.bonusAD += ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
+                    }
                     if (ampob.statChange.TickRate == undefined) { //calculates dmg 
                         totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level,w),ampob.statChange.type,champD.armor,champD.mr));
                     }
@@ -188,6 +194,13 @@ export function spellDamage() {
                             damageOverTime[i][j+1].push(damageOverTime[i][j+1][2] * damageOverTime[i][j+1][3]);
                         else 
                             damageOverTime[i][j+1].push(undefined);
+                    }
+                    if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
+                        champA.bonusAD -= ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
+                        if (ampob.statChange.flatBonusADScale != undefined) {
+                            champA.bonusAD -=ampob.statChange.flatBonusADScale * (champA.baseAD);
+                            champA.bonusAD /= (1+ampob.statChange.flatBonusADScale);
+                        }
                     }
                     if (ampob.statChange.percentileAD !=undefined) { //undoes percent ad change
                         champA.baseAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
@@ -391,7 +404,7 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
                     totalDamage += (spellsChampSpell.ADDamage[level[w]-1]+(spellsChampSpell.BADScale[level[w]-1]*(champA.bonusAD)));
             }
             else 
-                totalDamage += spellsChampSpell.ADDamage[champA.level[w]-1] + (spellsChampSpell.BADScale*(champA.bonusAD))
+                totalDamage += spellsChampSpell.ADDamage[champA.level-1] + (spellsChampSpell.BADScale*(champA.bonusAD))
         }
         else 
             totalDamage+= spellsChampSpell.BADScale*(champA.bonusAD)
@@ -407,8 +420,12 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
                 else 
                     totalDamage += (spellsChampSpell.ADDamage[level[w]-1]+(spellsChampSpell.ADScale[level[w]-1]*(champA.bonusAD+champA.baseAD)));
             }
-            else 
-                totalDamage += spellsChampSpell.ADDamage[champA.level-1] + (spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD))
+            else {
+                if (spellsChampSpell.ADScale.length != 18) 
+                    totalDamage += spellsChampSpell.ADDamage[champA.level-1] + (spellsChampSpell.ADScale*(champA.bonusAD+champA.baseAD));
+                else 
+                    totalDamage += spellsChampSpell.ADDamage[champA.level-1] + (spellsChampSpell.ADScale[champA.level-1]*(champA.bonusAD+champA.baseAD));
+            }
         }
         else { 
             if (spellsChampSpell.ADScale.length != 18) {
