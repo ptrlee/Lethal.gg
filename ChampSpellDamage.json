@@ -5857,13 +5857,20 @@
                 "APScale": 0.0917,
                 "TickRate": 0.25,
                 "Time": 3,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.5
+                    }
+                },
                 "Comment": "If in Danger Zone, damage values are x2 for max damage"
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         },
 
@@ -5873,7 +5880,21 @@
                 "type": 1,
                 "APDamage": [60, 85, 110, 135, 160],
                 "APScale": 0.4,
-                "Comment": "If in Danger Zone, does 50% more damage, values are per bullet"
+                "amp" : {
+                    "ampMult": {
+                        "value": 1.5
+                    }
+                },
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [60, 85, 110, 135, 160],
+                    "APScale": 0.4,
+                    "amp": {
+                        "ampMult": {
+                            "value": 1.5
+                        }
+                    }
+                }
             }
         },
 
@@ -5883,8 +5904,8 @@
                 "type": 1,
                 "APDamage": [70, 105, 140],
                 "APScale": 0.175,
-                "TickRate": 6,
-                "Time": 0.5
+                "TickRate": 0.5,
+                "Time": 6
             }
         }
     ],
@@ -5939,7 +5960,7 @@
                 "worksForAPI": false,
                 "type": 1,
                 "Frozen": false,
-                "TMHPScale": 0.1,
+                "targetHPScale": 0.1,
                 "Comment": "Basic attack aganist frozen enemies deal 10% of their max HP as Bonus AP"
             }
         },
@@ -5955,12 +5976,16 @@
                 "worksForAPI": false,
                 "type": 0,
                 "ADDamage": [20, 25, 30, 35, 40],
+                "ADScale": 0,
                 "APScale": 0.2,
-                "MHPScale": 0.02,
-                "ADDamageTwo": [30, 70, 110, 150, 190],
-                "APScaleTwo": 0.6,
-                "MHPScaleTwo": 0.0525,
-                "Comment": "Ability has two parts, 'Two' ending are values for second part of ability"
+                "myHPScale": 0.02,
+                "Condition": {
+                    "ADDamage": [30, 70, 110, 150, 190],
+                    "ADScale": 0,
+                    "APScale": 0.6,
+                    "myHPScale": 0.0525,
+                    "type": 0
+                }
             }
         },
 
@@ -5979,9 +6004,25 @@
                 "type": 1,
                 "APDamage": [100, 125, 150],
                 "APScale": 0.4,
-                "APDamageTwo": [150, 250, 350],
-                "APScaleTwo": 0.8,
-                "Comment": "Two values are for empowered ult when ult has traveled more than 400 length"
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [150, 250, 350],
+                        "type": 1,
+                        "APScale": 0.8
+                    }
+                },
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [100, 125, 150],
+                    "APScale": 0.4,
+                    "amp": {
+                        "flatAmp": {
+                            "APDamage": [150, 250, 350],
+                            "type": 1,
+                            "APScale": 0.8
+                        }
+                    }
+                }
             }
         }
     ],
@@ -6040,8 +6081,8 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
-                "ADScale": 0.15,
+                "ADDamage": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+                "ADScale": 1.15,
                 "Comment": "Only applies to his right punch basic attack"
             }
         },
@@ -6050,10 +6091,17 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [10, 20, 30, 40, 50],
-                "TMHPScale": [0.01, 0.02, 0.03, 0.04, 0.05],
-                "ADScale": "+1% per 100 AD",
-                "Comment": "Applies to both of his basic attack within 5 seconds of activating this ability"
+                "ADDamage": [10, 20, 30, 40, 50],
+                "ADScale": 1.0,
+                "targetHPScale": [0.01, 0.02, 0.03, 0.04, 0.05],
+                "targetHPScalePer100AD": 0.01,
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [10, 20, 30, 40, 50],
+                    "ADScale": 1.0,
+                    "targetHPScale": [0.01, 0.02, 0.03, 0.04, 0.05],
+                    "targetHPScalePer100AD": 0.01
+                }
             }
         },
 
@@ -6062,8 +6110,32 @@
                 "worksForAPI": false,
                 "type": 0,
                 "ADDamage": [80, 105, 130, 155, 180],
-                "GritScale": "25% of expanded grit",
-                "BADScale": "+10% per bonus AD"
+                "ADScale": 0,
+                "amp": {
+                    "flatAmp": {
+                        "type": 2,
+                        "ADDamage": [80, 105, 130, 155, 180],
+                        "ADScale": 0
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "type": 0,
+                            "ADDamage": [80, 105, 130, 155, 180],
+                            "ADScale": 0,
+                            "myHPScale": 0.125,
+                            "myHPScalePer100BAD": 0.05
+                        },
+                        "amp": {
+                            "flatAmp": {
+                                "type": 2,
+                                "ADDamage": [80, 105, 130, 155, 180],
+                                "ADScale": 0,
+                                "myHPScale": 0.125,
+                                "myHPScalePer100BAD": 0.05
+                            }
+                        }
+                    }
+                }
             }
         },
 
@@ -6082,7 +6154,12 @@
                 "type": 0,
                 "ADDamage": [200, 300, 400],
                 "BADScale": 1,
-                "TBHPScale": [0.4, 0.5, 0.6]
+                "targetBonusHPScale": [0.4, 0.5, 0.6],
+                "amp": {
+                    "ampMult": {
+                        "value": 0.6
+                    }
+                }
             }
         }
     ],
@@ -6092,8 +6169,9 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [10, 10.88, 11.76, 12.65, 13.53, 14.41, 15.29, 16.18, 17.06, 17.94, 18.82, 19.71, 20.59, 21.47, 22.35, 23.24, 24.12, 25],
+                "ADDamage": [5, 5.44, 5.88, 12.65, 6.325, 7.205, 7.645, 8.09, 8.53, 8.97, 9.41, 4.9275, 10.295, 10.735, 11.175, 11.62, 12.06, 12.5],
                 "BADScale": 0.15,
+                "ADScale": 1.0,
                 "Comment": "Only applies damage when attacking from behind"
             }
         },
@@ -6102,9 +6180,14 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [25, 35, 45, 55, 65],
+                "ADDamage": [12.5, 17.5, 22.5, 27.5, 32.5],
                 "BADScale": 0.25,
-                "Comment": "Applies on his next basic attack, gurantees a crit if backstab"
+                "ADScale": 1.0,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.3
+                    }
+                }
             }
         },
 
@@ -6114,8 +6197,13 @@
                 "type": 1,
                 "APDamage": [15, 20, 25, 30, 35],
                 "APScale": 0.1,
-                "APDamageTwo": [35, 50, 65, 80, 95],
-                "APScaleTwo": 0.2,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [35, 50, 65, 80, 95],
+                    "APScale": 0.2,
+                    "TickRate": 0.5,
+                    "Time": 5
+                },
                 "TickRate": 0.5,
                 "Time": 5,
                 "Comment": "Damage and Scale two are increased damage aganist a single target"
@@ -6129,6 +6217,11 @@
                 "APDamage": [70, 95, 120, 145, 170],
                 "BADScale": 0.7, 
                 "APScale": 0.55,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.5
+                    }
+                },
                 "BADDamage": [15, 17.06, 19.12, 21.28, 23.24, 25.29, 27.35, 29.41, 31.47, 33.53, 35.59, 37.65, 39.71, 41.76, 43.82, 45.88, 47.94, 50],
                 "APScaleTwo": 0.1,
                 "Comment": "Last two values are backstab damage, ALL values are increased by 50% HP if target has <30% max HP"
@@ -6159,13 +6252,54 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "BAPDamage": [30, 48, 66, 84, 102, 120],
-                "TMHPScale": [0.06, 0.075, 0.09, 0.105, 0.12],
-                "APScale": "+4.5% per 100 AP",
-                "TMHPScaleTwo": [0.15, 0.165, 0.18, 0.195, 0.21],
-                "APScaleTwo": "+6% per 100 AP",
-                "atkSpeedSteroid": 0.5,
-                "Comment": "These are all total values of all 3 basic attacks,  /3 for each one, TMHPScaleTwo and APScaleTwo are when the sword hits the enemy when coming back to Shen"
+                "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                "APScale": 0,
+                "targetHPScale": [0.02, 0.025, 0.03, 0.035, 0.04],
+                "targetHPScalePer100AP": 0.015,
+                "amp": {
+                    "flatAmp": {
+                        "type": 1,
+                        "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                        "APScale": 0,
+                        "targetHPScale": [0.05, 0.055, 0.06, 0.065, 0.07],
+                        "targetHPScalePer100AP": 0.02,
+                        "BonusAtkSpeed": 0.5
+                    }
+                },
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                    "APScale": 0,
+                    "targetHPScale": [0.02, 0.025, 0.03, 0.035, 0.04],
+                    "targetHPScalePer100AP": 0.015,
+                    "amp": {
+                        "flatAmp": {
+                            "type": 1,
+                            "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                            "APScale": 0,
+                            "targetHPScale": [0.05, 0.055, 0.06, 0.065, 0.07],
+                            "targetHPScalePer100AP": 0.02,
+                            "BonusAtkSpeed": 0.5
+                      }
+                    },
+                    "Condition": {
+                        "type": 1,
+                        "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                        "APScale": 0,
+                        "targetHPScale": [0.02, 0.025, 0.03, 0.035, 0.04],
+                        "targetHPScalePer100AP": 0.015,
+                        "amp": {
+                            "flatAmp": {
+                                "type": 1,
+                                "APDamage": [10,10,10,16,16,16,22,22,22,28,28,28,34,34,34,40,40,40],
+                                "APScale": 0,
+                                "targetHPScale": [0.05, 0.055, 0.06, 0.065, 0.07],
+                                "targetHPScalePer100AP": 0.02,
+                                "BonusAtkSpeed": 0.5
+                          }
+                        }
+                    }
+                }
             }
         },
 
@@ -6179,8 +6313,9 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
+                "ADScale": 0,
                 "ADDamage": [60, 85, 110, 135, 160],
-                "BHPScale": 0.15
+                "myBonusHPScale": 0.15
             }
         },
 
@@ -6294,7 +6429,18 @@
                 "APDamage": [5, 7.5, 10, 12.5, 15],
                 "APScale": 0.1,
                 "TickRate": 0.25,
-                "Time": 2
+                "Time": 2,
+                "amp": {
+                    "statChange": {
+                        "type": 1,
+                        "APDamage": [5, 7.5, 10, 12.5, 15],
+                        "APScale": 0.1,
+                        "TickRate": 0.25,
+                        "Time": 2,
+                        "APSpell": 3,
+                        "flatBonusAP": [30,60,90]
+                    }
+                }
             }
         },
 
@@ -6309,8 +6455,18 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [50, 65, 80, 95, 110],
-                "TMHPScale": [0.06, 0.06, 0.07, 0.075, 0.08],
-                "APScale": 0.75
+                "targetHPScale": [0.06, 0.06, 0.07, 0.075, 0.08],
+                "APScale": 0.75,
+                "amp": {
+                    "statChange": {
+                        "type": 1,
+                        "APDamage": [50, 65, 80, 95, 110],
+                        "targetHPScale": [0.06, 0.06, 0.07, 0.075, 0.08],
+                        "APScale": 0.75,
+                        "APSpell": 3,
+                        "flatBonusAP": [30,60,90]
+                    }
+                }
             }
         },
 
@@ -6338,8 +6494,13 @@
                 "type": 0,
                 "ADDamage": [30, 50, 70, 90, 110],
                 "ADScale": [0.45, 0.525, 0.6, 0.675, 0.75],
-                "ChargeScale": [1.3333, 1.5, 1.6667, 1.8333, 2],
-                "Comment": "Increases at every 0.25 of charge time"
+                "amp": {
+                    "flatAmp": {
+                        "type": 0,
+                        "ADDamage": [70, 135,200, 265, 330],
+                        "ADScale": [1.35,1.575,1.8,2.025,  2.25]
+                    }
+                }
             }
         },
 
@@ -6349,7 +6510,7 @@
                 "type": 1,
                 "APDamage": [40, 65, 90, 115, 140],
                 "APScale": 0.4,
-                "TMHPScale": [0.1, 0.11, 0.12, 0.13, 0.14]
+                "targetHPScale": [0.1, 0.11, 0.12, 0.13, 0.14]
             }
         },
 
@@ -6368,9 +6529,13 @@
                 "type": 0,
                 "ADDamage": [150, 300, 450],
                 "BADScale": 0.4,
-                "ADDamageTwo": [400, 800, 1200],
-                "BADScaleTwo": 0.8,
-                "Comment": "Damage and Scale two are mmax damage at full charge"
+                "amp": {
+                    "ampMult": {
+                        "type": 0,
+                        "ADDamage": [400, 800, 1200],
+                        "BADScale": 0.8
+                    }
+                }
             }
         }
     ],

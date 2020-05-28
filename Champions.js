@@ -182,6 +182,9 @@ export function spellDamage() {
                         }
                         champA.bonusAD += ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
                     }
+                    if (ampob.statChange.flatBonusAP != undefined) {
+                        champA.bonusAP += ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]-1];
+                    }
                     if (ampob.statChange.TickRate == undefined) { //calculates dmg 
                         totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level,w),ampob.statChange.type,champD.armor,champD.mr));
                     }
@@ -194,6 +197,9 @@ export function spellDamage() {
                             damageOverTime[i][j+1].push(damageOverTime[i][j+1][2] * damageOverTime[i][j+1][3]);
                         else 
                             damageOverTime[i][j+1].push(undefined);
+                    }
+                    if (ampob.statChange.flatBonusAP != undefined) {
+                        champA.bonusAP -= ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]-1];
                     }
                     if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
                         champA.bonusAD -= ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
@@ -366,8 +372,10 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale + (spellsChampSpell.targetHPScalePer100AP*(Math.floor(champA.bonusAP/100))));
             }
             else {
-                if (spellsChampSpell.targetHPScalePer100AP == null && spellsChampSpell.targetHPScalePer100BAD == null)
+                if (spellsChampSpell.targetHPScalePer100AP == null && spellsChampSpell.targetHPScalePer100BAD == null && spellsChampSpell.targetHPScalePer100AD == null)
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level[w]-1]);
+                else if (spellsChampSpell.targetHPScalePer100AD != null) 
+                totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level[w]-1] + (spellsChampSpell.targetHPScalePer100AD*(Math.floor((champA.bonusAD + champA.baseAD)/100))));
                 else if (spellsChampSpell.targetHPScalePer100AP != null)
                     totalDamage += (champD.health)*(spellsChampSpell.targetHPScale[level[w]-1] + (spellsChampSpell.targetHPScalePer100AP*(Math.floor(champA.bonusAP/100))));
                 else 
@@ -379,10 +387,14 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
 
     if (spellsChampSpell.myHPScale != null) {
         if (spellsChampSpell.myHPScalePerLevel == null) {
-            totalDamage += (champA.health)*(spellsChampSpell.myHPScale);
+            if (spellsChampSpell.myHPScalePer100BAD != null)
+                totalDamage += (champA.health)*(spellsChampSpell.myHPScale + (spellsChampSpell.myHPScalePer100BAD*(Math.floor(champA.bonusAD/100))));
+            else
+                totalDamage += (champA.health)*(spellsChampSpell.myHPScale);
         }
-        else 
+        else {
             totalDamage += (champA.health)*(spellsChampSpell.myHPScale + spellsChampSpell.myHPScalePerLevel * champA.level);
+        }
     }
 
     if (spellsChampSpell.myBonusHPScale != null) {
