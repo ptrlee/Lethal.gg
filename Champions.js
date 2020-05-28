@@ -41,7 +41,7 @@ export function spellDamage() {
     let champD = getDefChamp();
     let champA = getAtkChamp();
 
-    let spellsChamp = $.getJSON(document.getElementById("champ-name-one").innerHTML);
+    let spellsChamp = $.getJSON(document.getElementById("champ-input-list-one").value);
     //console.log(spellsChamp);
     let totalDamage = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] ];
     let damageOverTime = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] , [[0]]];
@@ -555,7 +555,7 @@ function itemSearch(itemIndex) {
 
 //attacking champion
 export function getAtkChamp() {
-    let x = document.getElementById("champ-name-one").innerHTML;
+    let x = document.getElementById("champ-input-list-one").value;
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
     let champ = att_champ[x];
     let champA = {
@@ -594,7 +594,7 @@ export function getAtkChamp() {
 
 //defending champion
 export function getDefChamp() { 
-    let y = document.getElementById("champ-name-two").innerHTML;
+    let y = document.getElementById("champ-input-list-two").value;
     let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
     let champ = def_champ[y];
 

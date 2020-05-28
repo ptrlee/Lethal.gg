@@ -19,34 +19,29 @@ let clicked = false;
  * Renders the two champion lists
  */
 function renderChampLists() {
-    let hold = `
-    <div id="champ-lists" class=columns>
+    let holdOne = `
         <div id="champ-one" class="column">
-            <input value="Ahri" id="champ-input-list-one" type="text" list="champions-one"/>
+            <input value="Ahri" class="champ-input" id="champ-input-list-one" type="text" list="champions-one"/>
             <datalist id="champions-one">
                 ${createChampionList()}
             </datalist>    
-        </div>
+        </div>`;
 
-        <div id="middle-ofchamps" class="column">
-        </div>
-        
-
-        <div id="champ-two" class="column">
-            <input value="Ahri" id="champ-input-list-two" type="text" list="champions-two" />
+    let holdTwo = ` <div id="champ-two" class="column">
+            <input value="Ahri" class="champ-input" id="champ-input-list-two" type="text" list="champions-two" />
             <datalist id="champions-two">
                 ${createChampionList()}
             </datalist>
-        </div>
-    </div>
-    `;
+        </div>`;
     
-    $champs.prepend(hold);  
+
+    $(`#champ-name-one`).append(holdOne); 
+    $(`#champ-name-two`).prepend(holdTwo); 
 
     $(function(ready){
         $('#champ-input-list-one').change(function() {
             championChangeStats("one");
-            getAbilities("one");
+            //getAbilities("one");
             damage = spellDamage();
             damageColumn();
             showDamage();
@@ -63,7 +58,7 @@ function renderChampLists() {
 
         $('#champ-input-list-two').change(function() {
             championChangeStats("two");
-            getAbilities("two");
+            //getAbilities("two");
             damage = spellDamage();
         });
 
@@ -105,8 +100,8 @@ $('#calc-button').on('click', function(e) {
     if (!clicked) {
         $("#live-game").remove();
         $("#name-inputbox").remove();
-        document.getElementById("champ-name-one").innerHTML = "Ahri";
-        document.getElementById("champ-name-two").innerHTML = "Ahri";
+        // document.getElementById("champ-name-one").innerHTML = "Ahri";
+        // document.getElementById("champ-name-two").innerHTML = "Ahri";
         levelChange("one");
         levelChange("two");
         renderChampLists();
@@ -124,8 +119,8 @@ $('#calc-button').on('click', function(e) {
         $(`#R-damage`).addClass("damage");
         $("#champ-stats-one").addClass("stats-and-runes");
         $("#champ-stats-two").addClass("stats-and-runes");
-        getAbilities("one");
-        getAbilities("two");
+        //getAbilities("one");
+        //getAbilities("two");
         clicked = true;
     } else {
         $root.append(getChamps());
@@ -144,7 +139,11 @@ function createChampionList() {
     let champs = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json');
     champions = Object.keys(champs);
     for (let i =0; i < champions.length; i++) {
-        temp += `<option>${champions[i]}</option>`;
+        // if (champions[i] == "MonkeyKing") {
+        //     temp += `<option> Wukong </option>`;
+        // } else {
+            temp += `<option>${champions[i]}</option>`;
+        //}
     }
     return temp;
 }
@@ -164,8 +163,8 @@ function levelChange(num) {
 
 function championChangeStats(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
-    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${x}_0.jpg`;
-    document.getElementById("champ-name-" + num).innerHTML = x;
+    document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${x}_0.jpg`;
+    //document.getElementById("champ-name-" + num).innerHTML = x;
 
     if (num == "one") {
         let champA = getAtkChamp();

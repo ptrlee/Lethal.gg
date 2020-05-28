@@ -5,8 +5,8 @@ let champs = "";
 
 renderSummonerSearchbar();
 $champs.append(renderChampStats("one"));
-renderDamageNumbers();
 $champs.append(renderChampStats("two"));
+renderDamageNumbers();
 
 
 
@@ -24,7 +24,7 @@ function renderSummonerSearchbar() {
 
 function renderDamageNumbers() {
     let hold = `
-    <div id='total-damage' class="column">
+    <div id='total-damage'>
         <div id="ability-damage-buttons"> 
         </div>
         <div id="ability-damage" class= columns> 
@@ -35,7 +35,7 @@ function renderDamageNumbers() {
             <div id="R-damage" class="column"></div>
         </div>
     </div>`
-    $champs.append(hold);
+    $(`#damage-numbers`).append(hold);
 }
 
 /**
@@ -65,11 +65,11 @@ export function getChamps() {
 
 function renderChampStats(num) {
     let hold = `
-    <div class="column">
+    <div class="column champ-column">
         <div id="champ-name-${num}"></div>
 
         <div id="champ-pictures-${num}">
-            <img width=150px length=300px id="image-${num}" ></img>
+            <img id="image-${num}" ></img>
         </div>
 
         <div id="champ-buttons-${num}"></div>
