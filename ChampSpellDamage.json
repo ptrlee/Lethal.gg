@@ -6994,9 +6994,26 @@
                 "type": 1,
                 "APDamage": [70, 95, 120, 145, 170],
                 "APScale": 0.45,
-                "APDamageTwo": [210, 285, 360, 435, 510],
-                "APScaleTwo": 1.35,
-                "Comment": "Damage and scale one is minimum damage(one stone shard),  damage and scale two is maximum single-target damage"
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [35,47.5,60,72.5,85],
+                    "APScale": 0.45,
+                    "Condition": {
+                        "type": 1,
+                        "APDamage": [35,47.5,60,72.5,85],
+                        "APScale": 0.45,
+                        "Condition": {
+                            "type": 1,
+                            "APDamage": [35,47.5,60,72.5,85],
+                            "APScale": 0.45,
+                            "Condition": {
+                                "type": 1,
+                                "APDamage": [35,47.5,60,72.5,85],
+                                "APScale": 0.45
+                            }
+                        }
+                    }
+                }
             }
         },
 
@@ -7012,11 +7029,18 @@
                 "type": 1,
                 "APDamage": [50, 75, 100, 125, 150],
                 "APScale": 0.4,
-                "APDamageTwo": [50, 60, 70, 80, 90],
-                "APScaleTwo": 0.3,
-                "APDamageThree": [155, 186, 217, 248, 279],
-                "APScaleThree": 0.93,
-                "Comment": "1 is initial damage, 2 is one boulder detonation, 3 is max damage from boulder detonation"
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [50, 60, 70, 80, 90],
+                    "APScale": 0.3,
+                    "amp" :{
+                        "flatAmp": {
+                            "APDamage": [155, 186, 217, 248, 279],
+                            "APScale": 0.93,
+                            "type": 1
+                        }
+                    }
+                }
             }
         },
 
@@ -7033,8 +7057,8 @@
                 "worksForAPI": false,
                 "type": 0,
                 "Stack": 0,
-                "ADDamage": [75, 85, 95, 105, 115, 125, 135, 145, 155, 165, 175, 185, 195, 205, 215, 225, 235, 245],
-                "BADScale": 2,
+                "ADDamage": [4.6875, 5.3125, 5.9375, 6.5625,7.1875,7.8125,8.4375,9.0625,9.6875,10.3125,10.9375,11.5625,12.1875,12.8125,13.4375,14.0625,14.6875,15.3125],
+                "BADScale": 0.125,
                 "TickRate": 0.125,
                 "Time": 2
             }
@@ -7046,9 +7070,13 @@
                 "type": 0,
                 "ADDamage": [65, 90, 115, 140, 165],
                 "BADScale": 1.1,
-                "ADDamageTwo": [97.5, 135, 172.5, 210, 247.5],
-                "BADScaleTwo": 1.65,
-                "Comment": "1 is dash damage, 2 is stab damage" 
+                "amp": {
+                    "flatAmp": {
+                        "type": 0,
+                        "ADDamage": [97.5, 135, 172.5, 210, 247.5],
+                        "BADScale": 1.65
+                    }
+                }
             }
         },
 
@@ -7058,9 +7086,11 @@
                 "type": 0,
                 "ADDamage": [45, 60, 75, 90, 105],
                 "BADScale": 0.4,
-                "ADDamageTwo": [45, 65, 85, 105, 125],
-                "BADScaleTwo": 0.7,
-                "Comment": "1 is sending out daggers damage, 2 is daggers returning damage"
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [45, 65, 85, 105, 125],
+                    "BADScale": 0.7
+                }
             }
         },
 
@@ -7076,7 +7106,11 @@
                 "type": 0,
                 "ADDamage": [90, 135, 180],
                 "BADScale": 1,
-                "Comment": "Two parts, x2 for maximum damage"
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [90, 135, 180],
+                    "BADScale": 1
+                }
             }
         }
     ],
@@ -7087,15 +7121,24 @@
                 "worksForAPI": false,
                 "type": 1,
                 "atkSpeedSteroid": 1,
-                "BAPDamage": [25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93],
+                "APDamage": [25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93],
+                "APScale": 0,
                 "BArmorScale": 0.15,
-                "Comment": "Only applies on his next two basic attacks after using an ability"
+                "Condition": {
+                    "type": 1,
+                    "atkSpeedSteroid": 1,
+                    "APDamage": [25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93],
+                    "APScale": 0,
+                    "BArmorScale": 0.15
+                }                    
             }
         },
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         },
 
@@ -7149,12 +7192,16 @@
         {
             "EBaseDamage": {
                 "worksForAPI": false,
-                "BAPDamage": [10, 20, 30, 40, 50],
+                "APDamage": [10, 20, 30, 40, 50],
                 "APScale": 0.3,
-                "APDamage": [6, 12, 18, 24, 30],
-                "APScaleTwo": 0.1,
-                "TickRate": 1,
-                "Time": 4 
+                "type": 1,
+                "Condition": {
+                    "APDamage": [6, 12, 18, 24, 30],
+                    "APScale": 0.1,
+                    "TickRate": 1,
+                    "Time": 4, 
+                    "type": 1
+                }
             }
         },
 
@@ -7201,8 +7248,10 @@
                 "APDamage": [65, 95, 125, 155, 185],
                 "APScale": 0.4,
                 "BAPDamage": "1 per soul collected, applies on basic attacks",
-                "ADScale": [1, 1.25, 1.5, 1.75, 2],
-                "Comment": "ADScale applies on BAPDamage(aka basic attacks), increases on time spent not attacking enemies (including minions)"
+                "Condition": {
+                    "type": 1,
+                    "ADScale": [2, 2.25, 2.5, 2.75,3]
+                }
             }
         },
 
@@ -7243,13 +7292,29 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [70, 80, 90, 100, 110],
-                "BADScale": [0.5, 0.75, 1, 1.25, 1.5],
-                "APScale": 0.5,
-                "ADDamageTwo": [154, 176, 198, 220, 242],
-                "BADScaleTwo": [1.10, 1.65, 2.2, 2.75, 3.3],
-                "APScaleTwo": 1.1,
-                "Comment": "1 is minimum damage, 2 is max damage"
+                "amp": {
+                    "ampMult": {
+                        "value": 0.4545454545
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 0.5909090909
+                        },
+                        "amp": {
+                            "ampMult": {
+                                "value": 0.7272727272
+                            },
+                            "amp": {
+                                "ampMult": {
+                                    "value": 0.769231
+                                }
+                            }
+                        }
+                    }
+                },
+                "ADDamage": [154, 176, 198, 220, 242],
+                "BADScale": [1.10, 1.65, 2.2, 2.75, 3.3],
+                "APScale": 1.1
             }
         },
 

@@ -2,7 +2,7 @@ import { getAbilities } from "./calc.js";
 const $root = $("#root");
 const $champs = $("#champs");
 let champs = "";
-
+//s
 renderSummonerSearchbar();
 $champs.append(renderChampStats("one"));
 $champs.append(renderChampStats("two"));

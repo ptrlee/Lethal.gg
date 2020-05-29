@@ -1,6 +1,6 @@
 import { getAtkChamp } from "./Champions.js";
 import { getDamage } from "./calc.js";
-
+//s
 export function damageColumn() {
     let atkChamp = getAtkChamp();
     document.getElementById("P-damage").innerHTML = `<image style="width:64px;height:64px;" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${atkChamp.passive}"> </image>`;

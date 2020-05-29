@@ -3,7 +3,7 @@ import { getDefChamp, getAtkChamp } from "./Champions.js";
 import { renderRunes } from "./runes.js";
 import { damageColumn, showDamage, renderAbilityDamageButtons } from "./damage.js";
 import { getChamps } from "./main.js";
-
+//s
 const $root = $("#root");
 const $champs = $("#input-champs");
 let champions;
