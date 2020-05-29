@@ -7306,7 +7306,7 @@
                             },
                             "amp": {
                                 "ampMult": {
-                                    "value": 0.769231
+                                    "value": 0.86363636363
                                 }
                             }
                         }
@@ -7340,8 +7340,16 @@
                 "worksForAPI": false,
                 "type": 0,
                 "ADDamage": [20, 40, 60, 80, 100],
-                "ADScale": [0.1, 0.2, 0.3, 0.4, 0.5],
-                "BonusAD": [20, 25, 30, 35, 40]
+                "ADScale": [1.1, 1.2, 1.3, 1.4, 1.5],
+                "amp": {
+                    "statChange": {
+                        "type": 0,
+                        "ADDamage": [20, 40, 60, 80, 100],
+                        "ADScale": [1.1, 1.2, 1.3, 1.4, 1.5],
+                        "flatBonusAD": [20,25,30,35,40],
+                        "ADSpell": 0
+                    }
+                }
             }
         },
 
@@ -7362,9 +7370,17 @@
             "RBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "TMHPScale": [0.2, 0.275, 0.35],
-                "APScale": "+2% per 100 AP",
-                "Comment": "These are total damage values, half is appled instanly, other half is spread over 4 seconds"
+                "targetHPScale": [0.1, 0.1375, 0.175],
+                "targetHPScalePer100AP": 0.01,
+                "APScale": 0,
+                "Condition": {
+                    "type": 1,
+                    "targetHPScale": [0.025, 0.034375, 0.04375],
+                    "targetHPScalePer100AP": 0.025,
+                    "APScale": 0,
+                    "TickRate": 1,
+                    "Time": 4
+                }
             }
         }
     ],
@@ -7397,7 +7413,18 @@
                 "type": 0,
                 "ADDamage": [80, 110, 140, 170, 200],
                 "BADScale": 1.3,
-                "APScale": 0.8
+                "APScale": 0.8,
+                "amp": {
+                    "statChange": {
+                        "type": 0,
+                        "ADDamage": [80, 110, 140, 170, 200],
+                        "BADScale": 1.3,
+                        "APScale": 0.8,
+                        "flatBonusAD": [5,10,15,20,25],
+                        "ADSpell": 0,
+                        "flatBonusADPerMissingHP": [0.15,0.2,0.25,0.3,0.35]
+                    }
+                }
             }
         },
 
@@ -7432,13 +7459,22 @@
                 "APDamage": [40, 60, 80, 100, 120],
                 "APScale": 0.9,
                 "ADScale": 1,
-                "APDamageTwo": [30, 45, 60, 75, 90],
-                "APScaleTwo": 6,
-                "ADScaleTwo": 1,
-                "APDamageThree": [15, 22.5, 30, 37.5, 45],
-                "APScaleThree": 0.5,
-                "ADScaleThree": 1,
-                "Comment": "1 - Blue card, 2 - Red Card, 3 - Gold Card"
+                "amp": {
+                    "flatAmp": {
+                        "type": 1,
+                        "APDamage": [30, 45, 60, 75, 90],
+                        "APScale": 0.6,
+                        "ADScale": 1
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "type": 1,
+                            "APDamage": [15, 22.5, 30, 37.5, 45],
+                            "APScale": 0.5,
+                            "ADScale": 1
+                        }
+                    }
+                }
             }
         },
 
@@ -7449,7 +7485,11 @@
                 "Stack": 0,
                 "atkSpeedSteroid": [0.2, 0.25, 0.3, 0.35, 0.4],
                 "BAPDamage": [65, 90, 115, 140, 165],
-                "APScale": 0.5
+                "APScale": 0.5,
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
+                }
             }
         },
 
@@ -7466,10 +7506,50 @@
                 "worksForAPI": false,
                 "type": 2,
                 "Stack": 0,
-                "TrueDamage": [1, 2, 3, 4, 5],
+                "ADScale": 0,
+                "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
                 "Time": 6,
                 "TickRate": 1,
-                "Comment": "Increase at levels [1, 5, 9, 13, 17], max 6 stacks"
+                "Condition": {
+                    "type": 2,
+                    "Stack": 0,
+                    "ADScale": 0,
+                    "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
+                    "Time": 6,
+                    "TickRate": 1,
+                    "Condition": {
+                        "type": 2,
+                        "Stack": 0,
+                        "ADScale": 0,
+                        "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
+                        "Time": 6,
+                        "TickRate": 1,
+                        "Condition": {
+                            "type": 2,
+                            "Stack": 0,
+                            "ADScale": 0,
+                            "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
+                            "Time": 6,
+                            "TickRate": 1,
+                            "Condition": {
+                                "type": 2,
+                                "Stack": 0,
+                                "ADScale": 0,
+                                "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
+                                "Time": 6,
+                                "TickRate": 1,
+                                "Condition": {
+                                    "type": 2,
+                                    "Stack": 0,
+                                    "ADScale": 0,
+                                    "ADDamage": [1,1,1,1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5],
+                                    "Time": 6,
+                                    "TickRate": 1
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
         },
@@ -7492,11 +7572,55 @@
             "EBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
+                "ADScale": 0,
                 "ADDamage": [20, 30, 40, 50, 60],
-                "ADDamageTwo": [15, 20, 25, 30, 35],
-                "BADScale": 0.35,
-                "APScale": 0.2,
-                "Comment": "ADDamage is base damage, 2 - is increased damage per stack, so 6 stacks + base damage = maximum damage"
+                "Condition": {
+                    "ADDamageTwo": [90, 120,150,180,210],
+                    "BADScale": 2.1,
+                    "APScale": 1.2,
+                    "amp": {
+                        "flatAmp": {
+                            "ADDamage": [90, 120,150,180,210],
+                            "BADScale": 2.1,
+                            "APScale": 1.2
+                        },
+                        "amp": {
+                            "flatAmp": {
+                                "ADDamage": [75, 100,125,150,175],
+                                "BADScale": 1.75,
+                                "APScale": 1
+                            },
+                            "amp": {
+                                "flatAmp": {
+                                    "ADDamage": [60, 80,100,120,140],
+                                    "BADScale": 1.4,
+                                    "APScale": 0.8
+                                },
+                                "amp": {
+                                    "flatAmp": {
+                                        "ADDamage": [45, 60,75,90,105],
+                                        "BADScale": 1.05,
+                                        "APScale": 0.6
+                                    },
+                                    "amp": {
+                                        "flatAmp": {
+                                            "ADDamage": [30, 40,50,60,70],
+                                            "BADScale": 0.7,
+                                            "APScale": 0.4
+                                        },
+                                        "amp": {
+                                            "flatAmp": {
+                                                "ADDamage": [15, 20,25,30,35],
+                                                "BADScale": 0.35,
+                                                "APScale": 0.2
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
 
