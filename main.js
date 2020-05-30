@@ -65,7 +65,7 @@ export function getChamps() {
 
 function renderChampStats(num) {
     let hold = `
-    <div class="column champ-column">
+    <div id="champ-column-${num}" class="column">
         <div id="champ-name-${num}"></div>
 
         <div id="champ-pictures-${num}">
@@ -73,32 +73,31 @@ function renderChampStats(num) {
         </div>
 
         <div id="champ-buttons-${num}"></div>
-        <div id="champ-items-${num}"></div>
-
-        <div class="" id="champ-stats-${num}">
-            <div id="level-${num}">
-            </div>
-
-            <div id="HP-${num}">
-            </div>
-
-            <div id="MP-${num}">
-            </div>
-
-            <div id="damage-${num}">
-                <div id="AD-${num}">
-                </div>
-
-                <div id="AP-${num}">
-                </div>
-            </div>
         
-            <div id="defense-${num}">
-                <div id="MR-${num}">
-                </div>
 
-                <div id="armor-${num}">
+        <div id="bottom-${num}" class="columns is-marginless">
+            <div class="column" id="champ-stats-${num}">
+                <div id="level-${num}"></div>
+
+                <div id="HP-${num}"></div>
+
+                <div id="MP-${num}"></div>
+
+                <div id="damage-${num}">
+                    <div id="AD-${num}"></div>
+
+                    <div id="AP-${num}"></div>
                 </div>
+            
+                <div id="defense-${num}">
+                    <div id="MR-${num}"></div>
+
+                    <div id="armor-${num}"></div>
+                </div>
+            </div>
+
+            <div class="items column" id="champ-items-${num}">
+                <div id="champ-items-button-${num}"></div>
             </div>
         </div>
     </div>

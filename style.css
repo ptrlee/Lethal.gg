@@ -78,6 +78,7 @@ input::-webkit-calendar-picker-indicator {
 .stats-and-runes {
     border: solid;
     background-color: darkblue;
+    text-align: center;
 }
 
 .s-r-button {
@@ -161,4 +162,9 @@ a.disable {
 
 .champ-column {
     border: solid;
+}
+
+.items {
+    max-width: 250px;
+    display: inline-block;
 }

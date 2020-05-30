@@ -117,8 +117,10 @@ $('#calc-button').on('click', function(e) {
         $(`#W-damage`).addClass("damage");
         $(`#E-damage`).addClass("damage");
         $(`#R-damage`).addClass("damage");
-        $("#champ-stats-one").addClass("stats-and-runes");
-        $("#champ-stats-two").addClass("stats-and-runes");
+        $("#bottom-one").addClass("stats-and-runes");
+        $("#bottom-two").addClass("stats-and-runes");
+        $("#champ-column-one").addClass("champ-column");
+        $("#champ-column-two").addClass("champ-column");
         //getAbilities("one");
         //getAbilities("two");
         clicked = true;
@@ -139,11 +141,14 @@ function createChampionList() {
     let champs = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json');
     champions = Object.keys(champs);
     for (let i =0; i < champions.length; i++) {
-        // if (champions[i] == "MonkeyKing") {
-        //     temp += `<option> Wukong </option>`;
-        // } else {
+        if (champions[i] != "MonkeyKing") {
             temp += `<option>${champions[i]}</option>`;
-        //}
+        } 
+        
+        if (champions[i] == "Warwick") {
+            temp += `<option>${champions[i]}</option>`;
+            temp += `<option> Wukong </option>`;
+        }
     }
     return temp;
 }
@@ -163,6 +168,9 @@ function levelChange(num) {
 
 function championChangeStats(num) {
     let x = document.getElementById("champ-input-list-" + num).value;
+    if (x == "Wukong") {
+        x = "MonkeyKing";
+    }
     document.getElementById("image-" + num).src = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${x}_0.jpg`;
     //document.getElementById("champ-name-" + num).innerHTML = x;
 
@@ -294,17 +302,16 @@ function increaseSpellLevel(i, num) {
  * Render the item input box 
  */
 export function getItemsList(num) {
-    const $champPics = $(`#champ-items-${num}`);
+    const $champPics = $(`#champ-items-button-${num}`);
     let temp = "";
     let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
     let items = Object.keys(item);
-    for (let i =0; i < items.length; i++) {
-        
+    for (let i = 0; i < items.length; i++) {
         temp += `<option>${item[items[i]].name}</option>`;
     }
 
     let itemInput = `
-    <input id="item-input-list-${num}" type="text" list="items-${num}"/>
+    <input style="margin-bottom:10px" id="item-input-list-${num}" type="text" list="items-${num}"/>
         <datalist id="items-${num}">
             ${temp}
         </datalist> 
@@ -369,7 +376,7 @@ function makeItemImages(item, array1, array2, num) {
  * Removes the images of the items by clicking on them
  */
 function removeImage(num, array, i) {
-    const $champPics = $(`#champ-pictures-${num}`);
+    const $champPics = $(`#champ-items-${num}`);
     let imgOne="";
     $(`#champ-${num}-${i}`).on('click', function(e) {   
         this.remove();     
@@ -377,7 +384,7 @@ function removeImage(num, array, i) {
         $(`.pic-${num}`).remove();
         for (let j = 0; j < array.length; j++) {
             imgOne = `
-                <img class="pic-${num}" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
+                <img class="pic-${num} clickable" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
             `;
             $champPics.append(imgOne);
             removeImage(num, array, j);
@@ -392,12 +399,8 @@ function removeImage(num, array, i) {
 
 //Render the Add Items button
 function renderItemChoices(num){
-    const $champPics = $(`#champ-stats-${num}`);
-    let hold = `
-    <div id="champ-items-${num}">
-        <button id="add-item-button-${num}"> Add Item </button>
-    </div>
-    `;
+    const $champPics = $(`#champ-items-button-${num}`);
+    let hold = `<button id="add-item-button-${num}"> Add Item </button>`;
     $champPics.prepend(hold);
 
 
