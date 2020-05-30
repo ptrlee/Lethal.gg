@@ -623,9 +623,18 @@
                 "worksForAPI": false,
                 "type": 1,
                 "atkSpeedSteroid": [0.2, 0.3, 0.4, 0.5, 0.6],
-                "APscale": 0.6,
+                "APScale": 0.6,
                 "APDamage": [60, 62, 64, 66, 68, 70, 72, 75, 80, 85, 90, 100, 110, 120, 130, 140, 150, 160],
-                "Comment": "Targets beyond the closest take 25 / 50 / 75 / 100% (based on level) damage; only applies if the sand soldier auto attacks the target"
+                "amp": {
+                    "ampMult": {
+                        "value": 1.25
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 1.5
+                        }
+                    }
+                }
             }
         },
 
@@ -651,31 +660,47 @@
     "Bard": [
         {
             "Passive": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40],
+                "APScale": 0.3,
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1
+                }
             }
         },
 
         {
             "QBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APDamage": [80,125,170,215,260],
+                "APScale": 0.65,
+                "type": 1
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         },
 
         {
             "EBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         },
 
         {
             "RBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         }
     ],
@@ -1264,7 +1289,7 @@
 
         {
             "QBaseDamage": {
-                "worksWithAPI": false,
+                "worksForAPI": false,
                 "APDamage": [60,95,130,165,200],
                 "APScale": 0.7,
                 "type": 1
@@ -1273,7 +1298,7 @@
 
         {
             "WBaseDamage": {
-                "worksWithAPI": false,
+                "worksForAPI": false,
                 "type": 1,
                 "APDamage": [54,90,126,162,198],
                 "APScale": 0.45
@@ -1282,7 +1307,7 @@
 
         {
             "EBaseDamage": {
-                "worksWithAPI": false,
+                "worksForAPI": false,
                 "type": 1,
                 "APDamage": [40,60,80,100,120],
                 "APScale": 0.40
@@ -7647,7 +7672,7 @@
                 "worksForAPI": false,
                 "Stack": 0,
                 "atkSpeedSteroid": [0.3, 0.4, 0.5, 0.6, 0.7, 0.8],
-                "BADDamage": [7.5, 15, 22.5, 30, 37.5, 45],
+                "ADDamage": [7.5, 15, 22.5, 30, 37.5, 45],
                 "ADScale": [0.275, 0.3125, 0.35, 0.3875, 0.425, 0.4625],
                 "Time": 2,
                 "TickRate": 0.5,
@@ -7657,7 +7682,9 @@
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
             }
         },
 
@@ -7674,11 +7701,14 @@
                 "Stack": 0,
                 "APDamage": [50, 95, 140, 185, 230, 275],
                 "APScale": 0.6,
-                "APDamageTwo": [10, 20, 30, 40, 50, 60],
-                "APScaleTwo": 0.25,
-                "Time": 4,
-                "TickRate": 1,
-                "Comment": "1 - cone damage at 3 stacks, 2 - damage over time"
+                "Condition": {
+                    "APDamage": [10, 20, 30, 40, 50, 60],
+                    "APScale": 0.25,
+                    "Time": 4,
+                    "TickRate": 1,
+                    "type": 1,
+                    "Comment": "1 - cone damage at 3 stacks, 2 - damage over time"
+                }
             }
         }
     ],
@@ -7688,8 +7718,9 @@
             "Passive": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [0.4, 0.52, 0.64, 0.76, 0.88, 1],
-                "TMHPScale": [0.02, 0.03, 0.04, 0.05, 0.06],
+                "ADScale": [0.4,0.4,0.4,0.4,0.4, 0.52, 0.52, 0.52, 0.64, 0.64, 0.76, 0.76, 0.88, 0.88, 1, 1, 1, 1],
+                "targetHPScale": 0,
+                "targetHPScalePerLevel": [0.02, 0.02,0.02,0.02,0.02,0.03,0.03,0.03, 0.04, 0.04, 0.05, 0.05, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06],
                 "Comment": "Values are increased at levels [1, 6, 9, 11, 13, 15]"
             }
         },
@@ -7707,7 +7738,9 @@
             "WBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": 12,
+                "TickRate": 0.333,
+                "Time": 50,
+                "ADDamage": [12,12,12,12,12],
                 "ADScale": [0.2, 0.24, 0.28, 0.32, 0.36],
                 "Comment": "Deals damage at a constant 3.0 attack speed"
             }
@@ -7745,17 +7778,40 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [10, 46.67, 83.33, 120, 156.67],
-                "ADScale": 1.1,
-                "ADDamageTwo": [15, 70, 125, 180, 235],
-                "ADScaleTwo": 1.65,
-                "Comment": "1 - minimum damage, 2 - maximum damage" 
+                "ADDamage": [15, 70, 125, 180, 235],
+                "ADScale": 1.65,
+                "amp": {
+                    "ampMult": {
+                        "value": 0.666667,
+                        "Comment": "No charge"
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 0.83333,
+                            "Comment": "1 second charge"
+                        }
+                    }
+                }
             }
         },
 
         {
             "WBaseDamage": {
-                "worksForAPI": true
+                "worksForAPI": false,
+                "APScale": 0,
+                "type": 1,
+                "targetHPScale": [0.09,0.105,0.12,0.135,0.15],
+                "targetHPScalePer100AP": 0.06,
+                "amp": {
+                    "ampMult": {
+                        "value": 0.333334
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 0.666667
+                        }
+                    }
+                }
             }
         },
 
@@ -7789,8 +7845,16 @@
             "QBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "BADDamage": [0.5, 0.55, 0.6, 0.65, 0.7],
-                "Comment": "Applies on next basic attack after ability"
+                "ADScale": [1.6,1.65,1.7,1.75,1.8],
+                "Comment": "Applies on next basic attack after ability",
+                "amp": {
+                    "statChange": {
+                        "type": 0,
+                        "ADScale": [1.6,1.65,1.7,1.75,1.8],
+                        "flatBonusAD": [25,40,55],
+                        "ADSpell": 3
+                    }
+                }
             }
         },
 
@@ -7800,7 +7864,7 @@
                 "type": 2,
                 "Stack": 0,
                 "TrueDamage": [50, 65, 80, 95, 110],
-                "TMHPScale": [0.04, 0.065, 0.09, 0.115, 0.14],
+                "targetHPScale": [0.04, 0.065, 0.09, 0.115, 0.14],
                 "Comment": "True Damage is minimum true damage possible, TMHPScale is true damage dealt based on targets max HP"
             }
         },
@@ -7811,8 +7875,29 @@
                 "type": 0,
                 "ADDamage": [50, 85, 120, 155, 190],
                 "BADScale": 0.5,
-                "ADDamageTwo": [75, 127.5, 180, 232.5, 285],
-                "BADScaleTwo": 0.75,
+                "Condition": {
+                    "type": 0,
+                    "ADDamage": [75, 127.5, 180, 232.5, 285],
+                    "BADScale": 0.75,
+                    "amp": {
+                        "statChange": {
+                            "type": 0,
+                            "ADDamage": [75, 127.5, 180, 232.5, 285],
+                            "BADScale": 0.75,
+                            "flatBonusAD": [25,40,55],
+                            "ADSpell": 3
+                        }
+                    }
+                },
+                "amp": {
+                    "statChange": {
+                        "type": 0,
+                        "ADDamage": [50, 85, 120, 155, 190],
+                        "BADScale": 0.5,
+                        "flatBonusAD": [25,40,55],
+                        "ADSpell": 3
+                    }
+                },
                 "Comment": "1 - ability damage, 2 - if target hits the terrain"
             }
         },
@@ -7863,356 +7948,1024 @@
             "RBaseDamage": {
                 "worksForAPI": false,
                 "type": 1,
-                "APDamage": [175, 250, 325],
-                "APScale": 0.75,
+                "APDamage": [350, 500, 650],
+                "APScale": 1.5,
+                "amp": {
+                    "ampMult": {
+                        "value": 0.5
+                    }
+                },
                 "TMisHPScale": 0.015,
                 "Comment": "+1.5% per 1% of Target's missing HP, max at missing 2/3 of HP"
             }
         }
     ],
 
-    "Velkoz": {
-        "PassiveDamage": {
+    "Velkoz": [
+    { 
+        "Passive": {
+            "worksForAPI": false,
             "type": 2,
-            "baseDamage": 25,
-            "damagePerLevel": 8,
+            "APDamage": [33,41,49,57,65,73,81,89,97,105,113,121,129,137,145,153,161,169],
             "APScale": 0.5
-        },
+        }
+    },
+    {
         "QBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [80,120,160,200,240],
+            "APDamage": [80,120,160,200,240],
             "APScale": 0.8
-        },
+        }
+    },
+    {
         "WBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [30,50,70,90,110],
+            "APDamage": [30,50,70,90,110],
             "APScale": 0.15,
-            "ifHit": false,
-            "explosionDamage": [45,75,105,135,165],
-            "ExplosionAPScale": 0.25
-        },
+            "Condition": {
+                "type": 1,
+                "APDamage": [45,75,105,135,165],
+                "APScale": 0.25
+            }
+        }
+    },
+    {
         "EBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [70,100,130,160,190],
+            "APDamage": [70,100,130,160,190],
             "APScale": 0.3
-        },
+        }
+    },
+    {
         "RBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "damagePer1/5second": [34.62,48.08,61.54],
+            "APDamage": [34.62,48.08,61.54],
             "APScale": 0.0962,
-            "time": 2.6,
+            "Time": 2.6,
+            "TickRate": 0.2,
+            "amp": {
+                "flatAmp": {
+                    "type": 2,
+                    "APDamage": [34.62,48.08,61.54],
+                    "APScale": 0.0962,
+                    "Time": 2.6,
+                    "TickRate": 0.2
+                }
+            },
             "Researched": "type = true",
             "explanation": "researched occurs if deconstruction is applied: i.e. 3 abilities hit"
         }
-    },
+    }
+    ],
 
-    "Vi": {
-        "QBaseDamage": {
+    "Vi": [
+    {   
+        "Passive": {
+            "worksForAPI": false,
             "type": 0,
-            "baseDamage": [55,80,105,130,155],
-            "bADScale": 0.7,
-            "charge": false,
-            "chargeTime": 1.25,
-            "DmgMultPer1/8Second": 0.1,
+            "ADScale": 0
+        }
+        
+    },
+    {
+        "QBaseDamage": {
+            "worksForAPI": false,
+            "type": 0,
+            "ADDamage": [110,160,210,260,310],
+            "BADScale": 1.4,
+            "amp": {
+                "ampMult": {
+                    "value": 0.5
+                }
+            },
             "explanation": "at .125 incraese by 10%, at .25 increase by 20% up to 1.25"
-        },
+        }
+    },
+    {
         "WBaseDamage": {
+            "worksForAPI": false,
             "type": 0,
             "targetHPScale": [0.04,0.055,0.07,0.085,0.1],
-            "HPScalePer35bAD": 0.01,
-            "explanation": "for every 35 bAD, increases HPScale by .01",
-            "atkSpeedSteroid": [0.3,0.375,0.45,0.525,0.6]
-        },
+            "targetHPScalePer35BAD": 0.01,
+            "atkSpeedSteroid": [0.3,0.375,0.45,0.525,0.6],
+            "ADScale": 1.0
+        }
+    },
+    {
         "EBaseDamage": {
+            "worksForAPI": false,
             "type": 0,
-            "baseDamage": [10,30,50,70,90],
+            "ADDamage": [10,30,50,70,90],
             "ADScale": 1.1,
-            "APScale": 0.9
-        },
+            "APScale": 0.9,
+            "Condition": {
+                "type": 0,
+                "ADDamage": [10,30,50,70,90],
+                "ADScale": 1.1,
+                "APScale": 0.9
+            }
+        }
+    },
+    {
         "RBaseDamage": {
+            "worksForAPI": false,
             "type": 0,
-            "baseDamage": [150,325,500],
-            "bADScale": 1.1
+            "ADDamage": [150,325,500],
+            "BADScale": 1.1
+        }
+    }
+    ],
+
+    "Viktor": [
+    {
+        "Passive": {
+            "worksForAPI": false,
+            "APScale": 0,
+            "type": 1
         }
     },
-
-    "Viktor": {
+    {
         "QBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [60,75,90,105,120],
+            "APDamage": [60,75,90,105,120],
             "APScale": 0.4,
-            "discharge": [20,45,70,95,120],
-            "ADScale": 1,
-            "DischargeAPScale": 0.55
-        },
-        "EBaseDamage": {
+            "Condition": {
+                "type": 1,
+                "APDamage": [20,45,70,95,120],
+                "ADScale": 1,
+                "APScale": 0.55
+            }
+        }
+    },
+    {
+        "WBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [70,110,150,190,230],
+            "APScale": 0
+        }
+    },
+    {
+        "EBaseDamage": {
+            "worksForAPI": false,
+            "type": 1,
+            "APDamage": [70,110,150,190,230],
             "APScale": 0.6,
-            "upgraded": false,
-            "upgradedExtraBaseDamage": [20,60,100,140,180],
-            "extraAPScale": 0.7
-        },
+            "Condition": {
+                "type": 1,
+                "APDamage": [20,60,100,140,180],
+                "APScale": 0.7
+            }
+        }
+    },
+    {
         "RBaseDamage": {
             "type": 1,
-            "baseDamage": [100,175,250],
+            "worksForAPI": false,
+            "APDamage": [100,175,250],
             "APScale": 0.5,
-            "baseDamagePerSecond": [65,105,145],
-            "TickAPScale": 0.45,
-            "time": 6.5
+            "Condition":{ 
+                "type": 1,
+                "APDamage": [65,105,145],
+                "APScale": 0.45,
+                "TickRate" : 1,
+                "Time": 6.5
+            }
+        }
+    }
+    ],
+
+    "Vladimir": [
+    {
+        "Passive": {
+            "worksForAPI": false,
+            "APScale": 0,
+            "type": 1
         }
     },
-
-    "Vladimir": {
+    {
         "QBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
-            "baseDamage": [80,100,120,140,160],
+            "APDamage": [80,100,120,140,160],
             "APScale": 0.6,
-            "empowered": false,
-            "dmgMult": 1.85
-        },
+            "amp": {
+                "flatAmp": {
+                    "type": 1,
+                    "APDamage": [160,200,240,280,320],
+                    "APScale": 1.2
+                },
+                "ampMult": {
+                    "value": 1.1,
+                    "Comment": "Ultimate amp"
+                },
+                "amp": {
+                    "ampMult": {
+                        "value": 2.2
+                    }
+                }
+            }
+        }
+    },
+    {
         "WBaseDamage": {
             "type": 1,
-            "damagePerHalfSecond": [20,33.75,47.5,61.25,75],
+            "worksForAPI": false,
+            "APDamage": [20,33.75,47.5,61.25,75],
+            "APScale": 0,
             "myHpScale": 0.025,
-            "time": 2
-        },
-        "EBaseDamage": {
-            "type": 1,
-            "baseDamage": [30,45,60,75,90],
-            "myHPScale": 0.025,
-            "APScale": 0.35,
-            "chargedFor1Second": false,
-            "baseDamageCharged": "Base x 2",
-            "myHPScaleCharged": 0.06,
-            "APScaleCharged": 0.8
-        },
-        "RBaseDamage": {
-            "type": 1,
-            "damageAMP": 0.1,
-            "baseDamage": [150, 250, 350],
-            "APScale": 0.7
+            "TickRate": 0.5,
+            "Time": 2,
+            "amp": {
+                "ampMult":{
+                    "value": 1.1
+                }
+            }
         }
     },
-
-    "Volibear": {
-        "Comment": "gonna get reworked anyway lmfao"
+    {
+        "EBaseDamage": {
+            "type": 1,
+            "APDamage": [30,45,60,75,90],
+            "worksForAPI": false,
+            "myHPScale": 0.025,
+            "APScale": 0.35,
+            "amp": {
+                "ampMult": {
+                    "value": 2.0,
+                    "Comment": "charged up to 1 second"
+                },
+                "amp": {
+                    "ampMult": {
+                        "value": 1.1
+                    },
+                    "amp":{
+                        "ampMult": {
+                            "value": 2.2
+                        }
+                    }
+                }
+            }
+        }
     },
+    {
+        "RBaseDamage": {
+            "type": 1,
+            "worksForAPI": false,
+            "APDamage": [150, 250, 350],
+            "APScale": 0.7
+        }
+    }
+    ],
 
-    "Warwick": {
+    "Volibear":  [
+        {
+            "Passive": {
+                "type": 1,
+                "worksForAPI": false,
+                "APScale": 0.4,
+                "APDamage": [11,12,13,15,17,19,22,25,28,31,34,37,40,44,48,52,56,60],
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1
+                }
+            }
+        },
+        {
+            "QBaseDamage": {
+                "type": 0, 
+                "worksForAPI": false,
+                "ADScale": 1.0,
+                "BADScale": 1.2,
+                "ADDamage": [10,20,30,40,50]
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [10,35,60,85,110],
+                "ADScale": 1,
+                "myBonusHPScale": 0.06,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.5
+                    }
+                }
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0.8,
+                "APDamage": [60,90,120,150,180],
+                "targetHPScale": [0.07,0.085,0.01,0.0115,0.013]
+            }
+        },
+        {
+            "RBaseDamage": {
+                "worksForAPI": false,
+                "type": 0,
+                "ADDamage": [250,475,700],
+                "BADScale": 2.5,
+                "APScale": 1.25
+            }
+        }
+        ],
+
+    "Warwick": [
+    {
         "Passive": {
             "type": 1,
+            "worksForAPI": false,
             "baseMagicDamageOnHit": 8,
-            "scalePerLevel": 2
-        },
+            "scalePerLevel": 2,
+            "APScale": 0
+        }
+    },
+    {
         "QBaseDamage": {
             "type": 1,
             "ADScale": 1.2,
+            "worksForAPI": false,
             "APScale": 1.0,
-            "targetHpScale": [0.06, 0.07, 0.08, 0.09, 0.1],
+            "targetHPScale": [0.06, 0.07, 0.08, 0.09, 0.1],
             "effect": "applies passive as well"
-        },
+        }
+    },
+    {
         "WBaseDamage": {
+            "worksForAPI": false,
             "targetBelow50%Hp": false,
+            "type": 1,
+            "APScale": 0,
             "atkSpeedSteroid": [0.7,0.8,0.9,1,1.1],
             "targetBelow20%HP": false,
             "atkSpeedBonusMult": 2.5
-        },
+        }
+    },
+    {
+        "EBaseDamage": {
+            "worksForAPI": false,
+            "type": 1,
+            "APScale": 0
+        }
+    },
+    {
         "RBaseDamage": {
+            "worksForAPI": false,
             "type": 1,
             "numberofStrikes": 9,
-            "time": 1.5 ,
-            "baseDamagePerScratch": [19.44,38.89,58.33],
-            "bADScale": 0.1856,
+            "Time": 1.5 ,
+            "TickRate": 0.166667,
+            "APDamage": [19.44,38.89,58.33],
+            "APScale": 0,
+            "BADScale": 0.1856,
             "effect": "applies passive as well"
         }
-    },
+    }
+    ],
 
-    "Wukong": {
+    "Wukong": [
+    {   
+        "Passive": {
+            "type": 0,
+            "ADScale": 0
+        }
+    },
+    {
         "QBaseDamage": {
-            "baseDamagePhysical": [20,45,70,95,120],
-            "bADScale": 0.5,
+            "worksForAPI": false,
+            "ADDamage": [10,22.5,35,47.5,60],
+            "BADScale": 0.5,
+            "ADScale": 1.0,
+            "type": 0,
             "armorReduc": [0.1,0.15,0.2,0.25,0.3]
-        },
+        }
+    },
+    {
         "WBaseDamage": {
+            "worksForAPI": false,
+            "type": 1,
+            "ADScale": 0,
             "cloneRatio": [0.35,0.4,0.45,0.5,0.55]
-        },
+        }
+    },
+    {
         "EBaseDamage": {
-            "baseDamageMagic": [80,110,140,170,200],
+            "worksForAPI": false,
+            "type": 1,
+            "APDamage": [80,110,140,170,200],
             "APScale": 0.8,
             "atkSpeedSteroid": [0.4,0.45,0.5,0.55,0.6]
-        },
-        "RBaseDamage": {
-            "targetMaxHpScale": [0.01, 0.015, 0.02],
-            "dmgTickPerSecond": 4,
-            "TotalCastTime": 2,
-            "ADScale": 27.5
         }
     },
+    {
+        "RBaseDamage": {
+            "worksForAPI": false,
+            "targetHPScale": [0.01, 0.015, 0.02],
+            "TickRate": 0.25,
+            "Time": 2.0,
+            "ADScale": 0.275
+        }
+    }],
 
-    "Xayah": {
+    "Xayah": [
+    {
+        "Passive": {
+            "worksForAPI": false,
+            "type": 0,
+            "ADScale": 0
+        }
+    },
+    {
         "QBaseDamage": {
-            "useParseToolTip": true,
-            "2ndQHitBaseDamageMultiplier": 0.5
-        },
+            "ADDamage": [45,65,85,105,125],
+            "BADScale": 0.5,
+            "worksForAPI": false,
+            "type": 0,
+            "Condition": {
+                "ADDamage": [22.5,32.5,42.5,52.5,62.5],
+                "BADScale": 0.25,
+                "type": 0
+            }
+        }
+    },
+    {
         "WBaseDamage": {
             "atkSpeedSteroid": [0.35,0.4,0.45,0.5,0.55],
+            "worksForAPI": false,
+            "type": 0,
             "AutoAtkDamageMult": 1.2
-        },
+        }
+    },
+    {
         "EBaseDamage": {
-            "baseDamagePerFeatherPhysical": [55,65,75,85,95],
-            "bADScale": 0.6,
-            "multDamage": ".5 * critchance",
-            "n+1FeatherHitDMGReduction": "1-.5Feather"
-        },
+            "ADDamage": [55,65,75,85,95],
+            "type": 0,
+            "worksForAPI": false,
+            "BADScale": 0.6,
+            "amp": {
+                "ampMult": {
+                    "value": 1.95
+                },
+                "amp": {
+                    "ampMult": {
+                        "value": 2.85
+                    },
+                    "amp": {
+                        "ampMult": {
+                            "value": 3.70
+                        },
+                        "amp": {
+                            "ampMult": {
+                                "value": 4.5
+                            },
+                            "amp": {
+                                "ampMult": {
+                                    "value": 5.25
+                                },
+                                "amp": {
+                                    "ampMult": {
+                                        "value": 5.95
+                                    },
+                                    "amp": {
+                                        "ampMult": {
+                                            "value": 6.6
+                                        },
+                                        "amp": {
+                                            "ampMult": {
+                                                "value": 7.2
+                                            },
+                                            "amp": {
+                                                "ampMult": {
+                                                    "value": 7.75
+                                                },
+                                                "amp": {
+                                                    "ampMult": {
+                                                        "value": 8.25
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }   
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
         "RBaseDamage": {
-            "baseDamagePhysical": [100,150,200],
-            "bADScale": 1,
-            "numberOfFeathers": 5
-        }
-    },
-
-    "Xerath": {
-        "WBaseDamage": {
-            "baseDamageMagic": [60,90,120,150,180],
-            "APScale": 0.6,
-            "SweetSpot": false,
-            "SweetSpotMultiplier": 1.667
-        },
-        "RBaseDamage": {
-            "useParseToolTip": true,
-            "numberOfUlts": [3,4,5]
-        }
-    },
-
-    "XinZhao": {
-        "Passive": {
-            "2Stacks": false,
-            "DeterminationbADScale": 0.15,
-            "Every5LevelsScale": 0.1,
-            "explanation": "add last variable to dbADScale every 5 levels from lvl 1"
-        },
-        "QBaseDamage": {
-            "useParseToolTip": true,
-            "qExplanation": "casts 3 times"
-        },
-        "WBaseDamage": {
-            "useParseToolTip": true,
-            "problem": "works but need to exclude <br> from parseToolTip"
-        },
-        "EBaseDamage": {
-            "useParseToolTip": true,
-            "atkSpeedSteroid": [0.4,0.45,0.5,0.55,0.6]
-        },
-        "RBaseDamage": {
-            "baseDamagePhysical": [75,175,275],
-            "bADScale": 1,
-            "targetCurrentHpScale": 0.15
-        }
-    
-    },
-
-    "Yasuo": {
-        "EBaseDamage": {
-            "useParseToolTip": true,
-            "ECondition": [0,1,2],
-            "explanation": "number of times already casted",
-            "EconditionScale": "0.25 * Econdition[i]"
-        },
-        "RBaseDamage": {
-            "baseDamagePhysical": [200,300,400],
-            "bADScale": [1.5],
-            "extra effect": "crits gain 50% bonus arm pen"
-        }
-    },
-
-    "Yorick": {
-        "EBaseDamage": {
-            "targetCurrentHPScale": 0.15,
-            "lessThanMin": false,
-            "minBaseDamageMagic": [70,105,140,175,210],
-            "minAPScale": 0.7
-        }
-    },
-
-    "Yuumi": {
-        "QBaseDamage": {
-            "baseDamageMagic": [40,70,100,130,160,190],
-            "APScale" : 0.3, 
-            "qLongerThan1Second": false,
-            "baseDamageEmpowered": [45, 85, 125, 165, 205, 245],
-            "APScaleEmpowered" : 0.4,
-            "targetCurrentHPScale": [0.02,0.032,0.044,0.056,0.068,0.08]
-        },
-        "RBaseDamage": {
-            "baseDamagePerWaveMagic": [60,80,100],
-            "APScale": 0.2,
-            "numberOfWaves": 7,
-            "subsequentDamageReduction": 0.5
-        }
-    },
-
-    "Zac": {
-        "QBaseDamage": {
-            "baseDamageMagic": [40,55,70,85,100],
-            "APScale": 0.3,
-            "myHpScale": 0.025
-        },
-        "WBaseDamage": {
-            "baseDamageMagic": [25,40,55,70,84],
-            "targetMaxHpScale": [0.04,0.05,0.06,0.07,0.08],
-            "targetMaxHpScalePer100AP": 0.02,
-            "explanation for that shit": "add .02 to targetMaxHPScale for every 100 AP zac has"
-        },
-        "EBaseDamage": {
-            "baseDamageMagic": [60, 110, 160, 210, 260],
-            "APScale": 0.9
-        },
-        "RBaseDamage": {
-            "baseDamageMagic": [140,210,280],
-            "APScale": 0.4
-        }
-    },
-
-    "Zed": {
-        "IDK HOW HE WORKS": "IDK HOW HE WORKS",
-        "RBaseDamagePhysical": {
-            "ADScale": 1,
-            "PreMitigationDamageMultiplier": [25,40,55]
-        }
-    },
-
-    "Ziggs": {
-        "RBaseDamage": {
-            "SweetSpot": "use parsetooltip[1]"
-        }
-    },
-
-    "Zoe": {
-        "PassiveBaseDamage": {
-            "baseDamageMagic": 16,
-            "scalePerLeveluntil6": 4,
-            "scalePerLeveluntil11": 6,
-            "scalePerLeveluntil14": 8,
-            "scalePerLevelRest" : 10,
-            "APScale" : 0.2
-        },
-        "QBaseDamage": {
-            "baseDamagePerLevelMagic" : 7,
-            "scalePerLeveluntil2" : 1,
-            "scalePerLeveluntil11" : 2,
-            "scalePerLeveluntil15" : 3,
-            "scalePerLevelRest" : 4,
-            "extraBaseDamage" : [50,80,110,140,170],
-            "APScale": 0.6,
-            "maxDistance": false,
-            "maxDistanceComment": "multiplies damage by 1.5"
-        },
-        "EBaseDamage": {
-            "baseDamageMagic": [60, 100, 140, 180, 220],
-            "APScale": 0.4,
-            "tooltip": "2nd part does dmg equal to post mitigation dmg <= EBaseDamage",
-            "greaterThan": false
+            "ADDamage": [100,150,200],
+            "worksForAPI": false,
+            "BADScale": 1,
+            "type": 0
         }
     }
+    ],
+
+    "Xerath": [
+    {
+        "Passive": {
+            "worksForAPI": false,
+            "type": 1,
+            "APScale": 0
+        }
+    },
+    {
+        "QBaseDamage": {
+            "type": 1,
+            "worksForAPI": false,
+            "APDamage": [80,120,160,200,240],
+            "APScale": 0.75
+        }
+    },
+    {
+        "WBaseDamage": {
+            "worksForAPI": false,
+            "APDamage": [60,90,120,150,180],
+            "APScale": 0.6,
+            "type": 1,
+            "amp": {
+                "ampMult": {
+                    "value": 1.667
+                }
+            }
+        }
+    },
+    {
+        "EBaseDamage": {
+            "worksForAPI": false,
+            "baseDamageMagic": [80,110,140,170,200],
+            "APScale": 0.45,
+            "type": 1
+        }
+    },
+    {
+        "RBaseDamage": {
+            "worksForAPI": false,
+            "type": 1,
+            "APDamage": [200,250,300],
+            "APScale": 0.45,
+            "Condition": {
+                "type": 1,
+                "APDamage": [200,250,300],
+                "APScale": 0.45,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [200,250,300],
+                    "APScale": 0.45,
+                    "Condition": {
+                        "type": 1,
+                        "APDamage": [200,250,300],
+                        "APScale": 0.45,
+                        "Condition": {
+                            "type": 1,
+                            "APDamage": [200,250,300],
+                            "APScale": 0.45
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ],
+
+    "XinZhao": [
+        {
+        "Passive": {
+            "worksForAPI": false,
+            "type": 0,
+            "ADScale": [1.15,1.25,1.35,1.45]
+        }
+    },
+    {
+        "QBaseDamage": {
+            "worksForAPI": false,
+            "ADDamage": [10,14,18,22,26],
+            "ADScale": 1.0,
+            "type": 0,
+            "BADScale": 0.4
+        }
+    },
+    {
+        "WBaseDamage": {
+            "worksForAPI": false,
+            "ADDamage": [30,40,50,60,70],
+            "ADScale": 0.3,
+            "type": 0,
+            "Condition": {
+                "ADDamage": [30,65,100,135,170],
+                "ADScale": 0.75,
+                "type": 0
+            }
+        }
+    },
+    {
+        "EBaseDamage": {
+            "worksForAPI": false,
+            "APDamage": [50,75,100,125,150],
+            "APScale": 0.6,
+            "type": 1,
+            "atkSpeedSteroid": [0.4,0.45,0.5,0.55,0.6]
+        }
+    },
+    {
+        "RBaseDamage": {
+            "worksForAPI": false,
+            "ADDamage": [75,175,275],
+            "BADScale": 1,
+            "type": 0,
+            "targetCurrentHpScale": 0.15
+        }
+    }
+    ],
+
+    "Yasuo": [
+    {
+        "Passive": {
+            "type": 0,
+            "worksForAPI": false,
+            "ADScale": 0
+        }
+    },
+    {
+        "QBaseDamage": {
+            "worksForAPI": false,
+            "ADDamage": [20,45,70,95,120],
+            "type": 0,
+            "ADScale": 1.0,
+            "amp": {
+                "ampMult": {
+                    "value": 1.6
+                },
+                "amp": {
+                    "ampMult": {
+                        "value": 1.8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "WBaseDamage": {
+            "worksForAPI": false,
+            "type": 1,
+            "APScale": 0
+        }
+    },
+    {
+        "EBaseDamage": {
+            "worksForAPI": false,
+            "APScale":0.6,
+            "type": 1,
+            "BADScale": 0.2,
+            "APDamage": [60,70,80,90,100],
+            "amp": {
+                "ampMult": {
+                    "value": 1.25
+                },
+                "amp": {
+                    "ampMult":{
+                        "value": 1.5
+                    }
+                }
+            }
+        }
+    },
+    {
+        "RBaseDamage": {
+            "worksForAPI": false,
+            "ADDamage": [200,300,400],
+            "type": 0,
+            "BADScale": 1.5,
+            "extra effect": "crits gain 50% bonus arm pen"
+        }
+    }],
+
+    "Yorick": [
+        {
+            "Passive":{
+                "worksForAPI": false,
+                "type": 0,
+                "ADScale": 0
+            }
+        },
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "ADDamage": [30,55,80,105,130],
+                "type": 0,
+                "ADScale": 1.4
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "ADScale": 0,
+                "type": 0
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "APDamage": [70,105,140,175,210],
+                "type": 1,
+                "APScale": 0.7,
+                "targetCurrentHPScale": 0.15
+            }
+        },
+        {
+            "RBaseDamage":{
+                "worksForAPI": false,
+                "ADScale": 0,
+                "type": 0
+            }
+        }
+    ],
+
+    "Yuumi":[
+        {
+            "Passive":{
+                "worksForAPI": false,
+                "type": 0,
+                "ADScale": 0
+            }
+        },
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "APDamage": [45,85,125,165,205,245],
+                "APScale": 0.40,
+                "type": 1,
+                "targetCurrentHPScale": [0.02,0.032,0.044,0.056,0.068,0.08],
+                "amp": {
+                    "flatAmp": {
+                        "APDamage": [40,70,100,130,160,190],
+                        "APScale": 0.30,
+                        "type": 1
+                    }
+                }
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "ADScale": 0,
+                "type": 0
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
+            }
+        },
+        {
+            "RBaseDamage":{
+                "worksForAPI": false,
+                "APDamage": [60,80,100],
+                "APScale": 0.20,
+                "type": 1,
+                "Condition": {
+                    "TickRate": 1,
+                    "Time": 6,
+                    "type": 1,
+                    "APDamage": [30,40,50],
+                    "APScale": 0.1
+                }
+            }
+        }
+    ],
+    "Zac": [
+    {
+        "Passive": {
+            "APScale": 0,
+            "type": 1,
+            "worksForAPI": false
+        }
+    },
+    {
+        "QBaseDamage": {
+            "APDamage": [40,55,70,85,100],
+            "APScale": 0.3,
+            "myHPScale": 0.025,
+            "type": 1,
+            "worksForAPI": false
+        }
+    },
+    {
+        "WBaseDamage": {
+            "APDamage": [25,40,55,70,85],
+            "APScale": 0,
+            "targetHPScale": [0.04,0.05,0.06,0.07,0.08],
+            "targetHPScalePer100AP": 0.02,
+            "type": 1,
+            "worksForAPI": false
+        }
+    },
+    {
+        "EBaseDamage": {
+            "APDamage": [60, 110, 160, 210, 260],
+            "APScale": 0.9,
+            "type": 1,
+            "worksForAPI": false
+        }
+    },
+    {
+        "RBaseDamage": {
+            "APDamage": [140,210,280],
+            "APScale": 0.4,
+            "type": 1,
+            "worksForAPI": false,
+            "Condition": {
+                "APDamage": [70,105,140],
+                "APScale": 0.2,
+                "type": 1,
+                "Condition": {
+                    "APDamage": [70,105,140],
+                    "APScale": 0.2,
+                    "type": 1,
+                    "Condition": {
+                        "APDamage": [70,105,140],
+                        "APScale": 0.2,
+                        "type": 1
+                    }
+                }
+            }
+        }
+    }
+    ],
+
+    "Zed": [
+        {
+            "Passive":{
+                "worksForAPI": false,
+                "type": 1,
+                "targetHPScale": [0.06,0.06,0.06,0.06,0.06,0.06,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.08,0.1,0.1],
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
+                }
+            }
+        },
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "ADDamage": [80,115,150,185,220],
+                "type": 0,
+                "BADScale": 1,
+                "Condition": {
+                    "ADDamage": [48,69,90,111,132],
+                    "type": 0,
+                    "BADScale": 0.6
+                }
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "ADScale": 0,
+                "type": 0
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "ADDamage": [70,95,120,145,170],
+                "type": 0,
+                "BADScale": 0.8
+            }
+        },
+        {
+            "RBaseDamage":{
+                "worksForAPI": false,
+                "ADScale": 1.0,
+                "type": 0
+            }
+        }
+    ],
+
+    "Ziggs": [
+        {
+            "Passive":{
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [20,24,28,32,36,40,48,56,64,72,80,88,100,112,124,136,148,160],
+                "APScale": [0.3,0.3,0.3,0.3,0.3,0.3,0.4,0.4,0.4,0.4,0.4,0.4,0.5,0.5,0.5,0.5,0.5,0.5],
+                "Condition": {
+                    "type": 0,
+                    "ADScale": 1.0
+                }
+            }
+        },
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "APDamage": [85,130,175,220,265],
+                "type": 1,
+                "APScale": 0.65
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70,105,140,175,210],
+                "APScale": 0.5
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [40,75,110,145,180],
+                "APScale": 0.3,
+                "Condition": {
+                    "APDamage": [16,30,44,58,72],
+                    "type": 1,
+                    "APScale": 0.12
+                }
+            }
+        },
+        {
+            "RBaseDamage":{
+                "worksForAPI": false,
+                "APDamage": [200,300,400],
+                "type": 1,
+                "APScale": 0.7333,
+                "amp": {
+                    "ampMult": {
+                        "value": 1.5
+                    }
+                }
+            }
+        }
+    ],
+
+    "Zoe": [
+        {
+            "Passive":{
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [16,20,24,28,32,36,42,48,54,60,66,74,82,90,100,110,120,130],
+                "APScale": 0.20,
+                "Condition" :{
+                    "type": 0,
+                    "ADScale": 1.0
+                }
+            }
+        },
+        {
+            "QBaseDamage": {
+                "worksForAPI": false,
+                "1APDamage": [7,8,10,12,14,16,18,20,22,24,26,29,32,35,38,42,46,50],
+                "APDamage": [50,80,110,140,170],
+                "type": 1,
+                "APScale": 0.6,
+                "amp": {
+                    "ampMult": {
+                        "value": 2.5
+                    }
+                }
+            }
+        },
+        {
+            "WBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [70,105,135,165,195],
+                "APScale": 0.4
+            }
+        },
+        {
+            "EBaseDamage": {
+                "worksForAPI": false,
+                "type": 1,
+                "APDamage": [60,100,140,180,220],
+                "APScale": 0.4,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [60,100,140,180,220],
+                    "APScale": 0.4
+                }
+            }
+        },
+        {
+            "RBaseDamage":{
+                "worksForAPI": false,
+                "type": 1,
+                "APScale": 0
+            }
+        }
+    ]
 }
