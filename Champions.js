@@ -584,6 +584,9 @@ function itemSearch(itemIndex) {
 //attacking champion
 export function getAtkChamp() {
     let x = document.getElementById("champ-input-list-one").value;
+    if (x == "Wukong") {
+        x = "MonkeyKing";
+    }
     let att_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + x + '.json');
     let champ = att_champ[x];
     let champA = {
@@ -623,9 +626,11 @@ export function getAtkChamp() {
 //defending champion
 export function getDefChamp() { 
     let y = document.getElementById("champ-input-list-two").value;
+    if (y == "Wukong") {
+        y = "MonkeyKing";
+    }
     let def_champ = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/' + y + '.json');
     let champ = def_champ[y];
-
     let champD = { // abilities and runes
         level: document.getElementById("champ-level-list-two").value,
         abilities: champ.abilities,
