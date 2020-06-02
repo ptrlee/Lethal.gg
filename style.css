@@ -168,3 +168,9 @@ a.disable {
     max-width: 250px;
     display: inline-block;
 }
+
+.item {
+    width: 64px;
+    height: 64px;
+    border: solid;
+}

@@ -577,8 +577,10 @@ function parseTooltip(tooltip) {
 }
 
 function itemSearch(itemIndex) {
-    let itemArray = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json');
-    return itemArray[itemIndex].stats;
+    if (itemIndex != undefined) {
+        let itemArray = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json');
+        return itemArray[itemIndex].stats;
+    }
 }
 
 //attacking champion
@@ -712,32 +714,34 @@ function changeDefStats (champion, champ) {
 function itemStats(items, champion) {
     for (let i = 0; i < items.length; i++) {
         let itemWanted = itemSearch(items[i]);
-        if (itemWanted.FlatHPPoolMod != null) {
-            champion.health += itemWanted.FlatHPPoolMod;
-            champion.bonushealth += itemWanted.FlatHPPoolMod;
-        }
-        if (itemWanted.FlatArmorMod != null) {
-            champion.armor += itemWanted.FlatArmorMod;
-            champion.bonusArmor += itemWanted.FlatArmorMod;
-        }       
-        if (itemWanted.FlatSpellBlockMod != null) {
-            champion.mr += itemWanted.FlatSpellBlockMod;
-            champion.bonusMr += itemWanted.FlatArmorMod;
-        }
-        if (itemWanted.PercentAttackSpeedMod != null && champion.bAtkSpeed != null) {
-            champion.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
-        }
-        if (itemWanted.FlatPhysicalDamageMod != null) {
-            champion.bonusAD += itemWanted.FlatPhysicalDamageMod;
-        }
-        if (itemWanted.FlatMagicDamageMod != null) {
-            champion.bonusAP += itemWanted.FlatMagicDamageMod;
-        }
-        if (itemWanted.FlatCritChanceMod != null && champion.crit != null) {
-            champion.crit += itemWanted.FlatCritChanceMod;
-        }
-        if (itemWanted.FlatMPPoolMod != null) {
-            champion.mana += itemWanted.FlatMPPoolMod;
+        if (itemWanted != undefined) {
+            if (itemWanted.FlatHPPoolMod != null) {
+                champion.health += itemWanted.FlatHPPoolMod;
+                champion.bonushealth += itemWanted.FlatHPPoolMod;
+            }
+            if (itemWanted.FlatArmorMod != null) {
+                champion.armor += itemWanted.FlatArmorMod;
+                champion.bonusArmor += itemWanted.FlatArmorMod;
+            }       
+            if (itemWanted.FlatSpellBlockMod != null) {
+                champion.mr += itemWanted.FlatSpellBlockMod;
+                champion.bonusMr += itemWanted.FlatArmorMod;
+            }
+            if (itemWanted.PercentAttackSpeedMod != null && champion.bAtkSpeed != null) {
+                champion.bAtkSpeed += itemWanted.PercentAttackSpeedMod;
+            }
+            if (itemWanted.FlatPhysicalDamageMod != null) {
+                champion.bonusAD += itemWanted.FlatPhysicalDamageMod;
+            }
+            if (itemWanted.FlatMagicDamageMod != null) {
+                champion.bonusAP += itemWanted.FlatMagicDamageMod;
+            }
+            if (itemWanted.FlatCritChanceMod != null && champion.crit != null) {
+                champion.crit += itemWanted.FlatCritChanceMod;
+            }
+            if (itemWanted.FlatMPPoolMod != null) {
+                champion.mana += itemWanted.FlatMPPoolMod;
+            }
         }
     }
 }

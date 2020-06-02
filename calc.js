@@ -345,26 +345,48 @@ function makeItemImages(item, array1, array2, num) {
     }
 
     if (num === "one") {
-        itemIdsOne.push(id);
-        for (let i = 0; i < itemIdsOne.length; i++) {
-            imgOne = `
-                <img class="clickable pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
-            `;
-            $champPics.append(imgOne);
-            removeImage("one", itemIdsOne, i);
-        }
+        //for (let i = 0; i < itemIdsOne.length; i++) {
+            //console.log(`champ-${num}-item` + i);
+            for (let i = 0; i < 6; i++) {
+                if (document.getElementById(`champ-${num}-item-` + i).getAttribute("data-userid") == "no") {
+                    if (itemIdsOne[i] == undefined) {
+                        itemIdsOne[i] = id;
+                    } else {
+                        itemIdsOne.push(id);
+                    }
+                    console.log("zzz", itemIdsOne);
+                    document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${id}.png`;
+                    document.getElementById(`champ-${num}-item-` + i).classList.add("clickable");
+                    document.getElementById(`champ-${num}-item-` + i).setAttribute("data-userid", "yes");
+                    removeImage("one", itemIdsOne, i);
+                    break;
+                }
+            }
+            // imgOne = `
+            //     <img class="clickable pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+            // `;
+            // $champPics.append(imgOne);
+            
+        //}
         championChangeStats("one");
         //console.log("Items add-", itemIdsOne);
      }
      
      else if (num === "two") {
-        itemIdsTwo.push(id);
-        for (let i = 0; i < itemIdsTwo.length; i++) {
-            imgTwo = `
-                <img class="clickable pic-${num}" id="champ-two-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsTwo[i]}.png">
-            `;
-            $champPics.append(imgTwo);
-            removeImage("two", itemIdsTwo, i);
+        for (let i = 0; i < 6; i++) {
+            if (document.getElementById(`champ-${num}-item-` + i).getAttribute("data-userid") == "no") {
+                if (itemIdsTwo[i] == undefined) {
+                    itemIdsTwo[i] = id;
+                } else {
+                    itemIdsOne.push(id);
+                }
+                //console.log("zzz", itemIdsOne);
+                document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${id}.png`;
+                document.getElementById(`champ-${num}-item-` + i).classList.add("clickable");
+                document.getElementById(`champ-${num}-item-` + i).setAttribute("data-userid", "yes");
+                removeImage("two", itemIdsTwo, i);
+                break;
+            }
         }
         championChangeStats("two");
         //console.log("Items add-", itemIdsTwo);
@@ -376,24 +398,25 @@ function makeItemImages(item, array1, array2, num) {
  * Removes the images of the items by clicking on them
  */
 function removeImage(num, array, i) {
-    const $champPics = $(`#champ-items-${num}`);
-    let imgOne="";
-    $(`#champ-${num}-${i}`).on('click', function(e) {   
-        this.remove();     
-        array.splice(i, 1);
-        $(`.pic-${num}`).remove();
-        for (let j = 0; j < array.length; j++) {
-            imgOne = `
-                <img class="pic-${num} clickable" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
-            `;
-            $champPics.append(imgOne);
-            removeImage(num, array, j);
-        }
-
+    $(`#champ-${num}-item-${i}`).on('click', function(e) { 
+        $(this).replaceWith(`<image data-userid="no" class="item" id="champ-${num}-item-${i}"></image>`);     
+        
+        delete array[i];
+        console.log("items", array);
+        // $(`.pic-${num}`).remove();
+        //for (let j = 0; j < array.length; j++) {
+            //document.getElementById(`champ-${num}-item-` + j).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[i]}.png`;
+            // imgOne = `
+            //     <img class="pic-${num} clickable" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
+            // `;
+            //$champPics.append(imgOne);
+            //removeImage(num, array, j);
+        //}
+        
         //console.log("Items delete- ", array);
         championChangeStats(num);
         e.preventDefault();
-        return true;
+        //return true;
     });
 }
 
@@ -434,8 +457,10 @@ function renderRunesAndStatsButton(num) {
             renderRunes(num);
             clicked = true;
         }
-        statsDiv = $(`#champ-stats-${num}`).detach();
-        $champPics.append(runesDiv);
+        //statsDiv = $(`#champ-stats-${num}`).detach();
+        //$champPics.append(runesDiv);
+        $(`#bottom-${num}`).hide();
+        $(`#runes-${num}`).show();
         $(`#stats-button-${num}`).removeAttr('disabled');
         $(this).attr('disabled', "disabled");
         $(this).addClass('clicked');
@@ -444,8 +469,10 @@ function renderRunesAndStatsButton(num) {
     });
 
     $(`#stats-button-${num}`).on('click', function(e) {
-        $champPics.append(statsDiv)
-        runesDiv = $(`#runes-${num}`).detach();
+        //$champPics.append(statsDiv)
+        //runesDiv = $(`#runes-${num}`).detach();
+        $(`#runes-${num}`).hide();
+        $(`#bottom-${num}`).show();
         $(`#runes-button-${num}`).removeAttr('disabled');
         $(this).attr('disabled', "disabled");
         $(this).addClass("clicked");
