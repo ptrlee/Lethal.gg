@@ -547,15 +547,15 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
         }
         else { 
             totalDamage += spellsChampSpell.APScale*(champA.bonusAP);
-            if (spellsChampSpell.APDamageBasedOnOtherAbilityPercentile != null) 
-                totalDamage *= spellsChampSpell.APDamageBasedOnOtherAbilityPercentile[level[spellsChampSpell.OtherAbility]-1];
         }
     }
 
     if (spellsChampSpell.BMRScale != null) 
         totalDamage += spellsChampSpell.BMRScale * champA.bonusMR;
 
-    if (spellsChampSpell.multiply != null) 
+    if (spellsChampSpell.multiplyBasedOnOtherAbility != null) 
+        totalDamage *= spellsChampSpell.multiplyBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]-1];
+    else if (spellsChampSpell.multiply != null) 
         totalDamage*= spellsChampSpell.multiply;
 
     return totalDamage;
