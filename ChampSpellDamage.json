@@ -3789,10 +3789,32 @@
                 "type": 1,
                 "APDamage": [70, 140, 210],
                 "APScale": 0.4,
-                "APDamageTwo": [150, 300, 450],
-                "APScaleTwo": 0.75,
-                "APDamageThree": [70, 140, 210],
-                "APScaleThree": 0.4,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [70, 140, 210],
+                    "APScale": 0.4,
+                    "multiply": 2
+                },
+                "amp": {
+                    "flatAmp": {
+                        "type": 1,
+                        "APDamage": [150, 300, 450],
+                        "APScale": 0.75
+                    },
+                    "amp" :{
+                        "flatAmp": {
+                            "APDamage": [70, 140, 210],
+                            "APScale": 0.4,
+                            "type": 1
+                        },
+                        "Condition": {
+                            "APDamage": [70, 140, 210],
+                            "APScale": 0.4,
+                            "type": 1,
+                            "multiply": 2
+                        }
+                    }
+                },
                 "Comment": "Modified Q,W,E in that order, E does x2 damage is chain activates"
             }
         }
@@ -4261,7 +4283,24 @@
                     "flatAmp": {
                         "type": 0,
                         "ADDamage": [25, 60, 95, 130, 165],
-                        "ADScale": 1.25
+                        "ADScale": 1,
+                        "multiply": 1.25
+                    },
+                    "amp": {
+                        "flatAmp": {
+                            "type": 0,
+                            "ADDamage": [25, 60, 95, 130, 165],
+                            "ADScale": 1,
+                            "multiply": 1.5
+                        },
+                        "amp": {
+                            "flatAmp": {
+                                "type": 0,
+                                "ADDamage": [25, 60, 95, 130, 165],
+                                "ADScale": 1,
+                                "multiply": 1.75
+                            }
+                        }
                     }
                 }
             }
@@ -4462,7 +4501,13 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [70, 110, 150, 190, 230],
-                "APScale": 0.5
+                "APScale": 0.5,
+                "Condition": {
+                    "type": 1,
+                    "APDamage": [70, 110, 150, 190, 230],
+                    "APScale": 0.5,
+                    "multiply": 0.70
+                }
             }
         },
 

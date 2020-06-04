@@ -101,18 +101,22 @@ export function spellDamage() {
             let condition = spellsChamp[i]; //recursive definition of spellsChamp used for conditions(parts)
             while (true) {
                 if (count > 0) {
-                    condition = condition.Condition; //recursive def 
-                    j++; //increments index of part 
+                    condition = condition.Condition; //recursive def
                     if (condition == null) //breaks if the next part doesnt exist
-                        break;
+                        break; 
+                    j++; //increments index of part 
                     type = condition.type;
                 }
                 if (condition.TickRate == null) { //not a DoT ability
                     if (j == 0) { //assigns to pre-existing index
                         totalDamage[i][0][0] = calculateSpell(champA, champD, condition, level,w);
                     }
-                    else //index doesn't exist -- dynamic array
-                        totalDamage[i].push([calculateSpell(champA, champD, condition, level,w)]);
+                    else { //index doesn't exist -- dynamic array 
+                        if (totalDamage[i][j] == undefined)
+                            totalDamage[i].push([calculateSpell(champA, champD, condition, level,w)]);
+                        else if (totalDamage[i][j][0] != undefined)
+                            totalDamage[i][j][0] = (calculateSpell(champA, champD, condition, level,w));
+                    }
                 }
                 else { //DoT ability
                     if (j==0) { // pre-existing index 
@@ -290,9 +294,9 @@ export function spellDamage() {
                     let conditionInAmp = ampob.Condition;
                     if (conditionInAmp.TickRate == null) { //not a DoT ability
                         for (let z = 0; z < totalDamage[i][j].length - 1;z++) {
-                            if (totalDamage[i][j+1] != undefined) 
+                            if (totalDamage[i][j+1] != undefined && totalDamage[i][j+1][z] == undefined) 
                                 totalDamage[i][j+1][z] = 0;
-                            else 
+                            else if (totalDamage[i][j+1] == undefined)
                                 totalDamage[i][j+1] = [0]
                         }
                         totalDamage[i][j+1].push(sortType(calculateSpell(champA, champD, conditionInAmp, level,w), conditionInAmp.type, champD.armor, champD.mr));
