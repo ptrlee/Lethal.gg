@@ -9,11 +9,11 @@
             "amp": {
                 "statChange": {
                     "type": 0,
-                    "percentileAD": [0.2,0.25,0.3],
+                    "percentileAD": [0,0.2,0.25,0.3],
                     "targetHPScale": 0.04588,
                     "targetHPScalePerLevel": 0.00412,
                     "ADScale": 1.0,
-                    "StatSpell": 4
+                    "ADSpell": 3
                 }
             }
         }},
@@ -24,20 +24,20 @@
             "SweetSpot": false,
             "amp": {
                 "statChange": {
-                    "percentileAD": [0.2,0.25,0.3],
+                    "percentileAD": [0,0.2,0.25,0.3],
                     "type": 0,
                     "ADDamage": [10,30,50,70,90],
                     "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
-                    "StatSpell": 4
+                    "ADSpell": 3
                 },
                 "ampMult": {
                     "value": 1.5,
                     "statChange": {
-                        "percentileAD": [0.2,0.25,0.3],
+                        "percentileAD": [0,0.2,0.25,0.3],
                         "type": 0,
                         "ADDamage": [10,30,50,70,90],
                         "ADScale": [0.6, 0.65, 0.7, 0.75, 0.8],
-                        "StatSpell": 4
+                        "ADSpell": 3
                     }
                 }
             },
@@ -49,19 +49,19 @@
                     "ampMult": {
                         "value": 1.5,
                         "statChange": {
-                            "percentileAD": [0.2,0.25,0.3],
+                            "percentileAD": [0,0.2,0.25,0.3],
                             "type": 0,
                             "ADDamage": [12.5,37.5,62.5,87.5,112.5],
                             "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
-                            "StatSpell": 4
+                            "ADSpell": 3
                         }
                     },
                     "statChange": {
-                        "percentileAD": [0.2,0.25,0.3],
+                        "percentileAD": [0,0.2,0.25,0.3],
                         "type": 0,
                         "ADDamage": [12.5,37.5,62.5,87.5,112.5],
                         "ADScale": [0.75, 0.8125, 0.875, 0.9375, 1],
-                        "StatSpell": 4
+                        "ADSpell": 3
                     }
                 },
                 "ADDamage": [12.5,37.5,62.5,87.5,112.5],
@@ -72,19 +72,19 @@
                         "ampMult": {
                             "value": 1.5,
                             "statChange": {
-                                "percentileAD": [0.2,0.25,0.3],
+                                "percentileAD": [0,0.2,0.25,0.3],
                                 "type": 0,
                                 "ADDamage": [15,45,75,105,135],
                                 "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
-                                "StatSpell": 4
+                                "ADSpell": 3
                             }
                         },
                         "statChange": {
-                            "percentileAD": [0.2,0.25,0.3],
+                            "percentileAD": [0,0.2,0.25,0.3],
                             "type": 0,
                             "ADDamage": [15,45,75,105,135],
                             "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
-                            "StatSpell": 4
+                            "ADSpell": 3
                         }
                     },
                     "ADScale": [0.9, 0.975, 1.05, 1.125, 1.2],
@@ -100,11 +100,11 @@
             "ADScale": 0.4,
             "amp": {
                 "statChange": {
-                    "percentileAD": [0.2,0.25,0.3],
+                    "percentileAD": [0,0.2,0.25,0.3],
                     "type": 0,
                     "ADDamage": [30,40,50,60,70],
                     "ADScale": 0.4,
-                    "StatSpell": 4
+                    "ADSpell": 3
                 }
             },
             "Condition": {
@@ -113,11 +113,11 @@
                 "ADScale": 0.4,
                 "amp": {
                     "statChange": {
-                        "percentileAD": [0.2,0.25,0.3],
+                        "percentileAD": [0,0.2,0.25,0.3],
                         "type": 0,
                         "ADDamage": [30,40,50,60,70],
                         "ADScale": 0.4,
-                        "StatSpell": 4
+                        "ADSpell": 3
                     }
                 }
             }
@@ -583,7 +583,8 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [16.8, 196, 22.4, 25.2,28,32.2,36.4,44.8,53.2,61.6,70,84,98,112,126,140,154,168],
-                "BonusAPDamage": [7,14,21,28,35],
+                "APDamageBasedOnOtherAbility": [7,14,21,28,35],
+                "OtherAbility": 1,
                 "APScale": 0.35
             }
         },
@@ -2406,7 +2407,7 @@
                 "ADDamage": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180],
                 "ADScale": 1.2,
                 "APScale": 0.4,
-                "multiplyBasedOnOtherAbility": [1.1,1.15,1.2,1.25,1.3],
+                "multiplyBasedOnOtherAbility": [0, 1.1,1.15,1.2,1.25,1.3],
                 "OtherAbility": 0
             }
         },
@@ -4815,7 +4816,7 @@
                 "Comment": "Can crit",
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [20,30,40,50,60],
+                        "flatBonusAD": [0,20,30,40,50,60],
                         "ADSpell": 0,
                         "type": 0,
                         "ADScale": 1.2
@@ -4857,7 +4858,7 @@
                 "BADScale": 1.2,
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [20,30,40,50,60],
+                        "flatBonusAD": [0,20,30,40,50,60],
                         "ADSpell": 0,
                         "type": 0,
                         "ADDamage": [150, 275, 400],
@@ -4991,7 +4992,7 @@
                 "type": 0,
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [15,20,25],
+                        "flatBonusAD": [0,15,20,25],
                         "flatBonusADScale": 0.3,
                         "ADSpell": 3,
                         "type": 0,
@@ -5017,7 +5018,7 @@
                 "ADScale": 0.5,
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [15,20,25],
+                        "flatBonusAD": [0,15,20,25],
                         "flatBonusADScale": 0.3,
                         "ADSpell": 3,
                         "type": 2,
@@ -5812,7 +5813,7 @@
                 "ADScale": [1.25,1.25,1.25,1.25,1.25, 1.30, 1.30, 1.30, 1.35, 1.35, 1.35, 1.4, 1.4, 1.4, 1.45, 1.45, 1.45, 0.5],
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [0,0,0],
+                        "flatBonusAD": [0,0,0,0],
                         "ADSpell": 3,
                         "flatBonusADScale": 0.2,
                         "type": 0,
@@ -5830,7 +5831,7 @@
                 "ADScale": [0.45, 0.5, 0.55, 0.6, 0.65],
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [0,0,0],
+                        "flatBonusAD": [0,0,0,0],
                         "ADSpell": 3,
                         "flatBonusADScale": 0.2,
                         "type": 0,
@@ -5844,7 +5845,7 @@
                     "ADScale": [0.45, 0.5, 0.55, 0.6, 0.65],
                     "amp": {
                         "statChange": {
-                            "flatBonusAD": [0,0,0],
+                            "flatBonusAD": [0,0,0,0],
                             "ADSpell": 3,
                             "flatBonusADScale": 0.2,
                             "type": 0,
@@ -5858,7 +5859,7 @@
                         "ADScale": [0.45, 0.5, 0.55, 0.6, 0.65],
                         "amp": {
                             "statChange": {
-                                "flatBonusAD": [0,0,0],
+                                "flatBonusAD": [0,0,0,0],
                                 "ADSpell": 3,
                                 "flatBonusADScale": 0.2,
                                 "type": 0,
@@ -5879,7 +5880,7 @@
                 "type": 0,
                 "amp": {
                     "statChange": {
-                        "flatBonusAD": [0,0,0],
+                        "flatBonusAD": [0,0,0,0],
                         "ADSpell": 3,
                         "flatBonusADScale": 0.2,
                         "ADDamage": [55,85,115,145,175],
@@ -6564,7 +6565,7 @@
                         "TickRate": 0.25,
                         "Time": 2,
                         "APSpell": 3,
-                        "flatBonusAP": [30,60,90]
+                        "flatBonusAP": [0,30,60,90]
                     }
                 }
             }
@@ -6581,16 +6582,16 @@
                 "worksForAPI": false,
                 "type": 1,
                 "APDamage": [50, 65, 80, 95, 110],
-                "targetHPScale": [0.06, 0.06, 0.07, 0.075, 0.08],
+                "targetHPScale": [0.06, 0.065, 0.07, 0.075, 0.08],
                 "APScale": 0.75,
                 "amp": {
                     "statChange": {
                         "type": 1,
                         "APDamage": [50, 65, 80, 95, 110],
-                        "targetHPScale": [0.06, 0.06, 0.07, 0.075, 0.08],
+                        "targetHPScale": [0.06, 0.065, 0.07, 0.075, 0.08],
                         "APScale": 0.75,
                         "APSpell": 3,
-                        "flatBonusAP": [30,60,90]
+                        "flatBonusAP": [0,30,60,90]
                     }
                 }
             }
@@ -7520,7 +7521,7 @@
                         "type": 0,
                         "ADDamage": [20, 40, 60, 80, 100],
                         "ADScale": [1.1, 1.2, 1.3, 1.4, 1.5],
-                        "flatBonusAD": [20,25,30,35,40],
+                        "flatBonusAD": [0,20,25,30,35,40],
                         "ADSpell": 0
                     }
                 }
@@ -7594,7 +7595,7 @@
                         "ADDamage": [80, 110, 140, 170, 200],
                         "BADScale": 1.3,
                         "APScale": 0.8,
-                        "flatBonusAD": [5,10,15,20,25],
+                        "flatBonusAD": [0,5,10,15,20,25],
                         "ADSpell": 0,
                         "flatBonusADPerMissingHP": [0.15,0.2,0.25,0.3,0.35]
                     }
@@ -8000,7 +8001,7 @@
                     "statChange": {
                         "type": 0,
                         "ADScale": [1.6,1.65,1.7,1.75,1.8],
-                        "flatBonusAD": [25,40,55],
+                        "flatBonusAD": [0,25,40,55],
                         "ADSpell": 3
                     }
                 }
@@ -8033,7 +8034,7 @@
                             "type": 0,
                             "ADDamage": [75, 127.5, 180, 232.5, 285],
                             "BADScale": 0.75,
-                            "flatBonusAD": [25,40,55],
+                            "flatBonusAD": [0,25,40,55],
                             "ADSpell": 3
                         }
                     }
@@ -8043,7 +8044,7 @@
                         "type": 0,
                         "ADDamage": [50, 85, 120, 155, 190],
                         "BADScale": 0.5,
-                        "flatBonusAD": [25,40,55],
+                        "flatBonusAD": [0,25,40,55],
                         "ADSpell": 3
                     }
                 },

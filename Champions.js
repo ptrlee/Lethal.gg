@@ -49,11 +49,16 @@ export function spellDamage() {
     let aaDMG;
     for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
-        let level = [5,1,1,1]; //level of spell placeholder
+        let level = [3,2,2,0]; //level of spell placeholder
         let spell;
         let spellEffect;
         let spellVar;
         //test for print
+
+        if (i != 0 && level[i-1] == 0) { //handles when ability isn't leveled
+            totalDamage[i][0][0] == 0;
+            continue;
+        }
         
         //yikes
         let spellString;
@@ -178,20 +183,20 @@ export function spellDamage() {
                 }
                 if (ampob.statChange != undefined) { //stat change is defined 
                     if (ampob.statChange.percentileAD != undefined) { //percent AD increase (aatrox ex)
-                        champA.baseAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
-                        champA.bonusAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        champA.baseAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
+                        champA.bonusAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
                     }
                     if (ampob.statChange.flatADPerLevel != undefined) { //flat ad increase darius ex
                         champA.bonusAD += ampob.statChange.flatADPerLevel[champA.level-1];
                     }
                     if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
-                        if (ampob.statChange.flatBonusADScale != undefined) {
+                        if (ampob.statChange.flatBonusADScale != undefined && level[ampob.statChange.ADSpell] != 0) {
                             champA.bonusAD +=ampob.statChange.flatBonusADScale * (champA.bonusAD+champA.baseAD);
                         }
-                        champA.bonusAD += ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
+                        champA.bonusAD += ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]];
                     }
                     if (ampob.statChange.flatBonusAP != undefined) {
-                        champA.bonusAP += ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]-1];
+                        champA.bonusAP += ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]];
                     }
                     if (ampob.statChange.TickRate == undefined) { //calculates dmg 
                         totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level,w),ampob.statChange.type,champD.armor,champD.mr));
@@ -207,18 +212,18 @@ export function spellDamage() {
                             damageOverTime[i][j+1].push(undefined);
                     }
                     if (ampob.statChange.flatBonusAP != undefined) {
-                        champA.bonusAP -= ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]-1];
+                        champA.bonusAP -= ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]];
                     }
                     if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
-                        champA.bonusAD -= ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]-1];
-                        if (ampob.statChange.flatBonusADScale != undefined) {
+                        champA.bonusAD -= ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]];
+                        if (ampob.statChange.flatBonusADScale != undefined && level[ampob.statChange.ADSpell] != 0) {
                             champA.bonusAD -=ampob.statChange.flatBonusADScale * (champA.baseAD);
                             champA.bonusAD /= (1+ampob.statChange.flatBonusADScale);
                         }
                     }
                     if (ampob.statChange.percentileAD !=undefined) { //undoes percent ad change
-                        champA.baseAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
-                        champA.bonusAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                        champA.baseAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
+                        champA.bonusAD /= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
                     }
                     if (ampob.statChange.flatADPerLevel != undefined) { //undoes flat ad change
                         champA.bonusAD -= ampob.statChange.flatADPerLevel[champA.level-1]
@@ -261,8 +266,8 @@ export function spellDamage() {
                         hasn't been bug tested
                         */
                         if (ampob.ampMult.statChange.percentileAD != undefined) {
-                            champA.baseAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
-                            champA.bonusAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                            champA.baseAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.ADSpell]];
+                            champA.bonusAD *= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.ADSpell]];
                         }
                         if (ampob.ampMult.statChange.flatADPerLevel != undefined) {
                             champA.bonusAD += ampob.ampMult.statChange.flatADPerLevel[champA.level-1];
@@ -281,8 +286,8 @@ export function spellDamage() {
                                 damageOverTime[i][j+1].push(undefined);
                         }
                         if (ampob.ampMult.statChange.percentileAD !=undefined) {
-                            champA.baseAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
-                            champA.bonusAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.StatSpell-1]-1];
+                            champA.baseAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.ADSpell]];
+                            champA.bonusAD /= 1+ampob.ampMult.statChange.percentileAD[level[ampob.statChange.ADSpell]];
                         }
                         if (ampob.ampMult.statChange.flatADPerLevel != undefined) {
                             champA.bonusAD -= ampob.ampMult.statChange.flatADPerLevel[champA.level-1]
@@ -354,13 +359,14 @@ export function spellDamage() {
         }
     }   
     //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
-    aaDMG = (champA.baseAD + champA.bonusAD) * (1+champA.critMult)*(champA.crit+1);
-    damageOverTime[5][0][0] = aaDMG; //dmg per aa
-    aaDMG = aaDMG* champA.atkSpeed*(1+champA.bAtkSpeed);
-    damageOverTime[5][0][1] = (1/(champA.atkSpeed*(1+champA.bAtkSpeed))); //tick rate 
-    damageOverTime[5][0][2] = aaDMG * damageOverTime[5][0][1]; //dmg per second
-    damageOverTime[5][0][3] = 50;
-    damageOverTime[5][0][4] = undefined;
+    //Ctrl f finder boom lmao
+    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+    damageOverTime[5][0][0] = (champA.baseAD + champA.bonusAD) //base auto attack damage
+    damageOverTime[5][0][0] = sortType(damageOverTime[5][0][0], 0, champD.armor, 0);
+    damageOverTime[5][0][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
+    damageOverTime[5][0][2] = damageOverTime[5][0][0] * (2+champA.critMult) // damage per crit
+    damageOverTime[5][0][3] = damageOverTime[5][0][0]*(1-champA.crit) + damageOverTime[5][0][2]*(champA.crit); //avg dmg per auto
+    damageOverTime[5][0][4] = damageOverTime[5][0][3]*damageOverTime[5][0][1];
 
     //no 'total damage' value
 
@@ -512,18 +518,13 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
         }
     }
 
-    //aatrox  q
-    if (spellsChampSpell.FirstADScale != null) {
-        totalDamage += (spellsChampSpell.FirstCast[level[w]-1]+(spellsChampSpell.FirstADScale[level[w]-1]*(champA.bonusAD+champA.baseAD)));
-    }
-
     // AP Scale
     if (spellsChampSpell.APScale !=null) {
         if (spellsChampSpell.APDamage != null) {
             if (spellsChampSpell.APDamage.length != 18) {
                 if (spellsChampSpell.APScale.length == undefined) {
                     if (spellsChampSpell.APDamageBasedOnOtherAbility != undefined) {
-                        totalDamage += spellsChampSpell.APDamage[level[w]-1]+spellsChampSpell.APScale*(champA.bonusAP) + spellsChampSpell.APDamageBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]-1];
+                        totalDamage += spellsChampSpell.APDamage[level[w]-1]+spellsChampSpell.APScale*(champA.bonusAP) + spellsChampSpell.APDamageBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]];
                     }
                     else
                         totalDamage += (spellsChampSpell.APDamage[level[w]-1]+(spellsChampSpell.APScale*(champA.bonusAP)));
@@ -534,7 +535,7 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
             else {
                 if (spellsChampSpell.APScale.length!= 18) {
                     if (spellsChampSpell.APDamageBasedOnOtherAbility != undefined) {
-                        totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale*(champA.bonusAP) + spellsChampSpell.APDamageBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]-1];
+                        totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale*(champA.bonusAP) + spellsChampSpell.APDamageBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]];
                     }
                     else if (spellsChampSpell.BonusAPDamage != undefined) 
                         totalDamage += spellsChampSpell.APDamage[champA.level-1]+spellsChampSpell.APScale*(champA.bonusAP) + spellsChampSpell.BonusAPDamage[level[w]-1];
@@ -554,7 +555,7 @@ function calculateSpell(champA, champD, spellsChampSpell, level, w) {
         totalDamage += spellsChampSpell.BMRScale * champA.bonusMR;
 
     if (spellsChampSpell.multiplyBasedOnOtherAbility != null) 
-        totalDamage *= spellsChampSpell.multiplyBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]-1];
+        totalDamage *= spellsChampSpell.multiplyBasedOnOtherAbility[level[spellsChampSpell.OtherAbility]];
     else if (spellsChampSpell.multiply != null) 
         totalDamage*= spellsChampSpell.multiply;
 
