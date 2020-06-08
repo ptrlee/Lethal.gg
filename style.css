@@ -174,3 +174,7 @@ a.disable {
     height: 64px;
     border: solid;
 }
+
+.stat-runes {
+    margin-top: 50px;
+}

@@ -121,6 +121,23 @@ $('#calc-button').on('click', function(e) {
         $("#bottom-two").addClass("stats-and-runes");
         $("#champ-column-one").addClass("champ-column");
         $("#champ-column-two").addClass("champ-column");
+        $("#stats-button-one").addClass("clicked");
+        $("#stats-button-two").addClass("clicked");
+
+        $("#champ-one-item-0").addClass("item");
+        $("#champ-one-item-1").addClass("item");
+        $("#champ-one-item-2").addClass("item");
+        $("#champ-one-item-3").addClass("item");
+        $("#champ-one-item-4").addClass("item");
+        $("#champ-one-item-5").addClass("item");
+
+        $("#champ-two-item-0").addClass("item");
+        $("#champ-two-item-1").addClass("item");
+        $("#champ-two-item-2").addClass("item");
+        $("#champ-two-item-3").addClass("item");
+        $("#champ-two-item-4").addClass("item");
+        $("#champ-two-item-5").addClass("item");
+
         //getAbilities("one");
         //getAbilities("two");
         clicked = true;

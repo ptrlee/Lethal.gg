@@ -1,3 +1,6 @@
+let doneOne = false;
+let doneTwo = false;
+
 export function renderRunes(num) {
     const $champPics = $(`#champ-buttons-${num}`);
     let runes = ["Precision", "Domination", "Sorcery", "Resolve", "Inspiration"];
@@ -10,6 +13,12 @@ export function renderRunes(num) {
         <div class="column" id="primary-runes-${num}">
             ${images}
         </div>
+
+        <div class="column" id="secondary-runes-${num}">
+
+        </div>
+
+       
     </div>
     `;
     $champPics.append(hold);
@@ -124,6 +133,7 @@ function renderImages(type, num) {
     `;
 
     $primaryPics.append(subs);
+
     for (let i=0; i<3; i++) {
         lineClick("primary", type, "LineOne", i, num);
         lineClick("primary", type, "LineTwo", i, num);
@@ -170,11 +180,13 @@ function lineClick(ary, type, line, i, num) {
 } 
 
 function renderSecondaryRunes(rune, num) {
-    $(`#secondary-runes-${num}`).remove();
-    const $runePics = $(`#runes-${num}`);
-    let make = `<div class="column" id="secondary-runes-${num}"></div>`;
+    $(`#secondary-runes-keystones-${num}`).remove();
+    let hold = $(`#stat-runes-${num}`).detach();
+    const $runePics = $(`#secondary-runes-${num}`);
+    let make = `<div id="secondary-runes-keystones-${num}"></div>`;
     $runePics.append(make)
-    const $secondary = $(`#secondary-runes-${num}`);
+    
+    const $secondary = $(`#secondary-runes-keystones-${num}`);
 
     let array = ["Precision", "Domination", "Sorcery", "Resolve", "Inspiration"];
     let index = array.indexOf(rune);
@@ -186,17 +198,32 @@ function renderSecondaryRunes(rune, num) {
     }
 
     $secondary.append(images);
+    $runePics.append(hold);
+
 
     runesClick("#secondary-", `Precision-${num}`, num);
     runesClick("#secondary-", `Domination-${num}`, num);
     runesClick("#secondary-", `Sorcery-${num}`, num);
     runesClick("#secondary-", `Resolve-${num}`, num);
     runesClick("#secondary-", `Inspiration-${num}`, num);
+
+
+    if (num =="one" && !doneOne) {
+        $runePics.append(`<div class="stat-runes" id="stat-runes-${num}"></div>`);
+        console.log(doneOne);
+        renderStatRunes(num);
+        doneOne = true;
+    } else if (num =="two" && !doneTwo) {
+        $runePics.append(`<div id="stat-runes-${num}"></div>`);
+        renderStatRunes(num);
+        downTwo = true;
+    }
 }
+
 
 function renderSecondarySubs(type, num) {
     $(`#secondary-runes-subs-${num}`).remove();
-    const $runePics = $(`#secondary-runes-${num}`);
+    const $runePics = $(`#secondary-runes-keystones-${num}`);
     let make = `<div id="secondary-runes-subs-${num}"></div>`;
     $runePics.append(make)
     const $secondaryPics = $(`#secondary-runes-subs-${num}`);
@@ -222,4 +249,37 @@ function renderSecondarySubs(type, num) {
         lineClick("secondary", type, "LineThree", i, num);    
     }
     lineClick("secondary", type, "LineThree", 3, num);
+}
+
+function renderStatRunes(num) {
+    //$(`#stat-runes-${num}`).detach();
+    let hold = `
+            <div>
+                <image id="tertiary-extra-LineOne-1-${num}" class="clickable runes tertiary-LineOne-${num}" src="Assets/Runes/StatMod/AdaptiveForce.png"></image>
+                <image id="tertiary-extra-LineOne-2-${num}" class="clickable runes tertiary-LineOne-${num}" src="Assets/Runes/StatMod/AttackSpeed.png"></image>
+                <image id="tertiary-extra-LineOne-3-${num}" class="clickable runes tertiary-LineOne-${num}" src="Assets/Runes/StatMod/CDRScaling.png"></image>
+            </div>
+
+            <div>
+                <image id="tertiary-extra-LineTwo-1-${num}" class="clickable runes tertiary-LineTwo-${num}" src="Assets/Runes/StatMod/AdaptiveForce.png"></image>
+                <image id="tertiary-extra-LineTwo-2-${num}" class="clickable runes tertiary-LineTwo-${num}" src="Assets/Runes/StatMod/Armor.png"></image>
+                <image id="tertiary-extra-LineTwo-3-${num}" class="clickable runes tertiary-LineTwo-${num}" src="Assets/Runes/StatMod/MagicResist.png"></image>
+            </div>
+
+            <div>
+                <image id="tertiary-extra-LineThree-1-${num}" class="clickable runes tertiary-LineThree-${num}" src="Assets/Runes/StatMod/HealthScaling.png"></image>
+                <image id="tertiary-extra-LineThree-2-${num}" class="clickable runes tertiary-LineThree-${num}" src="Assets/Runes/StatMod/Armor.png"></image>
+                <image id="tertiary-extra-LineThree-3-${num}" class="clickable runes tertiary-LineThree-${num}" src="Assets/Runes/StatMod/MagicResist.png"></image>
+            </div>
+    `;
+    $(`#stat-runes-${num}`).append(hold);
+
+    for (let i=1; i<4; i++) {
+        lineClick("tertiary", "extra", "LineOne", i, num);
+        lineClick("tertiary", "extra", "LineTwo", i, num);
+        lineClick("tertiary", "extra", "LineThree", i, num);    
+    }
+
+    //$(`secondary-runes-${num}`).append(hold);
+  
 }

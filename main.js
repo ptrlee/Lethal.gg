@@ -101,17 +101,17 @@ function renderChampStats(num) {
 
                 <div id="items-row-one-${num}">
                     <span>
-                        <image data-userid="no" class="item" id="champ-${num}-item-0"></image>
-                        <image data-userid="no" class="item" id="champ-${num}-item-1"></image>
-                        <image data-userid="no" class="item" id="champ-${num}-item-2"></image>
+                        <image data-userid="no" id="champ-${num}-item-0"></image>
+                        <image data-userid="no" id="champ-${num}-item-1"></image>
+                        <image data-userid="no" id="champ-${num}-item-2"></image>
                     </span>
                 </div>
 
                 <div id="items-row-two-${num}">
                     <span>
-                        <image data-userid="no" class="item" id="champ-${num}-item-3"></image>
-                        <image data-userid="no" class="item" id="champ-${num}-item-4"></image>
-                        <image data-userid="no" class="item" id="champ-${num}-item-5"></image>
+                        <image data-userid="no" id="champ-${num}-item-3"></image>
+                        <image data-userid="no" id="champ-${num}-item-4"></image>
+                        <image data-userid="no" id="champ-${num}-item-5"></image>
                     </span>
                 </div>
 
