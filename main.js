@@ -16,7 +16,7 @@ renderDamageNumbers();
 function renderSummonerSearchbar() {
     let hold = `
         <div id="live-game">
-            <input placeholder="Enter Summoner's Name" id="name-inputbox"> </input>
+            <input placeholder="Enter Summoner's Name" id="name-inputbox"></input>
         </div>
     `;
     $root.append(hold);
