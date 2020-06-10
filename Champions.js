@@ -47,9 +47,22 @@ export function spellDamage() {
     let damageOverTime = [ [[0]] , [[0]] , [[0]] , [[0]] , [[0]] , [[0]]];
     let combinedDamage = [totalDamage, damageOverTime];
     let aaDMG;
+
+    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+    //Ctrl f finder boom lmao
+    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
+
+    let dmgCount = 0; //keeps track of previous damageOvertime index
+    damageOverTime[5][0][0] = (champA.baseAD + champA.bonusAD) //base auto attack damage
+    damageOverTime[5][0][0] = sortType(damageOverTime[5][0][0], 0, champD.armor, 0);
+    damageOverTime[5][0][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
+    damageOverTime[5][0][2] = damageOverTime[5][0][0] * (2+champA.critMult) // damage per crit
+    damageOverTime[5][0][3] = damageOverTime[5][0][0]*(1-champA.crit) + damageOverTime[5][0][2]*(champA.crit); //avg dmg per auto
+    damageOverTime[5][0][4] = damageOverTime[5][0][3]*damageOverTime[5][0][1];
+
     for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
-        let level = [3,2,2,0]; //level of spell placeholder
+        let level = [3,2,2,1]; //level of spell placeholder
         let spell;
         let spellEffect;
         let spellVar;
@@ -182,22 +195,28 @@ export function spellDamage() {
                         break;
                 }
                 if (ampob.statChange != undefined) { //stat change is defined 
+                    let adChanged = false;
                     if (ampob.statChange.percentileAD != undefined) { //percent AD increase (aatrox ex)
                         champA.baseAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
                         champA.bonusAD *= 1+ampob.statChange.percentileAD[level[ampob.statChange.ADSpell]];
+                        adChanged = true;
                     }
                     if (ampob.statChange.flatADPerLevel != undefined) { //flat ad increase darius ex
                         champA.bonusAD += ampob.statChange.flatADPerLevel[champA.level-1];
+                        adChanged = true;
                     }
                     if (ampob.statChange.flatBonusAD != undefined) { //flat bnus AD inc nocturne ex
                         if (ampob.statChange.flatBonusADScale != undefined && level[ampob.statChange.ADSpell] != 0) {
                             champA.bonusAD +=ampob.statChange.flatBonusADScale * (champA.bonusAD+champA.baseAD);
                         }
                         champA.bonusAD += ampob.statChange.flatBonusAD[level[ampob.statChange.ADSpell]];
+                        adChanged = true;
                     }
                     if (ampob.statChange.flatBonusAP != undefined) {
                         champA.bonusAP += ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]];
                     }
+
+                    //pushes stat change dmg
                     if (ampob.statChange.TickRate == undefined) { //calculates dmg 
                         totalDamage[i][j].push(sortType(calculateSpell(champA,champD,ampob.statChange,level,w),ampob.statChange.type,champD.armor,champD.mr));
                     }
@@ -211,6 +230,21 @@ export function spellDamage() {
                         else 
                             damageOverTime[i][j+1].push(undefined);
                     }
+
+                    
+                    //if AD, changes auto attack values
+                    console.log(adChanged);
+                    if (adChanged && sortType((champA.baseAD+champA.bonusAD),0,champD.armor,0) != damageOverTime[5][dmgCount][0]) {
+                        damageOverTime[5].push([(champA.baseAD + champA.bonusAD)]) //base auto attack damage
+                        damageOverTime[5][dmgCount+1][0] = sortType(damageOverTime[5][dmgCount+1][0], 0, champD.armor, 0);
+                        damageOverTime[5][dmgCount+1][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
+                        damageOverTime[5][dmgCount+1][2] = damageOverTime[5][dmgCount+1][0] * (2+champA.critMult) // damage per crit
+                        damageOverTime[5][dmgCount+1][3] = damageOverTime[5][dmgCount+1][0]*(1-champA.crit) + damageOverTime[5][dmgCount+1][2]*(champA.crit); //avg dmg per auto
+                        damageOverTime[5][dmgCount+1][4] = damageOverTime[5][dmgCount+1][3]*damageOverTime[5][dmgCount+1][1];
+                        dmgCount++;
+                    }
+
+
                     if (ampob.statChange.flatBonusAP != undefined) {
                         champA.bonusAP -= ampob.statChange.flatBonusAP[level[ampob.statChange.APSpell]];
                     }
@@ -357,16 +391,7 @@ export function spellDamage() {
                 }
             }
         }
-    }   
-    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
-    //Ctrl f finder boom lmao
-    //aa dmg calculator (needs to factor in abilities that steroid ex trist q)
-    damageOverTime[5][0][0] = (champA.baseAD + champA.bonusAD) //base auto attack damage
-    damageOverTime[5][0][0] = sortType(damageOverTime[5][0][0], 0, champD.armor, 0);
-    damageOverTime[5][0][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
-    damageOverTime[5][0][2] = damageOverTime[5][0][0] * (2+champA.critMult) // damage per crit
-    damageOverTime[5][0][3] = damageOverTime[5][0][0]*(1-champA.crit) + damageOverTime[5][0][2]*(champA.crit); //avg dmg per auto
-    damageOverTime[5][0][4] = damageOverTime[5][0][3]*damageOverTime[5][0][1];
+    } 
 
     //no 'total damage' value
 
