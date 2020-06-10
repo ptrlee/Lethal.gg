@@ -138,8 +138,8 @@ $('#calc-button').on('click', function(e) {
         $("#champ-two-item-4").addClass("item");
         $("#champ-two-item-5").addClass("item");
 
-        //getAbilities("one");
-        //getAbilities("two");
+        getAbilities("one");
+        getAbilities("two");
         clicked = true;
     } else {
         $root.append(getChamps());
@@ -234,7 +234,7 @@ jQuery.extend({
  */
 export function getAbilities(num){
     $(`#champ-spell-${num}`).remove();
-    let x = document.getElementById("champ-name-" + num).textContent;
+    let x = document.getElementById("champ-input-list-" + num).value;
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
    
     const $champPics = $(`#champ-pictures-${num}`);
@@ -243,7 +243,7 @@ export function getAbilities(num){
     let levels = "";
     for (let i = 0; i < 4; i++) {
         spells += `
-        <div class="column is-narrow spells">
+        <div class="column spells">
             <image class="clickable ability" id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${y[i].id}.png"> </image>
         
             <div>
