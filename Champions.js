@@ -62,7 +62,8 @@ export function spellDamage() {
 
     for (let i = 0; i < 5; i++) {
         let type = 0; // If 0 == physical; 1 == magical; 2 == true 
-        let level = [3,2,2,1]; //level of spell placeholder
+        //let level = [3,2,2,1]; //level of spell placeholder
+        let level = [document.getElementById(`champ-spell-level-0-one`).innerHTML ,document.getElementById(`champ-spell-level-1-one`).innerHTML,document.getElementById(`champ-spell-level-2-one`).innerHTML,document.getElementById(`champ-spell-level-3-one`).innerHTML]; //level of spell placeholder
         let spell;
         let spellEffect;
         let spellVar;
