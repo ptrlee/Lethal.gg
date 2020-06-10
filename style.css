@@ -27,7 +27,8 @@ html, body {
 
 .spells {
     position: relative;
-    
+    left: 170px;
+    margin-left: 25px;
 }
 
 .short {

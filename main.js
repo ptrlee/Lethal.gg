@@ -6,7 +6,6 @@ let champs = "";
 renderSummonerSearchbar();
 $champs.append(renderChampStats("one"));
 $champs.append(renderChampStats("two"));
-renderDamageNumbers();
 
 
 
@@ -22,21 +21,6 @@ function renderSummonerSearchbar() {
     $root.append(hold);
 }
 
-function renderDamageNumbers() {
-    let hold = `
-    <div id='total-damage'>
-        <div id="ability-damage-buttons"> 
-        </div>
-        <div id="ability-damage" class= columns> 
-            <div id="P-damage" class="column"></div>
-            <div id="Q-damage" class="column"></div>
-            <div id="W-damage" class="column"></div>
-            <div id="E-damage" class="column"></div>
-            <div id="R-damage" class="column"></div>
-        </div>
-    </div>`
-    $(`#damage-numbers`).append(hold);
-}
 
 /**
  * Handles Live Game button press

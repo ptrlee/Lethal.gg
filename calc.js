@@ -40,11 +40,10 @@ function renderChampLists() {
 
     $(function(ready){
         $('#champ-input-list-one').change(function() {
-            championChangeStats("one");
-            //getAbilities("one");
-            damage = spellDamage();
-            damageColumn();
-            showDamage();
+            reset("one");
+            //championChangeStats("one");
+            getAbilities("one");
+            
 
         });
 
@@ -57,9 +56,10 @@ function renderChampLists() {
         });
 
         $('#champ-input-list-two').change(function() {
-            championChangeStats("two");
-            //getAbilities("two");
-            damage = spellDamage();
+            reset("two");
+            //championChangeStats("two");
+            getAbilities("two");
+            //damage = spellDamage();
         });
 
         $('#champ-level-list-one').change(function() {
@@ -102,6 +102,7 @@ $('#calc-button').on('click', function(e) {
         $("#name-inputbox").remove();
         // document.getElementById("champ-name-one").innerHTML = "Ahri";
         // document.getElementById("champ-name-two").innerHTML = "Ahri";
+        renderCalculateButton();
         levelChange("one");
         levelChange("two");
         renderChampLists();
@@ -109,7 +110,6 @@ $('#calc-button').on('click', function(e) {
         renderItemChoices("two");
         renderRunesAndStatsButton("one");
         renderRunesAndStatsButton("two");
-        renderAbilityDamageButtons();
         championChangeStats("one");
         championChangeStats("two");
         $(`#P-damage`).addClass("damage");
@@ -177,7 +177,7 @@ function levelChange(num) {
     let hold = `
         <div id="input-level-${num}">
             <label> Level: </label>
-            <input class="level-input" id="champ-level-list-${num}" value=1 type="text"/>
+            <input class="level-input" id="champ-level-list-${num}" value=1 type="text"></input>
         </div>
     `;
     $stats.prepend(hold);
@@ -243,7 +243,7 @@ export function getAbilities(num){
     let levels = "";
     for (let i = 0; i < 4; i++) {
         spells += `
-        <div class="column spells">
+        <div class="spells">
             <image class="clickable ability" id="champ-spell-${i}-${num}" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/spell/${y[i].id}.png"> </image>
         
             <div>
@@ -497,6 +497,45 @@ function renderRunesAndStatsButton(num) {
         e.preventDefault();
     });
     
+}
+
+function renderCalculateButton() {
+
+    let hold = `
+        <button id="calc-calculate-button">  Calculate </button>
+    `;
+
+    $(`#damage-numbers`).append(hold);
+        $(`#calc-calculate-button`).on('click', function(e) { 
+            renderDamageNumbers();
+            renderAbilityDamageButtons();
+            damage = spellDamage();
+            damageColumn();
+            showDamage();
+            e.preventDefault();
+        });
+
+}
+
+function renderDamageNumbers() {
+    let hold = `
+    <div id='total-damage'>
+        <div id="ability-damage-buttons"> 
+        </div>
+        <div id="ability-damage" class= columns> 
+            <div id="P-damage" class="column"></div>
+            <div id="Q-damage" class="column"></div>
+            <div id="W-damage" class="column"></div>
+            <div id="E-damage" class="column"></div>
+            <div id="R-damage" class="column"></div>
+        </div>
+    </div>`
+    $(`#damage-numbers`).append(hold);
+}
+
+function reset(num) {
+    $(`#champ-level-list-${num}`).val(1);
+    championChangeStats(num);
 }
 
 //Gets the first champion's items
