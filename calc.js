@@ -11,8 +11,11 @@ let itemIdsOne=[];
 let itemIdsTwo=[]
 let spellPointsOne = 1;
 let spellPointsTwo = 1;
+let RUpgradeOne = 0;
+let RUpgradeTwo = 0;
 let damage;
 let clicked = false;
+let calcClicked = false;
 
 
 /**
@@ -70,7 +73,41 @@ function renderChampLists() {
                 alert("Maximum possible level is 18");
                 this.value = 18;
             }
-            spellPointsOne = this.value;
+            
+            if (spellPointsOne == 1 && spellSum("one") == 0) {
+                spellPointsOne = this.value;
+            } else if (this.value > spellSum("one") && spellSum("one") != 0) {
+                spellPointsOne = this.value - spellSum("one");
+            } else if (this.value < spellSum("one")) {
+                spellReset("one");
+                spellPointsOne = this.value;
+            }
+
+            if (this.value >= 6 && this.value < 11) {
+                RUpgradeOne++;
+                if (document.getElementById(`champ-spell-level-3-one`).innerHTML >= 1) {
+                    document.getElementById(`champ-spell-level-3-one`).innerHTML = 0;
+                }
+            } else if (this.value >= 11 && this.value < 16) {
+                if (document.getElementById(`champ-spell-level-3-one`).innerHTML == 1) {
+                    RUpgradeOne++
+                } else {
+                    document.getElementById(`champ-spell-level-3-one`).innerHTML = 0;
+                    RUpgradeOne = 2; 
+                }
+            } else if (this.value >= 16) {
+                if (document.getElementById(`champ-spell-level-3-one`).innerHTML == 1) {
+                    RUpgradeOne = 2;
+                } else if (document.getElementById(`champ-spell-level-3-one`).innerHTML == 2) {
+                    RUpgradeOne++;
+                } else {
+                    RUpgradeOne = 3;
+                }
+            } else {
+                RUpgradeOne = 0;
+                document.getElementById(`champ-spell-level-3-one`).innerHTML = 0;
+            }
+            
             championChangeStats("one");
         });
 
@@ -82,7 +119,39 @@ function renderChampLists() {
                 alert("Maximum possible level is 18");
                 this.value = 18;
             }
-            spellPointsTwo = this.value;
+            if (spellPointsTwo == 1 && spellSum("two") == 0) {
+                spellPointsTwo = this.value;
+            } else if (this.value > spellSum("two") && spellSum("two") != 0) {
+                spellPointsTwo = this.value - spellSum("two");
+            } else if (this.value < spellSum("two")) {
+                spellReset("two");
+                spellPointsTwo = this.value;
+            }
+
+            if (this.value >= 6 && this.value < 11) {
+                RUpgradeTwo++;
+                if (document.getElementById(`champ-spell-level-3-two`).innerHTML >= 1) {
+                    document.getElementById(`champ-spell-level-3-two`).innerHTML = 0;
+                }
+            } else if (this.value >= 11 && this.value < 16) {
+                if (document.getElementById(`champ-spell-level-3-two`).innerHTML == 1) {
+                    RUpgradeTwo++
+                } else {
+                    document.getElementById(`champ-spell-level-3-two`).innerHTML = 0;
+                    RUpgradeTwo = 2; 
+                }
+            } else if (this.value >= 16) {
+                if (document.getElementById(`champ-spell-level-3-two`).innerHTML == 1) {
+                    RUpgradeTwo = 2;
+                } else if (document.getElementById(`champ-spell-level-3-two`).innerHTML == 2) {
+                    RUpgradeTwo++;
+                } else {
+                    RUpgradeTwo = 3;
+                }
+            } else {
+                RUpgradeTwo = 0;
+                document.getElementById(`champ-spell-level-3-two`).innerHTML = 0;
+            }
             championChangeStats("two");
         });
     });
@@ -229,6 +298,13 @@ jQuery.extend({
     }
 });
 
+
+/********************************************************************************************************
+ * EVERYTHING IN THIS PART DEALS WITH CHAMP ABILITIES
+ */
+
+
+
 /**
  * Renders the abilities of the champs  
  */
@@ -282,20 +358,40 @@ export function getAbilities(num){
 
 function increaseSpellLevel(i, num) {
     $(`#champ-spell-${i}-${num}`).mousedown(function(event) {
+        
+        //console.log("Two " + spellPointsTwo);
         switch (event.which) {
             case 1: 
             if (document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 5) {
                 alert("Left: " + "You cannot level up this spell anymore");
             } else if (i == 3 && document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML == 3) {
                 alert("Left: " + "You cannot level up this spell anymore");
-            } else if (spellPointsOne == 0 || spellPointsTwo == 0) {
+            } else if ( (spellPointsOne == 0 && num == "one")|| (spellPointsTwo == 0 && num == "two") ) {
                 alert("You have no spell points to level up any spells");
-            } else {
+            } else if (i != 3) {
                 document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
-                if (num == "one")
+                if (num == "one") {
                     spellPointsOne--;
+                }
                 else if (num == "two")
                     spellPointsTwo--;
+            } else if (i == 3) {
+                if (num == "one") {
+                    if (RUpgradeOne == 0) {
+                        alert("You cannot upgrade your ult at this time");
+                    } else {
+                        document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
+                        RUpgradeOne--;
+                    }
+                } else if (num == "two") {
+                    if (RUpgradeTwo == 0) {
+                        alert("You cannot upgrade your ult at this time");
+                    } else {
+                        document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML++;
+                        RUpgradeTwo--;
+                    }
+                }
+                
             }
                 break;
             case 3: 
@@ -313,6 +409,27 @@ function increaseSpellLevel(i, num) {
         }
     });
 }
+
+function spellSum(num) {
+    let total = 0;
+    for (let  i = 0; i < 3; i++) {
+        total += parseInt(document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML);
+    }
+    console.log("total " + total);
+    return total;
+}
+
+function spellReset(num) {
+    for (let  i = 0; i < 3; i++) {
+        document.getElementById(`champ-spell-level-${i}-${num}`).innerHTML = 0;
+    }
+}
+
+
+
+/*********************************************************************************************************
+ * EVERYTHING IN THIS SECTION DEALS WITH ITEMS
+ */
 
 
 /**
@@ -455,6 +572,20 @@ function renderItemChoices(num){
     });
 }
 
+//Gets the first champion's items
+export function getChampOneItems(){
+    return itemIdsOne;
+}
+
+//Gets the second champion's items
+export function getChampionTwoItems(){
+    return itemIdsTwo;
+}
+
+/******************************************************************************************************
+ *  EVERYTHING BELOW HERE DEALS WITH RUNES AND DAMAGE NUMBERS, WHICH ALL HAVE THEIR OWN JS FILES
+ */
+
 function renderRunesAndStatsButton(num) {
     const $champPics = $(`#champ-buttons-${num}`);
     let statsDiv = "";
@@ -502,17 +633,20 @@ function renderRunesAndStatsButton(num) {
 function renderCalculateButton() {
 
     let hold = `
-        <button id="calc-calculate-button">  Calculate </button>
+        <button id="calc-calculate-button">  CALCULATE </button>
     `;
 
     $(`#damage-numbers`).append(hold);
-        $(`#calc-calculate-button`).on('click', function(e) { 
-            renderDamageNumbers();
-            renderAbilityDamageButtons();
+        $(`#calc-calculate-button`).on('click', function(e) {
+            if (!calcClicked) { 
+                renderDamageNumbers();
+                renderAbilityDamageButtons();
+                damageColumn();
+                calcClicked = true;
+                e.preventDefault();
+            }
             damage = spellDamage();
-            damageColumn();
             showDamage();
-            e.preventDefault();
         });
 
 }
@@ -536,16 +670,6 @@ function renderDamageNumbers() {
 function reset(num) {
     $(`#champ-level-list-${num}`).val(1);
     championChangeStats(num);
-}
-
-//Gets the first champion's items
-export function getChampOneItems(){
-    return itemIdsOne;
-}
-
-//Gets the second champion's items
-export function getChampionTwoItems(){
-    return itemIdsTwo;
 }
 
 export function getDamage() {

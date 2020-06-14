@@ -179,3 +179,12 @@ a.disable {
 .stat-runes {
     margin-top: 50px;
 }
+
+#calc-calculate-button {
+    width: 100%;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: gold;
+    color: black;
+}
