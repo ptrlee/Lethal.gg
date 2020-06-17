@@ -57,6 +57,8 @@ export function spellDamage() {
     damageOverTime[5][0][0] = sortType(damageOverTime[5][0][0], 0, champD.armor, 0);
     damageOverTime[5][0][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
     damageOverTime[5][0][2] = damageOverTime[5][0][0] * (2+champA.critMult) // damage per crit
+    damageOverTime[5][0][0] += champA.itemOnHitDmg;
+    damageOverTime[5][0][2] += champA.itemOnHitDmg;
     damageOverTime[5][0][3] = damageOverTime[5][0][0]*(1-champA.crit) + damageOverTime[5][0][2]*(champA.crit); //avg dmg per auto
     damageOverTime[5][0][4] = damageOverTime[5][0][3]*damageOverTime[5][0][1];
 
@@ -126,9 +128,10 @@ export function spellDamage() {
                     j++; //increments index of part 
                     type = condition.type;
                 }
+
                 if (condition.TickRate == null) { //not a DoT ability
                     if (j == 0) { //assigns to pre-existing index
-                        totalDamage[i][0][0] = calculateSpell(champA, champD, condition, level,w);
+                        totalDamage[i][j][0] = calculateSpell(champA, champD, condition, level,w);
                     }
                     else { //index doesn't exist -- dynamic array 
                         if (totalDamage[i][j] == undefined)
@@ -187,6 +190,38 @@ export function spellDamage() {
                     if (damageOverTime[i][j][4] != undefined) 
                         damageOverTime[i][j][4] = sortType(damageOverTime[i][j][4],type,champD.armor,champD.mr)
             }
+
+            //sorts on-hit dmg 
+            if (condition.onHit != null) {
+                let onHitDamageTemp = sortType((calculateSpell(champA,champD,condition.onHit,level,w)),condition.onHit.type,champD.armor,champD.mr);
+                champA.onHitDmg = onHitDamageTemp;
+                
+                //calculates on-hit dmg and back iterates to fix abilitlies that are on-hit
+                for (let a = i -1; a >= 0; a--) {
+                    let spellsa =  $.getJSON(document.getElementById("champ-input-list-one").value)[a];
+                    
+                    if (a == 0)
+                        spellsa = spellsa.Passive;
+                    else if (a == 1)
+                        spellsa = spellsa.QBaseDamage;
+                    else if (a == 2)
+                        spellsa = spellsa.WBaseDamage;
+                    else if (a == 3)
+                        spellsa = spellsa.EBaseDamage;
+
+                    if (spellsa.isAttack != null) {
+                        let dmg = onHitDamageTemp + totalDamage[a][0][0];
+                        if (totalDamage[a][0][totalDamage[a][0].length-1] != dmg)
+                            totalDamage[a][0].push(dmg);
+                    }
+                }
+            }
+            if (condition.isAttack != null) {
+                totalDamage[i][j][0] += champA.itemOnHitDmg;
+                if (champA.onHitDmg != 0)
+                    totalDamage[i][j].push(champA.onHitDmg + totalDamage[i][j][0]);
+            }
+
             let count2 = 0; //checker for static array 
             let ampob = condition.amp; //recursive definition of amp (special effect multiplier like ahri e)
             while (condition.amp != undefined) { //if the amp exists
@@ -234,12 +269,13 @@ export function spellDamage() {
 
                     
                     //if AD, changes auto attack values
-                    console.log(adChanged);
-                    if (adChanged && sortType((champA.baseAD+champA.bonusAD),0,champD.armor,0) != damageOverTime[5][dmgCount][0]) {
+                    if (adChanged && sortType((champA.baseAD+champA.bonusAD),0,champD.armor,0) != (damageOverTime[5][dmgCount][0] - champA.onHitDmg)) {
                         damageOverTime[5].push([(champA.baseAD + champA.bonusAD)]) //base auto attack damage
                         damageOverTime[5][dmgCount+1][0] = sortType(damageOverTime[5][dmgCount+1][0], 0, champD.armor, 0);
                         damageOverTime[5][dmgCount+1][1] = (champA.atkSpeed*(1+champA.bAtkSpeed)); //attack speed
                         damageOverTime[5][dmgCount+1][2] = damageOverTime[5][dmgCount+1][0] * (2+champA.critMult) // damage per crit
+                        damageOverTime[5][dmgCount+1][0] += champA.itemOnHitDmg;
+                        damageOverTime[5][dmgCount+1][2] += champA.itemOnHitDmg;
                         damageOverTime[5][dmgCount+1][3] = damageOverTime[5][dmgCount+1][0]*(1-champA.crit) + damageOverTime[5][dmgCount+1][2]*(champA.crit); //avg dmg per auto
                         damageOverTime[5][dmgCount+1][4] = damageOverTime[5][dmgCount+1][3]*damageOverTime[5][dmgCount+1][1];
                         dmgCount++;
@@ -395,6 +431,16 @@ export function spellDamage() {
     } 
 
     //no 'total damage' value
+    if (champA.onHitDmg != 0) {
+        let length = damageOverTime[5].length;
+        for (let c = 0; c < length;c++) {
+            damageOverTime[5].push([champA.onHitDmg + damageOverTime[5][c][0]]);
+            damageOverTime[5][c+length].push(damageOverTime[5][c][1]);
+            damageOverTime[5][c+length].push(champA.onHitDmg + damageOverTime[5][c][2]);
+            damageOverTime[5][c+length].push(damageOverTime[5][c+length][0]*(1-champA.crit) + damageOverTime[5][c+length][2]*(champA.crit)) //avg dmg per auto
+            damageOverTime[5][c+length].push(damageOverTime[5][c+length][3]*damageOverTime[5][c+length][1]);
+        }
+    }
 
    console.log(totalDamage);
    console.log(damageOverTime);
@@ -661,6 +707,8 @@ export function getAtkChamp() {
     let champA = {
         passive: champ.passive.image.full,
         type: 0, //0 = burst, 1 = adc, 2 = dps not ADC, 3 = else
+        onHitDmg: 0,
+        itemOnHitDmg: 0,
         abilities: champ.spells,
         level: document.getElementById("champ-level-list-one").value,
         bonusArmor: 0,

@@ -259,9 +259,9 @@
         "QBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "APDamage": [25,50,75,100,125],
+            "APDamage": [30,55,80,105,130],
             "ADScale": 0.65,
-            "APScale": 0.6
+            "APScale": 0.65
             } 
 
         },
@@ -1812,16 +1812,15 @@
 
         {
             "QBaseDamage": {
-                "worksForAPI": true,
+                "worksForAPI": false,
                 "APDamage": [10, 25, 40, 55,70],
                 "APScale": 0.55,
                 "type": 1,
-                "Condition": {
-                    "ADDamage": [0,0,0,0,0],
+                "DiffType": {
                     "ADScale": 1.0,
                     "type": 0
                 },
-                "ADDamage": "100% of his AD"
+                "isAttack": true
             }
         },
 
@@ -1837,8 +1836,16 @@
                     "type": 1,
                     "APDamage": [50, 70, 90, 110, 130],
                     "APScale": 0.5,
-                    "BonusOnHitDamage": [10, 15, 20, 25, 30],
-                    "APScaleTwo": 0.35
+                    "Condition": {
+                        "type": 1,
+                        "APDamage": [10, 15, 20, 25, 30],
+                        "APScale": 0.35,
+                        "onHit": {
+                            "type": 1,
+                            "APDamage": [10, 15, 20, 25, 30],
+                            "APScale": 0.35
+                        }
+                    }
                 },
                 "Comment": "APScale is for BonusAPDamage, APScaleTwo is for BonusOnHitDamage; APScaleTwo and BonusOnHitDamage are only applied if target doesn't die"
             }
@@ -2461,7 +2468,13 @@
                 "type": 1,
                 "APDamage": [15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66],
                 "APScale": 0,
-                "BADScale": 0.25 
+                "BADScale": 0.25,
+                "onHit": {
+                    "type": 1,
+                    "APDamage": [15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66],
+                    "APScale": 0,
+                    "BADScale": 0.25                
+                }
             }
         },
 
@@ -2470,7 +2483,8 @@
                 "worksForAPI": false,
                 "type": 0,
                 "ADDamage": [5, 25, 45, 65, 85],
-                "ADScale": 0.6
+                "ADScale": 0.6,
+                "isAttack": true
             }
         },
 
@@ -7929,7 +7943,7 @@
                 "worksForAPI": false,
                 "type": 0,
                 "ADDamage": [15, 70, 125, 180, 235],
-                "ADScale": 1.65,
+                "ADScale": 1.5,
                 "amp": {
                     "ampMult": {
                         "value": 0.666667,
@@ -8248,7 +8262,7 @@
                 "type": 1,
                 "APDamage": [20,45,70,95,120],
                 "ADScale": 1,
-                "APScale": 0.55
+                "APScale": 0.6
             }
         }
     },
@@ -8421,7 +8435,7 @@
             "RBaseDamage": {
                 "worksForAPI": false,
                 "type": 0,
-                "ADDamage": [250,475,700],
+                "ADDamage": [300,500,700],
                 "BADScale": 2.5,
                 "APScale": 1.25
             }
@@ -8614,7 +8628,7 @@
     },
     {
         "RBaseDamage": {
-            "ADDamage": [100,150,200],
+            "ADDamage": [125,250,375],
             "worksForAPI": false,
             "BADScale": 1,
             "type": 0
