@@ -190,7 +190,7 @@ export function spellDamage() {
                     if (damageOverTime[i][j][4] != undefined) 
                         damageOverTime[i][j][4] = sortType(damageOverTime[i][j][4],type,champD.armor,champD.mr)
             }
-
+            /** 
             //sorts on-hit dmg 
             if (condition.onHit != null) {
                 let onHitDamageTemp = sortType((calculateSpell(champA,champD,condition.onHit,level,w)),condition.onHit.type,champD.armor,champD.mr);
@@ -221,6 +221,7 @@ export function spellDamage() {
                 if (champA.onHitDmg != 0)
                     totalDamage[i][j].push(champA.onHitDmg + totalDamage[i][j][0]);
             }
+            **/
 
             let count2 = 0; //checker for static array 
             let ampob = condition.amp; //recursive definition of amp (special effect multiplier like ahri e)
