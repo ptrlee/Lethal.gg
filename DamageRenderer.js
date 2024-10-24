@@ -1,5 +1,5 @@
-import { getAtkChamp } from "./Champions.js";
-import { getDamage } from "./calc.js";
+import { getAtkChamp } from "./MathCalculation.js";
+import { getDamage } from "./DamageCalculatorUI.js";
 //s
 export function damageColumn() {
     let atkChamp = getAtkChamp();
@@ -14,6 +14,11 @@ export function damageColumn() {
 export function showDamage(){
     //0 - normal; 1 - Q + Amp; 2 - R-Q-Normal; 3 - R-Q-Amp
 
+    $(`#P-ability-damage`).remove(); 
+    $(`#Q-ability-damage`).remove(); 
+    $(`#W-ability-damage`).remove(); 
+    $(`#E-ability-damage`).remove(); 
+    $(`#R-ability-damage`).remove(); 
     shortenedDamage("P", 0);
     shortenedDamage("Q", 1);
     shortenedDamage("W", 2);
@@ -117,7 +122,7 @@ export function renderAbilityDamageButtons() {
     $('#tick-damage-button').on('click', function(e) {    
         let DoT = getDamage()[1];    
         showTickDamage(DoT, "P", 0);
-        showTickDamage(DoT, "Q", 1);
+        showTickDamaqge(DoT, "Q", 1);
         showTickDamage(DoT, "W", 2);
         showTickDamage(DoT, "E", 3);
         showTickDamage(DoT, "R", 4);
@@ -125,11 +130,12 @@ export function renderAbilityDamageButtons() {
     });
 
     $('#base-damage-button').on('click', function(e) {   
-        shortenedDamage("P", 0);
+        showDamage()
+       /*  shortenedDamage("P", 0);
         shortenedDamage("Q", 1);
         shortenedDamage("W", 2);
         shortenedDamage("E", 3);
-        shortenedDamage("R", 4);
+        shortenedDamage("R", 4); */
         e.preventDefault();
     });
 }

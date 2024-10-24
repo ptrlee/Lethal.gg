@@ -149,21 +149,11 @@
         "QBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "amp": {
-                "ampMult": {
-                    "value": 1.2
-                }
-            },
             "APDamage": [40,65,90,115,140],
             "APScale": 0.35,
             "Condition" : {
                 "type": 2,
                 "APDamage": [40,65,90,115,140],
-                "amp": {
-                    "ampMult": {
-                        "value": 1.2
-                    }
-                },
                 "APScale": 0.35
             }
             }
@@ -173,31 +163,16 @@
         "WBaseDamage": {
             "worksForAPI": false,
             "type": 1,
-            "amp": {
-                "ampMult": {
-                    "value": 1.2
-                }
-            },
             "APDamage": [40,65,90,115,140],
             "APScale": 0.3,
             "Condition": {
                 "type": 1,
                 "APDamage": [12,19.5,27,34.5,42],
                 "APScale": 0.09,
-                "amp": {
-                    "ampMult": {
-                        "value": 1.2
-                    }
-                },
                 "Condition": {
                     "type": 1,
                     "APDamage": [12,19.5,27,34.5,42],
-                    "APScale": 0.09,
-                    "amp": {
-                        "ampMult": {
-                            "value": 1.2
-                        }
-                    }
+                    "APScale": 0.09
                 }
             }
             }
@@ -214,29 +189,14 @@
             "type": 1,
             "worksForAPI": false,
             "APDamage": [60,90,120],
-            "amp": {
-                "ampMult": {
-                    "value": 1.2
-                }
-            },
             "APScale": 0.35,
             "Condition": {
                 "type": 1,
                 "APDamage": [60,90,120],
-                "amp": {
-                    "ampMult": {
-                        "value": 1.2
-                    }
-                },
                 "APScale": 0.35,
                 "Condition": {
                     "type": 1,
                     "APDamage": [60,90,120],
-                    "amp": {
-                        "ampMult": {
-                            "value": 1.2
-                        }
-                    },
                     "APScale": 0.35
                 }
             }

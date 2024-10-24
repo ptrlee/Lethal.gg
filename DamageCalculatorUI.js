@@ -1,7 +1,7 @@
-import { spellDamage } from "./Champions.js";
-import { getDefChamp, getAtkChamp } from "./Champions.js";
+import { spellDamage } from "./MathCalculation.js";
+import { getDefChamp, getAtkChamp } from "./MathCalculation.js";
 import { renderRunes } from "./runes.js";
-import { damageColumn, showDamage, renderAbilityDamageButtons } from "./damage.js";
+import { damageColumn, showDamage, renderAbilityDamageButtons } from "./DamageRenderer.js";
 import { getChamps } from "./main.js";
 //s
 const $root = $("#root");
@@ -24,7 +24,7 @@ let calcClicked = false;
 function renderChampLists() {
     let holdOne = `
         <div id="champ-one" class="column">
-            <input value="Ahri" class="champ-input" id="champ-input-list-one" type="text" list="champions-one"/>
+            <input value="Ahri" class="champ-input" id="champ-input-list-one" type="text" list="champions-one" autocomplete="on"/>
             <datalist id="champions-one">
                 ${createChampionList()}
             </datalist>    
@@ -224,8 +224,9 @@ $('#calc-button').on('click', function(e) {
  */
 function createChampionList() {
     let temp = "";
-    let champs = $.getValues('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json');
+    let champs = $.getValues('http://ddragon.leagueoflegends.com/cdn/14.21.1/data/en_US/champion.json');
     champions = Object.keys(champs);
+    console.log(champions)
     for (let i =0; i < champions.length; i++) {
         if (champions[i] != "MonkeyKing") {
             temp += `<option>${champions[i]}</option>`;
@@ -314,6 +315,7 @@ export function getAbilities(num){
     let champ = $.getValues(`http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion/${x}.json`);
    
     const $champPics = $(`#champ-pictures-${num}`);
+    console.log(champ[x])
     let y = champ[x].spells;
     let spells = "";
     let levels = "";
@@ -339,7 +341,7 @@ export function getAbilities(num){
     let hold = ` 
     <div class="columns is-gapless" id="champ-spell-${num}">
         <div class="column is-narrow spells">
-            <image class="ability" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/passive/${champ[x].passive.image.full}"> </image>
+            <image class="ability" width=32px length=32px src="http://ddragon.leagueoflegends.com/cdn/14.21.1/img/passive/${champ[x].passive.image.full}"> </image>
         </div>    
         ${spells}
 
@@ -438,7 +440,7 @@ function spellReset(num) {
 export function getItemsList(num) {
     const $champPics = $(`#champ-items-button-${num}`);
     let temp = "";
-    let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/item.json");
+    let item = $.getValues("http://ddragon.leagueoflegends.com/cdn/14.21.1/data/en_US/item.json");
     let items = Object.keys(item);
     for (let i = 0; i < items.length; i++) {
         temp += `<option>${item[items[i]].name}</option>`;
@@ -489,7 +491,7 @@ function makeItemImages(item, array1, array2, num) {
                         itemIdsOne.push(id);
                     }
                     console.log("zzz", itemIdsOne);
-                    document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${id}.png`;
+                    document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/${id}.png`;
                     document.getElementById(`champ-${num}-item-` + i).classList.add("clickable");
                     document.getElementById(`champ-${num}-item-` + i).setAttribute("data-userid", "yes");
                     removeImage("one", itemIdsOne, i);
@@ -497,7 +499,7 @@ function makeItemImages(item, array1, array2, num) {
                 }
             }
             // imgOne = `
-            //     <img class="clickable pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${itemIdsOne[i]}.png">
+            //     <img class="clickable pic-${num}" id="champ-one-${i}" src="http://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/${itemIdsOne[i]}.png">
             // `;
             // $champPics.append(imgOne);
             
@@ -515,7 +517,7 @@ function makeItemImages(item, array1, array2, num) {
                     itemIdsOne.push(id);
                 }
                 //console.log("zzz", itemIdsOne);
-                document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${id}.png`;
+                document.getElementById(`champ-${num}-item-` + i).src = `http://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/${id}.png`;
                 document.getElementById(`champ-${num}-item-` + i).classList.add("clickable");
                 document.getElementById(`champ-${num}-item-` + i).setAttribute("data-userid", "yes");
                 removeImage("two", itemIdsTwo, i);
@@ -539,9 +541,9 @@ function removeImage(num, array, i) {
         console.log("items", array);
         // $(`.pic-${num}`).remove();
         //for (let j = 0; j < array.length; j++) {
-            //document.getElementById(`champ-${num}-item-` + j).src = `http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[i]}.png`;
+            //document.getElementById(`champ-${num}-item-` + j).src = `http://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/${array[i]}.png`;
             // imgOne = `
-            //     <img class="pic-${num} clickable" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/${array[j]}.png">
+            //     <img class="pic-${num} clickable" id="champ-one-${j}" src="http://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/${array[j]}.png">
             // `;
             //$champPics.append(imgOne);
             //removeImage(num, array, j);

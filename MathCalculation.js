@@ -1,4 +1,4 @@
-import {getChampOneItems, getChampionTwoItems} from "./calc.js";
+import {getChampOneItems, getChampionTwoItems} from "./DamageCalculatorUI.js";
 
 jQuery.extend({
     getValues: function(url) {

@@ -1,4 +1,4 @@
-import { getAbilities } from "./calc.js";
+import { getAbilities } from "./DamageCalculatorUI.js";
 const $root = $("#root");
 const $champs = $("#champs");
 let champs = "";
